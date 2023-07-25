@@ -1,5 +1,5 @@
-import { ColumnAccessorType } from "./ColumnAccessors";
-import { FilterGroup, FilterType } from "./TableFilters";
+import { ColumnAccessorType } from "@table/ColumnAccessors";
+import { FilterGroup, FilterType } from "@table/TableFilters";
 
 export interface TableColumnSort {
     id: string;

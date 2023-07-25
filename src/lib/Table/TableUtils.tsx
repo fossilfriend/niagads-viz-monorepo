@@ -15,7 +15,7 @@ export const resolveJSONFieldValue = (value: string) => {
     }
 };
 
-export const resolveNullFieldValue = (value: string, returnNA: boolean) => {
+export const resolveNullFieldValue = (value: string | null, returnNA: boolean) => {
     return value === null || value === "N/A" ? (returnNA ? "N/A" : "") : resolveJSONFieldValue(value);
 };
 
@@ -28,6 +28,7 @@ const getAccessorType = (value: any) => {
         : "String";
     return accessorType.includes("Boolean") ? "BooleanCheckAccessor" : accessorType;
 }
+
 
 export const parseFieldValue = (value: any, returnNA: boolean = false): any => {
     if (!value) {
