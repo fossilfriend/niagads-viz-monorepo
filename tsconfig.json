@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "strictNullChecks": false,
+    "target": "es2017",
+    "module": "esnext",
+    "allowJs": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitReturns": true,
+    "jsx": "react",
+    "strict": true,
+    "alwaysStrict": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "typeRoots": ["./src/ambient_types", "node_modules/@types"],
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "paths": {
+      "@table/*": ["./src/lib/Table/*"],
+    }
+  },
+  "exclude": ["dist/**/*"]
+}
