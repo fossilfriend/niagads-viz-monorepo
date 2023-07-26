@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Box from "@mui/core/Box";
+import Box from "@mui/material/Box";
 interface TabPanelProps {
     children?: React.ReactNode;
     index: any;

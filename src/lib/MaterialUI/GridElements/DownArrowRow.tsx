@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box";
-import DownArrow from "@mui/icons/ArrowDropDown";
+import DownArrow from "@mui/icons-material/ArrowDropDown";
 import { theme } from "..";
 
 interface DownArrowRowProps {

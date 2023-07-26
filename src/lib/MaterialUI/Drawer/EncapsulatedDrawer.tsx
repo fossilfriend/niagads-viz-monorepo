@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState, useRef } from "react";
 
-import AppBar from "@mui/core/AppBar";
-import Toolbar from "@mui/core/Toolbar";
-import Drawer from "@mui/core/Drawer";
-import IconButton from "@mui/core/IconButton";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
 
 import clsx from "clsx";
 
-import { makeStyles, useTheme, Theme, createStyles } from "@mui/core/styles";
+import { makeStyles, useTheme, Theme, createStyles } from "@mui/material/styles";
 
 import { StyledTooltip as Tooltip, DrawerProps, DrawerContentsProps } from "@components/MaterialUI";
 

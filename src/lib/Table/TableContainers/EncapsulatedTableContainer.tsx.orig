@@ -4,10 +4,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { assign } from "lodash";
 
-import Typography from "@mui/core/Typography";
-import LibraryBooksIcon from "@mui/icons/LibraryBooks";
-import AppBar from "@mui/core/AppBar";
-import Toolbar from "@mui/core/Toolbar";
+import Typography from "@mui/material/Typography";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
 
 import {
     useTable,

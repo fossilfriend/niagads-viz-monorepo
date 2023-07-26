@@ -1,11 +1,11 @@
 import React from "react";
 
-import { withStyles, makeStyles, Theme } from "@mui/core/styles";
-import Tooltip from "@mui/core/Tooltip";
-import Typography from "@mui/core/Typography";
-import MUIHelpIcon from "@mui/icons/Help";
-import IconButton from "@mui/core/IconButton";
-import { blue } from "@mui/core/colors";
+import { withStyles, makeStyles, Theme } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import MUIHelpIcon from "@mui/icons-material/Help";
+import IconButton from "@mui/material/IconButton";
+import { blue } from "@mui/material/colors";
 
 import { safeHtml } from "wdk-client/Utils/ComponentUtils";
 

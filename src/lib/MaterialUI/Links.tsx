@@ -1,9 +1,9 @@
 import React from "react";
 
-import { LinkProps } from "@mui/core";
-import Link from "@mui/core/Link";
+import { LinkProps } from "@mui/material";
+import Link from "@mui/material/Link";
 
-import { makeStyles, createStyles, Theme } from "@mui/core/styles";
+import { makeStyles, createStyles, Theme } from "@mui/material/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

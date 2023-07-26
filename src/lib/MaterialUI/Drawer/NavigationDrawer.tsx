@@ -2,19 +2,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
-import { makeStyles, Theme, createStyles } from "@mui/core/styles";
+import { makeStyles, Theme, createStyles } from "@mui/material/styles";
 
-import AppBar from "@mui/core/AppBar";
-import Toolbar from "@mui/core/Toolbar";
-import Drawer from "@mui/core/Drawer";
-import Divider from "@mui/core/Divider";
-import Grid from "@mui/core/Grid";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Drawer from "@mui/material/Drawer";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
 
-import ChevronLeftIcon from "@mui/icons/ChevronLeft";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 import { StyledTooltip as Tooltip, DrawerProps, DRAWER_WIDTH } from "@components/MaterialUI";
-import Button from "@mui/core/Button";
-import Box from "@mui/core/Box";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 const useDrawerStyles = (props: any) =>
     makeStyles((theme: Theme) =>

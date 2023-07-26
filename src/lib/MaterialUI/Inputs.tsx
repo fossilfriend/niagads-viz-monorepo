@@ -1,6 +1,6 @@
 import React from "react";
-import { FormControl, Input, InputProps, OutlinedInput, TextField, TextFieldProps } from "@mui/core";
-import { makeStyles } from "@mui/core/styles";
+import { FormControl, Input, InputProps, OutlinedInput, TextField, TextFieldProps } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 //base resset of wdk non-button inputs
 const useBaseInputStyles = makeStyles({

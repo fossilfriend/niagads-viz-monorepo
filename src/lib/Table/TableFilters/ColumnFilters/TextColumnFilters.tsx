@@ -3,23 +3,23 @@ import React, { useMemo, useState, useEffect } from "react";
 
 import { Column } from "react-table";
 
-import TextField from "@mui/core/TextField";
-import MenuItem from "@mui/core/MenuItem";
-import FormControl from "@mui/core/FormControl";
-import FormLabel from "@mui/core/FormLabel";
-import FormGroup from "@mui/core/FormGroup";
-import FormControlLabel from "@mui/core/FormControlLabel";
-import Checkbox from "@mui/core/Checkbox";
-import RadioGroup from "@mui/core/RadioGroup";
-import Radio from "@mui/core/Radio";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import RadioGroup from "@mui/material/RadioGroup";
+import Radio from "@mui/material/Radio";
 import { Autocomplete } from "@mui/lab";
 
 import { ComingSoonAlert, StyledTooltip as Tooltip } from "@components/MaterialUI";
 
 import { parseFieldValue } from "@viz/Table";
 import { useFilterStyles, ZeroFilterChoicesMsg } from "@viz/Table/TableFilters";
-import Typography from "@mui/core/Typography";
-import Chip from "@mui/core/Chip";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
 
 const findFirstColumn = <T extends Record<string, unknown>>(columns: Array<Column<T>>): Column<T> =>
     //@ts-ignore

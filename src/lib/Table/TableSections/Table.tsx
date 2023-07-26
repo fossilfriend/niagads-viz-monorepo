@@ -3,13 +3,13 @@ import React, { useMemo, useState, useEffect, useCallback, useRef, useLayoutEffe
 import cx from "classnames";
 import { get } from "lodash";
 
-import MaUTable from "@mui/core/Table";
-import TableBody from "@mui/core/TableBody";
-import TableCell from "@mui/core/TableCell";
-import TableHead from "@mui/core/TableHead";
-import TableRow from "@mui/core/TableRow";
-import Box from "@mui/core/Box";
-import Grid from "@mui/core/Grid";
+import MaUTable from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 import { InfoAlert, CustomPanel } from "@components/MaterialUI";
 

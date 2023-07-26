@@ -1,9 +1,9 @@
 import React from "react";
 
-import { makeStyles } from "@mui/core/styles";
-import Box from "@mui/core/Box";
-import Button from "@mui/core/Button";
-import OpenInBrowserIcon from "@mui/icons/OpenInBrowser";
+import { makeStyles } from "@mui/styles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
 
 import { ColumnAccessor } from "@viz/Table/ColumnAccessors";
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-export const RowSelectButtonAccessor: React.SFC<ColumnAccessor> = ({ value, userProps }) => {
+export const RowSelectButtonAccessor: React.FC<ColumnAccessor> = ({ value, userProps }) => {
     const classes = useStyles();
     return (
         <Box component="span">

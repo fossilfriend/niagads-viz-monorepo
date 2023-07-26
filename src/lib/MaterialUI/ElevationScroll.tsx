@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import useScrollTrigger from "@mui/core/useScrollTrigger";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
 
 interface ElevationScrollProps {
     children: React.ReactElement;

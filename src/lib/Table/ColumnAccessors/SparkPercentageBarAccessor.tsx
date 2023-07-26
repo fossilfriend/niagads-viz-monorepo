@@ -1,8 +1,8 @@
 import React from "react";
 
-import { withStyles } from "@mui/core";
-import Box, { BoxProps } from "@mui/core/Box";
-import Grid from "@mui/core/Grid";
+import { withStyles } from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 import { ColumnAccessor } from "@viz/Table/ColumnAccessors";
 

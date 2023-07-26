@@ -19,7 +19,7 @@ export const resolveLink = (url: string, value: string) => {
 };
 
 // text with tooltip value = { value: string, url: string, tooltip: string}
-export const LinkAccessor: React.SFC<ColumnAccessor> = ({ value }) => {
+export const LinkAccessor: React.FC<ColumnAccessor> = ({ value }) => {
     return Array.isArray(value) ? (
         <LinkListAccessor value={value} />
     ) : "tooltip" in value && value.tooltip != "" ? (

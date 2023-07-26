@@ -2,14 +2,14 @@ import React, { useMemo, useState, useEffect } from "react";
 
 import { Row, IdType, Column } from "react-table";
 
-import TextField from "@mui/core/TextField";
-import Button from "@mui/core/Button";
-import InputLabel from "@mui/core/InputLabel";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
 
-import OutlinedInput from "@mui/core/OutlinedInput";
-import FormControl from "@mui/core/FormControl";
-import InputAdornment from "@mui/core/InputAdornment";
-import FormHelperText from "@mui/core/FormHelperText";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormHelperText from "@mui/material/FormHelperText";
 import { StyledTooltip as Tooltip } from "@components/MaterialUI";
 
 const getMinMax = (rows: Row[], id: IdType<any>) => {

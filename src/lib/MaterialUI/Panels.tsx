@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 
-import { makeStyles, createStyles, Theme } from "@mui/core";
-import Grid, { GridItemsAlignment, GridJustification } from "@mui/core/Grid";
-import Card from "@mui/core/Card";
-import CardActions from "@mui/core/CardActions";
-import Typography from "@mui/core/Typography";
-import IconButton from "@mui/core/IconButton";
-import Collapse from "@mui/core/Collapse";
-import CardContent from "@mui/core/CardContent";
-import ExpandMoreIcon from "@mui/icons/ExpandMore";
-import MoreVertIcon from "@mui/icons/MoreVert";
+import { makeStyles, createStyles, Theme } from "@mui/material";
+import Grid, { GridItemsAlignment, GridJustification } from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Collapse from "@mui/material/Collapse";
+import CardContent from "@mui/material/CardContent";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import { lighten } from "@mui/core/styles";
+import { lighten } from "@mui/material/styles";
 import { DownArrowRow } from "@components/MaterialUI";
 
 export interface PanelProps {

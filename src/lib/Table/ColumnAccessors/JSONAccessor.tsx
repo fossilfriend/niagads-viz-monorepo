@@ -50,7 +50,7 @@ export const jsonAccessorType = (obj: any) => {
 
 // expect 2 types 1: text w/tooltip, 2) link
 // assumes "tooltip" = { value: str; tooltip: str}
-export const JSONAccessor: React.SFC<ColumnAccessor> = ({ value }) => {
+export const JSONAccessor: React.FC<ColumnAccessor> = ({ value }) => {
     const obj = isObject(value) ? value : JSON.parse(value);
     const objType = jsonAccessorType(obj);
     switch (objType) {

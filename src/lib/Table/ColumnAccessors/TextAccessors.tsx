@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { isObject, isString } from "lodash";
 
-import Box from "@mui/core/Box";
+import Box from "@mui/material/Box";
 import { StyledTooltip as Tooltip} from "@components/MaterialUI";
 
 import { ColumnAccessor, JSONAccessor } from "@viz/Table/ColumnAccessors";
@@ -21,7 +21,7 @@ export const isJSON = (value: any) => {
     
 };
 
-export const DefaultTextAccessor: React.SFC<ColumnAccessor> = ({ value, maxLength = 100 }) => {
+export const DefaultTextAccessor: React.FC<ColumnAccessor> = ({ value, maxLength = 100 }) => {
     if (isJSON(value)) {
         return <JSONAccessor value={value} />;
     }
@@ -34,7 +34,7 @@ export const DefaultTextAccessor: React.SFC<ColumnAccessor> = ({ value, maxLengt
 
 // large text, show more or tooltip
 // if not JSON & no tooltip, show more
-export const ClobTextAccessor: React.SFC<ColumnAccessor> = ({ value, maxLength = 100 }) => {
+export const ClobTextAccessor: React.FC<ColumnAccessor> = ({ value, maxLength = 100 }) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
     const toggleIsExpanded = () => {
@@ -54,7 +54,7 @@ export const ClobTextAccessor: React.SFC<ColumnAccessor> = ({ value, maxLength =
     );
 };
 
-export const ColoredTextAccessor: React.SFC<ColumnAccessor> = ({ value, className, muiColor }) => {
+export const ColoredTextAccessor: React.FC<ColumnAccessor> = ({ value, className, muiColor }) => {
     return (
         <Box className={className ? className : ""} component="span" color={muiColor ? muiColor : ""}>
             {value}
@@ -65,7 +65,7 @@ export const ColoredTextAccessor: React.SFC<ColumnAccessor> = ({ value, classNam
 // text with tooltip value = { value: string, tooltip: string}
 // so technically, takes JSON
 
-export const AnnotatedTextAccessor: React.SFC<ColumnAccessor> = ({ value }) => {
+export const AnnotatedTextAccessor: React.FC<ColumnAccessor> = ({ value }) => {
     return (    
         <Tooltip title={value.tooltip} arial-label={value.tooltip}>
            <Box component="span" className="annotated-text">{value.value}</Box>

@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, ButtonProps, IconButton, Theme, withStyles, ThemeProvider } from "@mui/core";
-import { makeStyles, createStyles } from "@mui/core/styles";
+import { Button, ButtonProps, IconButton, Theme, withStyles, ThemeProvider } from "@mui/material";
+import { makeStyles, createStyles } from "@mui/material/styles";
 import { muiTheme } from "@components/MaterialUI";
 
 //base override of wdk input[type=button]

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, forwardRef, useState, useImperativeHandle } from "react";
-import Button from "@mui/core/Button";
-import OpenInBrowserIcon from '@mui/icons/OpenInBrowser';
+import Button from "@mui/material/Button";
+import OpenInBrowserIcon from '@mui/icons-material/OpenInBrowser';
 
 //@ts-ignore
 export const RowSelectButton = forwardRef(({ indeterminate, ...rest }, ref) => {

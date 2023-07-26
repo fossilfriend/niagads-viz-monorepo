@@ -1,7 +1,7 @@
 import React from "react";
 import { InfoAlert } from "@components/MaterialUI"
 
-import { makeStyles } from "@mui/core/styles";
+import { makeStyles } from "@mui/styles";
 import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export const ZeroFilterChoicesMsg: React.SFC<{ label: string }> = ({ label }) => {
+export const ZeroFilterChoicesMsg: React.FC<{ label: string }> = ({ label }) => {
     const classes = useStyles();
     return (
         <InfoAlert title={label} className={classes.alert} message="No choices (or only NAs) available with selected filters." />    

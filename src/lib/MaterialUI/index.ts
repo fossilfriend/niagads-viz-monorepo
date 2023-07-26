@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/core/styles';
+import { createTheme } from '@mui/material/styles';
 import { primaryThemeOptions, muiThemeOptions } from "./theme";
 
 export const theme = createTheme(primaryThemeOptions);

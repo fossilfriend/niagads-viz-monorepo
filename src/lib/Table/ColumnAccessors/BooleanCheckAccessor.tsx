@@ -1,10 +1,10 @@
 import React from "react";
-import Box from "@mui/core/Box";
+import Box from "@mui/material/Box";
 
-import CheckIcon from "@mui/icons/Check";
+import CheckIcon from "@mui/icons-material/Check";
 import { ColumnAccessor } from "@table/ColumnAccessors";
 
-export const BooleanCheckAccessor: React.SFC<ColumnAccessor> = ({ value, className, htmlColor, muiColor }) => {
+export const BooleanCheckAccessor: React.FC<ColumnAccessor> = ({ value, className, htmlColor, muiColor }) => {
     if (value && ["true", "yes"].includes(value.toString().toLowerCase())) {
         return (
             <Box component="span">

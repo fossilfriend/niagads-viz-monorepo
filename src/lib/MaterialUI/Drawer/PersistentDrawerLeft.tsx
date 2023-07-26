@@ -1,12 +1,12 @@
 import React from "react";
-import { makeStyles, useTheme, Theme, createStyles } from "@mui/core/styles";
-import Drawer from "@mui/core/Drawer";
-import Divider from "@mui/core/Divider";
-import ChevronLeftIcon from "@mui/icons/ChevronLeft";
-import Button from "@mui/core/Button";
+import { makeStyles, useTheme, Theme, createStyles } from "@mui/material/styles";
+import Drawer from "@mui/material/Drawer";
+import Divider from "@mui/material/Divider";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import Button from "@mui/material/Button";
 
 import { DrawerProps } from "@components/MaterialUI";
-import { Box } from "@mui/core";
+import { Box } from "@mui/material";
 
 
 export const DRAWER_WIDTH = 300;

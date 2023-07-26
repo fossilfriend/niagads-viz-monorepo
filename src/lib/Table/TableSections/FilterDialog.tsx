@@ -1,19 +1,19 @@
 // modified from https://github.com/ggascoigne/react-table-example
 import React, { ReactElement, useCallback, useState, useMemo } from "react";
 
-import Button from "@mui/core/Button";
-import Box from "@mui/core/Box";
-import Grid from "@mui/core/Grid";
-import DialogTitle from "@mui/core/DialogTitle";
-import DialogContent from "@mui/core/DialogContent";
-import DialogActions from "@mui/core/DialogActions";
-import Dialog from "@mui/core/Dialog";
-import Collapse from "@mui/core/Collapse";
-import Paper from "@mui/core/Paper";
-import Typography from "@mui/core/Typography";
-import Divider from "@mui/core/Divider";
-import RotateLeftIcon from "@mui/icons/RotateLeft";
-import InfoIcon from "@mui/icons/Info";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Dialog from "@mui/material/Dialog";
+import Collapse from "@mui/material/Collapse";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+import InfoIcon from "@mui/icons-material/Info";
 
 import {
     CollapsableCardPanel,

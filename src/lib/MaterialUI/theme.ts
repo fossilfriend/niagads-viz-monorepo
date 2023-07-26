@@ -1,4 +1,4 @@
-import { ThemeOptions, makeStyles, Theme, createStyles } from "@mui/core/styles";
+import { ThemeOptions, makeStyles, Theme, createStyles } from "@mui/material/styles";
 
 // MUI default theme, for theming blue buttons and the like
 export const muiThemeOptions: ThemeOptions = {

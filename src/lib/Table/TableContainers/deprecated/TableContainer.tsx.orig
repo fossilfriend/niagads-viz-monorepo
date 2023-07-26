@@ -3,9 +3,9 @@
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { assign } from "lodash";
 
-import Typography from "@mui/core/Typography";
+import Typography from "@mui/material/Typography";
 
-import FilterListIcon from "@mui/icons/FilterList";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 import {
     useTable,

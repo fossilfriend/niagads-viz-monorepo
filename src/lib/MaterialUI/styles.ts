@@ -1,4 +1,4 @@
-import { makeStyles, createStyles, Theme } from "@mui/core";
+import { makeStyles, createStyles, Theme } from "@mui/material";
 
 export const useTypographyStyles = makeStyles((theme: Theme) =>
     createStyles({

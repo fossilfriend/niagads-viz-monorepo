@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Backdrop from '@mui/core/Backdrop';
-import CircularProgress from '@mui/core/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
-export const LoadingOverlay: React.SFC<{color: "inherit" | "primary" | "secondary"}> = ({color}) => {
+export const LoadingOverlay: React.FC<{color: "inherit" | "primary" | "secondary"}> = ({color}) => {
 
   return (
     <>
