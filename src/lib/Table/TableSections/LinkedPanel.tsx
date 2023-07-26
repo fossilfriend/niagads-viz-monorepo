@@ -2,14 +2,13 @@ import React, { useState, useCallback, useEffect } from "react";
 
 import { MemoLocusZoomPlot as LocusZoomPlot, DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@viz/LocusZoom";
 
-import { makeStyles, createStyles, Theme } from "@mui/material";
-import Collapse from "@mui/material/Collapse";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+import { Theme } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { Collapse, Grid, Button } from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close";
 
 export const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         bordered: {
             border: "2px solid #1f1f1f",
             padding: "20px",

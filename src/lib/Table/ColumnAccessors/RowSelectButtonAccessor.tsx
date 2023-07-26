@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
 
-import { ColumnAccessor } from "@viz/Table/ColumnAccessors";
+import { ColumnAccessor } from "@table/ColumnAccessors";
 
 const useStyles = makeStyles((theme) => ({
     endIcon: {

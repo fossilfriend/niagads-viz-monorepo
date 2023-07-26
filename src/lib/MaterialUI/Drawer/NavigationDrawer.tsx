@@ -5,17 +5,23 @@ import clsx from "clsx";
 import { Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 
-import { AppBar, Toolbar, Drawer, Divider, Grid } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Drawer,
+  Divider,
+  Grid,
+  Button,
+  Box,
+} from "@mui/material";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 import {
   StyledTooltip as Tooltip,
-  DrawerProps,
+  DrawerProps, DrawerContentsProps,
   DRAWER_WIDTH,
 } from "@m-ui/index";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 
 const useDrawerStyles = (props: any) =>
   makeStyles((theme: Theme) => ({
@@ -61,7 +67,7 @@ const useDrawerStyles = (props: any) =>
     },
   }));
 
-export const NavigationDrawer: React.FC<DrawerProps> = (props) => {
+export const NavigationDrawer: React.FC<DrawerProps & DrawerContentsProps> = (props) => {
   const {
     navigation,
     navigationProps,

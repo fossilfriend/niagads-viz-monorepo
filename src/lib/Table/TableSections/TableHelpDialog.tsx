@@ -1,7 +1,5 @@
 import React from "react";
 
-import { webAppUrl } from "ebrc-client/config";
-
 import { makeStyles } from "@mui/styles";
 
 import DialogTitle from "@mui/material/DialogTitle";
@@ -22,7 +20,7 @@ import ToggleIcon from "@mui/icons-material/ToggleOff";
 
 import { blue } from "@mui/material/colors";
 
-import { InfoAlert } from "@components/MaterialUI";
+import { InfoAlert } from "@m-ui/Alerts";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -54,6 +52,7 @@ interface TableHelpOptions {
     hasLinkedPanel: boolean;
     canFilter: boolean;
     canAddColumns: boolean;
+    webAppUrl: string;
 }
 
 export const TableHelpDialog: React.FC<TableHelpOptions> = ({
@@ -62,6 +61,7 @@ export const TableHelpDialog: React.FC<TableHelpOptions> = ({
     hasLinkedPanel,
     canFilter,
     canAddColumns,
+    webAppUrl
 }) => {
     const imagePath = webAppUrl + "/images/help/table";
     const classes = useStyles();

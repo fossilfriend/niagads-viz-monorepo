@@ -1,8 +1,7 @@
 import React from "react";
-import { InfoAlert } from "@components/MaterialUI"
 
 import { makeStyles } from "@mui/styles";
-import classNames from "classnames";
+import { InfoAlert } from "@m-ui/Alerts"
 
 const useStyles = makeStyles((theme) => ({
     alert: {
