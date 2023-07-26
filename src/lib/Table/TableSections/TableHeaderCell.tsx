@@ -1,8 +1,8 @@
 //@ts-nocheck -- @types/react-table out of date / to be fixed in react-table v8
 import React from "react";
 import { Column } from "react-table";
-import TableCell from "@material-ui/core/TableCell";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
+import TableCell from "@mui/core/TableCell";
+import TableSortLabel from "@mui/core/TableSortLabel";
 import cx from 'classnames';
 
 

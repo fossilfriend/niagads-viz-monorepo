@@ -2,25 +2,25 @@ import React from "react";
 
 import { webAppUrl } from "ebrc-client/config";
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/core/styles";
 
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Icon from "@material-ui/core/Icon";
+import DialogTitle from "@mui/core/DialogTitle";
+import DialogContent from "@mui/core/DialogContent";
+import DialogActions from "@mui/core/DialogActions";
+import Dialog from "@mui/core/Dialog";
+import Button from "@mui/core/Button";
+import Typography from "@mui/core/Typography";
+import Box from "@mui/core/Box";
+import List from "@mui/core/List";
+import ListItem from "@mui/core/ListItem";
+import Icon from "@mui/core/Icon";
 
-import ViewColumnIcon from "@material-ui/icons/ViewColumn";
-import FilterIcon from "@material-ui/icons/FilterList";
-import DownloadIcon from "@material-ui/icons/GetApp";
-import ToggleIcon from "@material-ui/icons/ToggleOff";
+import ViewColumnIcon from "@mui/icons/ViewColumn";
+import FilterIcon from "@mui/icons/FilterList";
+import DownloadIcon from "@mui/icons/GetApp";
+import ToggleIcon from "@mui/icons/ToggleOff";
 
-import { blue } from "@material-ui/core/colors";
+import { blue } from "@mui/core/colors";
 
 import { InfoAlert } from "@components/MaterialUI";
 

@@ -2,8 +2,8 @@
 // @ts-nocheck -- react-table type issues / should be fixed in v8
 import React, { ReactElement, useCallback } from "react";
 
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
-import Chip from "@material-ui/core/Chip";
+import { createStyles, makeStyles, Theme } from "@mui/core";
+import Chip from "@mui/core/Chip";
 
 import { ColumnInstance, FilterValue, IdType, TableInstance } from "react-table";
 

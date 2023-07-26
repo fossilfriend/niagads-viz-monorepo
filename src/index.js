@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 import { render } from "react-dom";
-import { TextInput } from "./lib";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+
+const theme = createTheme();
 
 const App = () => (
-  <div style={{ width: 640, margin: "15px auto" }}>
+  <ThemeProvider theme={theme}>
     <h1>Hello React</h1>
-    <TextInput label="Email Address" placeholder="name@example.com" />
-  </div>
+  </ThemeProvider>
 );
 
 render(<App />, document.getElementById("root"));

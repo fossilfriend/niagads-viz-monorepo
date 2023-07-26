@@ -3,23 +3,23 @@ import React, { useMemo, useState, useEffect } from "react";
 
 import { Column } from "react-table";
 
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import { Autocomplete } from "@material-ui/lab";
+import TextField from "@mui/core/TextField";
+import MenuItem from "@mui/core/MenuItem";
+import FormControl from "@mui/core/FormControl";
+import FormLabel from "@mui/core/FormLabel";
+import FormGroup from "@mui/core/FormGroup";
+import FormControlLabel from "@mui/core/FormControlLabel";
+import Checkbox from "@mui/core/Checkbox";
+import RadioGroup from "@mui/core/RadioGroup";
+import Radio from "@mui/core/Radio";
+import { Autocomplete } from "@mui/lab";
 
 import { ComingSoonAlert, StyledTooltip as Tooltip } from "@components/MaterialUI";
 
 import { parseFieldValue } from "@viz/Table";
 import { useFilterStyles, ZeroFilterChoicesMsg } from "@viz/Table/TableFilters";
-import Typography from "@material-ui/core/Typography";
-import Chip from "@material-ui/core/Chip";
+import Typography from "@mui/core/Typography";
+import Chip from "@mui/core/Chip";
 
 const findFirstColumn = <T extends Record<string, unknown>>(columns: Array<Column<T>>): Column<T> =>
     //@ts-ignore

@@ -2,16 +2,16 @@ import React, { ReactElement, useState } from "react";
 
 import { TableInstance } from "react-table";
 
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
+import Switch from "@mui/core/Switch";
+import FormControlLabel from "@mui/core/FormControlLabel";
+import FormControl from "@mui/core/FormControl";
+import FormGroup from "@mui/core/FormGroup";
 
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
+import DialogTitle from "@mui/core/DialogTitle";
+import DialogContent from "@mui/core/DialogContent";
+import DialogActions from "@mui/core/DialogActions";
+import Dialog from "@mui/core/Dialog";
+import Button from "@mui/core/Button";
 
 import { ROW_SELECTION_FIELD } from "@viz/Table";
 

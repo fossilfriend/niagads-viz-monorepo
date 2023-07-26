@@ -1,5 +1,5 @@
-import { makeStyles, createStyles, Theme, alpha } from "@material-ui/core";
-import { green, blue } from "@material-ui/core/colors";
+import { makeStyles, createStyles, Theme, alpha } from "@mui/core";
+import { green, blue } from "@mui/core/colors";
 
 export const useFilterStyles = makeStyles((theme: Theme) =>
     createStyles({

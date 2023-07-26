@@ -6,15 +6,15 @@ import { SelectColumnsDialog, FilterDialog, MemoTableHelpDialog as TableHelpDial
 
 import { StyledTooltip as Tooltip, MaterialUIThemedButton as BlueButton } from "@components/MaterialUI";
 
-import Button from "@material-ui/core/Button";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Box from "@material-ui/core/Box";
-import Toolbar from "@material-ui/core/Toolbar";
-import ViewColumnIcon from "@material-ui/icons/ViewColumn";
-import FilterIcon from "@material-ui/icons/FilterList";
-import InfoIcon from "@material-ui/icons/Info";
-import DownloadIcon from "@material-ui/icons/GetApp";
+import Button from "@mui/core/Button";
+import Switch from "@mui/core/Switch";
+import FormControlLabel from "@mui/core/FormControlLabel";
+import Box from "@mui/core/Box";
+import Toolbar from "@mui/core/Toolbar";
+import ViewColumnIcon from "@mui/icons/ViewColumn";
+import FilterIcon from "@mui/icons/FilterList";
+import InfoIcon from "@mui/icons/Info";
+import DownloadIcon from "@mui/icons/GetApp";
 
 interface PanelOptions {
     toggle: any;

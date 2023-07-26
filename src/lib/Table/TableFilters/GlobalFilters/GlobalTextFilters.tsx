@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { useAsyncDebounce } from "react-table";
 
-import InputBase from "@material-ui/core/InputBase";
-import SearchIcon from "@material-ui/icons/Search";
+import InputBase from "@mui/core/InputBase";
+import SearchIcon from "@mui/icons/Search";
 
 import { useGlobalFilterStyles } from "@viz/Table/TableFilters";
 

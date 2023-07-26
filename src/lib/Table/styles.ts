@@ -1,4 +1,4 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core";
+import { makeStyles, createStyles, Theme } from "@mui/core";
 
 export const useTableStyles = makeStyles((theme: Theme) =>
     createStyles({

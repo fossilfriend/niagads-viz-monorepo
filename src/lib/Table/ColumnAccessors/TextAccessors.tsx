@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { isObject, isString } from "lodash";
 
-import Box from "@material-ui/core/Box";
+import Box from "@mui/core/Box";
 import { StyledTooltip as Tooltip} from "@components/MaterialUI";
 
 import { ColumnAccessor, JSONAccessor } from "@viz/Table/ColumnAccessors";

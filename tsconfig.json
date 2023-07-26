@@ -22,6 +22,7 @@
     "resolveJsonModule": true,
     "paths": {
       "@table/*": ["./src/lib/Table/*"],
+      "@m-ui/*": ["./src/lib/MaterialUI/*"]
     }
   },
   "exclude": ["dist/**/*"]

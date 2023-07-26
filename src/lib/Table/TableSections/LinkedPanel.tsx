@@ -2,11 +2,11 @@ import React, { useState, useCallback, useEffect } from "react";
 
 import { MemoLocusZoomPlot as LocusZoomPlot, DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@viz/LocusZoom";
 
-import { makeStyles, createStyles, Theme } from "@material-ui/core";
-import Collapse from "@material-ui/core/Collapse";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import CloseIcon from "@material-ui/icons/Close";
+import { makeStyles, createStyles, Theme } from "@mui/core";
+import Collapse from "@mui/core/Collapse";
+import Grid from "@mui/core/Grid";
+import Button from "@mui/core/Button";
+import CloseIcon from "@mui/icons/Close";
 
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({

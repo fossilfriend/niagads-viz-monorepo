@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, forwardRef, useState, useImperativeHandle } from "react";
-import Checkbox from "@material-ui/core/Checkbox";
+import Checkbox from "@mui/core/Checkbox";
 
 // after https://github.com/TanStack/table/blob/06703a56890122cedf1b2fa4b82982999537774e/examples/row-selection/src/App.js#L36
 //@ts-ignore

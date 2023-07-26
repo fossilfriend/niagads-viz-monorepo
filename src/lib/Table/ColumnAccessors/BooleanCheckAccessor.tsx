@@ -1,7 +1,7 @@
 import React from "react";
-import Box from "@material-ui/core/Box";
+import Box from "@mui/core/Box";
 
-import CheckIcon from "@material-ui/icons/Check";
+import CheckIcon from "@mui/icons/Check";
 import { ColumnAccessor } from "@table/ColumnAccessors";
 
 export const BooleanCheckAccessor: React.SFC<ColumnAccessor> = ({ value, className, htmlColor, muiColor }) => {
