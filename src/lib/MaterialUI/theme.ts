@@ -1,13 +1,13 @@
-import { ThemeOptions, makeStyles, Theme, createStyles } from "@mui/material/styles";
+import { ThemeOptions, Theme } from "@mui/material/styles";
 
 // MUI default theme, for theming blue buttons and the like
 export const muiThemeOptions: ThemeOptions = {
-  palette: {type: "light"}
+  palette: {mode: "light"}
 }
 
 export const primaryThemeOptions: ThemeOptions = {
     palette: {
-      type: 'light',
+      mode: 'light',
       primary: {
         main: '#27333f',
       },

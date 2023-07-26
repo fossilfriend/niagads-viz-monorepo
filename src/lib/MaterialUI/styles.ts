@@ -1,7 +1,8 @@
-import { makeStyles, createStyles, Theme } from "@mui/material";
+import { Theme } from "@mui/material";
+import { makeStyles } from "@mui/styles"
 
 export const useTypographyStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         pass: {
             color: "red",
         },
@@ -19,7 +20,7 @@ export const useTypographyStyles = makeStyles((theme: Theme) =>
 );
 
 export const useLayoutStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         noPadding: { padding: 0 },
     })
 );

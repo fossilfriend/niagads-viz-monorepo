@@ -3,10 +3,11 @@ import React from "react";
 import { LinkProps } from "@mui/material";
 import Link from "@mui/material/Link";
 
-import { makeStyles, createStyles, Theme } from "@mui/material/styles";
+import { Theme } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles"
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         secondary: {
             color: theme.palette.secondary.main,
             "&:hover": {

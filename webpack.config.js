@@ -13,6 +13,7 @@ module.exports = {
     alias: {
       "@table": path.resolve(__dirname, "/src/lib/Table"),
       "@m-ui": path.resolve(__dirname, "/src/lib/MaterialUI"),
+      "@root": path.resolve(__dirname, "src/lib/")
     },
   },
 
