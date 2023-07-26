@@ -1,8 +1,9 @@
-import { makeStyles, createStyles, Theme, alpha } from "@mui/material";
+import { Theme, alpha } from "@mui/material";
+import { makeStyles } from "@mui/styles"
 import { green, blue } from "@mui/material/colors";
 
 export const useFilterStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         paper: {
             padding: "2px 4px",
             display: "flex",
@@ -56,7 +57,7 @@ export const useFilterStyles = makeStyles((theme: Theme) =>
 );
 
 export const useGlobalFilterStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         search: {
             position: "relative",
             borderRadius: theme.shape.borderRadius,
@@ -101,7 +102,7 @@ export const useGlobalFilterStyles = makeStyles((theme: Theme) =>
 );
 
 export const useFilterPanelStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         root: {
             //maxHeight: 1000,
             //overflowY: "scroll"
