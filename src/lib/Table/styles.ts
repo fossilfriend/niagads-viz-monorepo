@@ -1,7 +1,8 @@
-import { makeStyles, createStyles, Theme } from "@mui/material";
+import { createStyles, Theme } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 export const useTableStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         root: {
             height: 500
         },

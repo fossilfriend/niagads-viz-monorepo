@@ -4,7 +4,7 @@ import { TablePagination as _MuiTablePagination } from '@mui/material'
 import React, { PropsWithChildren, ReactElement, useCallback } from 'react'
 import { TableInstance,  UsePaginationOptions } from 'react-table';
 
-import { useTableStyles } from '@viz/Table'
+import { useTableStyles } from '@table/styles'
 
 const rowsPerPageOptions = [10, 20, 50, { label: 'All', value: -1 }]
 
@@ -45,7 +45,7 @@ export function TablePagination<T extends Record<string, unknown>>({
   )
 
   const onRowsPerPageChange = useCallback(
-    (e) => {
+    (e:any) => {
       setPageSize(Number(e.target.value))
     },
     [setPageSize]
@@ -64,6 +64,7 @@ export function TablePagination<T extends Record<string, unknown>>({
       page={pageIndex}
       onPageChange={handleChangePage}
       onRowsPerPageChange={onRowsPerPageChange}
+      labelRowsPerPage="Results per page:"
     />
   ) : null
 }

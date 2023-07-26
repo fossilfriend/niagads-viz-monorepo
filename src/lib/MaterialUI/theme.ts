@@ -15,13 +15,10 @@ export const primaryThemeOptions: ThemeOptions = {
         main: '#ffc665',
       },
     },
-    props: {
+    components: {
       MuiAppBar: {
        // color: 'transparent'
       },
-      MuiTablePagination: {
-        labelRowsPerPage: 'Results per page:'
-      }
     },
     typography: {
       h1: {

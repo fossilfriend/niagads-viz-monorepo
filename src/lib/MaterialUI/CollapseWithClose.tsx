@@ -1,10 +1,7 @@
 // modified from https://github.com/ggascoigne/react-table-example
 import React, { ReactElement, useCallback, useState, useMemo } from "react";
 
-import Button from "@mui/material/Button";
-import Collapse from "@mui/material/Collapse";
-import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
+import { Button, Collapse, Divider, Box } from "@mui/material"
 
 interface CollapseWithClose {
     isOpen: boolean;

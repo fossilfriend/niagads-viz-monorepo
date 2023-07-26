@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import { Tabs, Tab } from "@mui/material"
 
 import { TabPanel } from "./TabPanel";
 
