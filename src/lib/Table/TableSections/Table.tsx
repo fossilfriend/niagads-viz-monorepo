@@ -11,11 +11,11 @@ import TableRow from "@mui/material/TableRow";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import { InfoAlert, CustomPanel } from "@components/MaterialUI";
+import { InfoAlert, CustomPanel } from "@m-ui/index";
 
 import { DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@viz/LocusZoom";
 
-import useLocalStorage from "genomics-client/hooks/useLocalStorage";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 import {
     useTable,
@@ -31,7 +31,7 @@ import {
     HeaderGroup,
 } from "react-table";
 
-import { useTableStyles, Table as TableProps, parseFieldValue, ROW_SELECTION_FIELD, RowCheckedState } from "@viz/Table";
+import { useTableStyles, Table as TableProps, parseFieldValue, ROW_SELECTION_FIELD, RowCheckedState } from "@table/index";
 
 import { RowSelectCheckbox } from "@viz/Table/RowSelectors";
 
@@ -54,7 +54,7 @@ import {
     textCaseSensitiveSort,
     barChartSort,
     booleanFlagSort,
-} from "@viz/Table/TableSortingFunctions";
+} from "@table/TableSortingFunctions";
 
 import {
     TableHeaderCell,
@@ -62,7 +62,7 @@ import {
     MemoLinkedPanel as LinkedPanel,
     TablePagination,
     FilterChipBar,
-} from "@viz/Table/TableSections";
+} from "@table/TableSections";
 
 export const Table: React.FC<TableProps> = ({ className, columns, title, data, options, onTableLoad }) => {
     const classes = useTableStyles();
