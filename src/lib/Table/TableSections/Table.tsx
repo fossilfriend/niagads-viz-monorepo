@@ -1,7 +1,14 @@
 // modeled after https://github.com/ggascoigne/react-table-example
-import React, { useMemo, useState, useEffect, useCallback, useRef, useLayoutEffect } from "react";
+import React, {
+    useMemo,
+    useState,
+    useEffect,
+    useCallback,
+    useRef,
+    useLayoutEffect,
+} from "react";
 import cx from "classnames";
-import get from "lodash.get"
+import get from "lodash.get";
 
 import MaUTable from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -31,7 +38,13 @@ import {
     HeaderGroup,
 } from "react-table";
 
-import { useTableStyles, Table as TableProps, parseFieldValue, ROW_SELECTION_FIELD, RowCheckedState } from "@table/index";
+import {
+    useTableStyles,
+    Table as TableProps,
+    parseFieldValue,
+    ROW_SELECTION_FIELD,
+    RowCheckedState,
+} from "@table/index";
 
 import { RowSelectCheckbox } from "@table/RowSelectors";
 
@@ -64,20 +77,38 @@ import {
     FilterChipBar,
 } from "@table/TableSections";
 
-export const Table: React.FC<TableProps> = ({ className, columns, title, data, options, onTableLoad }) => {
+export const Table: React.FC<TableProps> = ({
+    className,
+    columns,
+    title,
+    data,
+    options,
+    onTableLoad,
+}) => {
     const classes = useTableStyles();
 
-    const [initialState, setInitialState] = useLocalStorage(`tableState:${name}`, {});
+    const [initialState, setInitialState] = useLocalStorage(
+        `tableState:${name}`,
+        {}
+    );
     const [linkedPanelIsOpen, setLinkedPanelIsOpen] = useState<boolean>(false);
     const [linkedPanelTarget, setLinkedPanelTarget] = useState<any>(null);
 
     const firstUpdate = useRef(true);
 
-    const showToolbar = options.hideToolbar && options.hideToolbar !== null ? !options.hideToolbar : true;
-    const showNavigation = options.hideNavigation && options.hideNavigation !== null ? !options.hideNavigation : true;
+    const showToolbar =
+        options.hideToolbar && options.hideToolbar !== null
+            ? !options.hideToolbar
+            : true;
+    const showNavigation =
+        options.hideNavigation && options.hideNavigation !== null
+            ? !options.hideNavigation
+            : true;
 
     const hasLinkedPanel = options.linkedPanel && true;
-    const rowSelectProps = options.rowSelect ? options.rowSelect : get(options, "linkedPanel.rowSelect", null);
+    const rowSelectProps = options.rowSelect
+        ? options.rowSelect
+        : get(options, "linkedPanel.rowSelect", null);
 
     const defaultFilterTypes = {
         fuzzyText: useMemo(() => fuzzyTextFilter, []),
@@ -97,17 +128,30 @@ export const Table: React.FC<TableProps> = ({ className, columns, title, data, o
     };
 
     const hooks = useMemo(() => {
-        return [useFlexLayout, useResizeColumns, useGlobalFilter, useFilters, useSortBy, usePagination, useRowSelect];
+        return [
+            useFlexLayout,
+            useResizeColumns,
+            useGlobalFilter,
+            useFilters,
+            useSortBy,
+            usePagination,
+            useRowSelect,
+        ];
     }, []);
 
     // add custom filterTypes into the default / overwrite defaults
     const tableFilterTypes = useMemo(() => {
-        return options.filterTypes ? Object.assign({}, defaultFilterTypes, options.filterTypes) : defaultFilterTypes;
+        return options.filterTypes
+            ? Object.assign({}, defaultFilterTypes, options.filterTypes)
+            : defaultFilterTypes;
     }, [options.filterTypes]);
 
     const sortingFunctions = {
         alphanumeric: useMemo(() => alphanumericSort, []),
-        alphanumericCaseSensitiveSort: useMemo(() => alphanumericCaseSensitiveSort, []),
+        alphanumericCaseSensitiveSort: useMemo(
+            () => alphanumericCaseSensitiveSort,
+            []
+        ),
         basic: useMemo(() => basicSort, []),
         textCaseSensitive: useMemo(() => textCaseSensitiveSort, []),
         text: useMemo(() => textSort, []),
@@ -123,7 +167,9 @@ export const Table: React.FC<TableProps> = ({ className, columns, title, data, o
             pageSize: 10,
             filters: [options.initialFilters ? options.initialFilters : {}],
             sortBy: options.initialSort ? options.initialSort : [],
-            hiddenColumns: columns.filter((col: any) => col.show === false).map((col) => col.id || col.accessor) as any,
+            hiddenColumns: columns
+                .filter((col: any) => col.show === false)
+                .map((col) => col.id || col.accessor) as any,
         };
 
         let tableProps = {
@@ -181,24 +227,24 @@ export const Table: React.FC<TableProps> = ({ className, columns, title, data, o
     const instance: TableInstance =
         rowSelectProps !== null
             ? useTable(tableProps, ...hooks, (hooks) => {
-                  hooks.visibleColumns.push((columns: any) => [
-                      {
-                          id: ROW_SELECTION_FIELD,
-                          sortable: false,
-                          Header: rowSelectProps.label,
-                          help: rowSelectProps.tooltip.replace(":", ""),
-                          Cell: (cell: any) => (
-                              <div>
-                                  <RowSelectCheckbox
-                                      {...cell.row.getToggleRowSelectedProps()}
-                                      title={rowSelectProps.tooltip}
-                                  />
-                              </div>
-                          ),
-                      },
-                      ...columns,
-                  ]);
-              })
+                hooks.visibleColumns.push((columns: any) => [
+                    {
+                        id: ROW_SELECTION_FIELD,
+                        sortable: false,
+                        Header: rowSelectProps.label,
+                        help: rowSelectProps.tooltip.replace(":", ""),
+                        Cell: (cell: any) => (
+                            <div>
+                                <RowSelectCheckbox
+                                    {...cell.row.getToggleRowSelectedProps()}
+                                    title={rowSelectProps.tooltip}
+                                />
+                            </div>
+                        ),
+                    },
+                    ...columns,
+                ]);
+            })
             : useTable(tableProps, ...hooks);
 
     const {
@@ -226,7 +272,14 @@ export const Table: React.FC<TableProps> = ({ className, columns, title, data, o
     }, []);
 
     useEffect(() => {
-        const { sortBy, filters, pageSize, columnResizing, hiddenColumns, selectedRowIds } = debouncedState;
+        const {
+            sortBy,
+            filters,
+            pageSize,
+            columnResizing,
+            hiddenColumns,
+            selectedRowIds,
+        } = debouncedState;
         const val = {
             sortBy,
             filters,
@@ -247,8 +300,12 @@ export const Table: React.FC<TableProps> = ({ className, columns, title, data, o
             }
             if (options.linkedPanel.type === "LocusZoom") {
                 // for LocusZoom, only one row is ever selected
-                const variant = parseFieldValue(selectedFlatRows[0].values[options.linkedPanel.rowSelect.column]);
-                const refSnpId = parseFieldValue(selectedFlatRows[0].values["ref_snp_id"]); // TODO - fix this to pull variant ID out of url of variant field
+                const variant = parseFieldValue(
+                    selectedFlatRows[0].values[options.linkedPanel.rowSelect.column]
+                );
+                const refSnpId = parseFieldValue(
+                    selectedFlatRows[0].values["ref_snp_id"]
+                ); // TODO - fix this to pull variant ID out of url of variant field
                 const [chrm, position, ...rest] = variant.split(":"); // chr:pos:ref:alt
                 const start = parseInt(position) - LZ_DEFAULT_FLANK;
                 const end = parseInt(position) + LZ_DEFAULT_FLANK;
@@ -261,7 +318,8 @@ export const Table: React.FC<TableProps> = ({ className, columns, title, data, o
                     });
             }
         } else {
-            rowSelectProps !== null && rowSelectProps.action(Object.keys(selectedRowIds));
+            rowSelectProps !== null &&
+                rowSelectProps.action(Object.keys(selectedRowIds));
         }
         //hasLinkedPanel && linkedPanel.select && linkedPanel.select.action(Object.keys(selectedRowIds)[0]);
     }, [selectedRowIds]);
@@ -285,42 +343,51 @@ export const Table: React.FC<TableProps> = ({ className, columns, title, data, o
                     isOpen={linkedPanelIsOpen}
                     type={options.linkedPanel.type}
                     initialState={options.linkedPanel.initialState}
-                    setActionTarget={setLinkedPanelTarget}
-                ></LinkedPanel>
+                    setActionTarget={setLinkedPanelTarget}></LinkedPanel>
             )}
 
             <Grid container justifyContent="flex-end" direction="column">
                 <Grid item xs={12}>
-                    {showToolbar && <TableToolbar
-                        instance={instance}
-                        filter={{
-                            hasGlobalFilter: options.canFilter,
-                            advancedFilter: options.showAdvancedFilter
-                                ? {
-                                      label: "Filter",
-                                      tooltip: "View and filter table by summary graphics",
-                                      options: { filterGroups: options.filterGroups },
-                                  }
-                                : null,
-                        }}
-                        columnsDialog={
-                            options.showHideColumns
-                                ? {
-                                      label: "Columns",
-                                      tooltip: "View column list to add or remove from the table",
-                                      options: { requiredColumns: options.requiredColumns },
-                                  }
-                                : null
-                        }
-                        linkedPanel={
-                            hasLinkedPanel ? { toggle: toggleLinkedPanel, label: options.linkedPanel.type } : null
-                        }
-                    />}
+                    {showToolbar && (
+                        <TableToolbar
+                            instance={instance}
+                            filter={{
+                                hasGlobalFilter: options.canFilter,
+                                advancedFilter: options.showAdvancedFilter
+                                    ? {
+                                        label: "Filter",
+                                        tooltip: "View and filter table by summary graphics",
+                                        options: { filterGroups: options.filterGroups },
+                                    }
+                                    : null,
+                            }}
+                            columnsDialog={
+                                options.showHideColumns
+                                    ? {
+                                        label: "Columns",
+                                        tooltip:
+                                            "View column list to add or remove from the table",
+                                        options: { requiredColumns: options.requiredColumns },
+                                    }
+                                    : null
+                            }
+                            linkedPanel={
+                                hasLinkedPanel
+                                    ? {
+                                        toggle: toggleLinkedPanel,
+                                        label: options.linkedPanel.type,
+                                    }
+                                    : null
+                            }
+                        />
+                    )}
                     {options.canFilter && <FilterChipBar instance={instance} />}
                 </Grid>
-                {showNavigation && <Grid item xs={12}>
-                    <TablePagination instance={instance} />
-                </Grid>}
+                {showNavigation && (
+                    <Grid item xs={12}>
+                        <TablePagination instance={instance} />
+                    </Grid>
+                )}
             </Grid>
 
             {preFilteredRows.length === 0 || page.length === 0 ? (
@@ -353,8 +420,7 @@ export const Table: React.FC<TableProps> = ({ className, columns, title, data, o
                                                 <TableCell
                                                     size="small"
                                                     {...cell.getCellProps()}
-                                                    className={cx({ [classes.tableCell]: true })}
-                                                >
+                                                    className={cx({ [classes.tableCell]: true })}>
                                                     {cell.render("Cell")}
                                                 </TableCell>
                                             );
