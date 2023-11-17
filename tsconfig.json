@@ -21,9 +21,12 @@
     "outDir": "dist",
     "resolveJsonModule": true,
     "paths": {
-      "@table/*": ["./src/lib/Table/*"],
-      "@mui-wrappers/*": ["./src/lib/MaterialUI/*"],
-      "@root/*": ["./src/lib/*"]
+      "@charts/*": ["./src/charts/*"],
+      "@table/*": ["./src/table/*"],
+      "@mui-wrappers/*": ["./src/mui-wrappers/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@data/*": ["./data/*"],
+      "@documentation/*": ["./documentation/*"]
     }
   },
   "exclude": ["dist/**/*"]

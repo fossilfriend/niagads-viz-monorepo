@@ -1,4 +1,4 @@
-import { createStyles, Theme } from "@mui/material";
+import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 export const useTableStyles = makeStyles((theme: Theme) =>

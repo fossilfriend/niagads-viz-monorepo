@@ -4,7 +4,6 @@ import { FilterGroup } from "@table/TableFilters";
 
 export type TableData = Record<string, string>;
 
-
 export type RowCheckedState =  {[key: string]: boolean};
 
 export interface RowSelectOptions {

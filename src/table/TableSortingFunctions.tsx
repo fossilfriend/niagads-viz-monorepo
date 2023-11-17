@@ -3,7 +3,7 @@
 // and catch N/A's to treat them like null values
 
 import { Row } from "react-table";
-import { parseFieldValue } from "../Table";
+import { parseFieldValue } from "@table/index";
 
 const reSplitAlphaNumeric = /([0-9]+)/gm;
 

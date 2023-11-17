@@ -1,2 +1,2 @@
-import Table from "./Table";
+import Table from "../table";
 export { Table };

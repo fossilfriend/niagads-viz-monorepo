@@ -1,20 +1,20 @@
-import React, { useState, useCallback, useEffect } from "react";
-
-import { MemoLocusZoomPlot as LocusZoomPlot, DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@viz/LocusZoom";
+import React, { useCallback } from "react";
 
 import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Collapse, Grid, Button } from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close";
 
+import { MemoLocusZoomPlot as LocusZoomPlot, DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@charts/LocusZoom";
+
 export const useStyles = makeStyles((theme: Theme) =>
-    ({
-        bordered: {
-            border: "2px solid #1f1f1f",
-            padding: "20px",
-            marginBottom: "10px",
-        },
-    })
+({
+    bordered: {
+        border: "2px solid #1f1f1f",
+        padding: "20px",
+        marginBottom: "10px",
+    },
+})
 );
 
 interface LinkedPanelSection {

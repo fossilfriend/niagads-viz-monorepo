@@ -50,11 +50,7 @@ export const TableToolbar: React.FC<TableToolbar & FilterPageProps> = ({
   filter,
 }) => {
   //@ts-ignore
-  const {
-    preGlobalFilteredRows,
-    globalFilter,
-    setGlobalFilter,
-    sortedRows,
+  const { preGlobalFilteredRows, globalFilter, setGlobalFilter, sortedRows,
     prepareRow,
     visibleColumns,
   } = instance;

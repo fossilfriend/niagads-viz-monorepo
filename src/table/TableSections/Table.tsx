@@ -7,8 +7,10 @@ import React, {
     useRef,
     useLayoutEffect,
 } from "react";
+
 import cx from "classnames";
 import get from "lodash.get";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 import MaUTable from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -20,9 +22,7 @@ import Grid from "@mui/material/Grid";
 
 import { InfoAlert, CustomPanel } from "@mui-wrappers/index";
 
-import { DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@viz/LocusZoom";
-
-import { useLocalStorage } from "@uidotdev/usehooks";
+import { DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@charts/LocusZoom";
 
 import {
     useTable,

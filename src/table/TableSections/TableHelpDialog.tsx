@@ -1,7 +1,8 @@
 import React from "react";
 
 import { makeStyles } from "@mui/styles";
-
+import { Theme } from "@mui/material/styles"
+ 
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
@@ -22,7 +23,9 @@ import { blue } from "@mui/material/colors";
 
 import { InfoAlert } from "@mui-wrappers/Alerts";
 
-const useStyles = makeStyles((theme) => ({
+import { DOCUMENTATION_PATH } from "@table/index";
+
+const useStyles = makeStyles((theme: Theme) => ({
     title: {
         marginTop: theme.spacing(2),
     },
@@ -52,7 +55,6 @@ interface TableHelpOptions {
     hasLinkedPanel: boolean;
     canFilter: boolean;
     canAddColumns: boolean;
-    webAppUrl: string;
 }
 
 export const TableHelpDialog: React.FC<TableHelpOptions> = ({
@@ -60,10 +62,9 @@ export const TableHelpDialog: React.FC<TableHelpOptions> = ({
     handleClose,
     hasLinkedPanel,
     canFilter,
-    canAddColumns,
-    webAppUrl
+    canAddColumns
 }) => {
-    const imagePath = webAppUrl + "/images/help/table";
+    const imagePath = DOCUMENTATION_PATH + "/images";
     const classes = useStyles();
 
     const renderFilterHelp = () => (

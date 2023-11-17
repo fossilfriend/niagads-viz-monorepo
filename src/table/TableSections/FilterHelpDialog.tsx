@@ -1,5 +1,5 @@
 // modified from https://github.com/ggascoigne/react-table-example
-import React, { ReactElement, useCallback, useState, useMemo } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -8,7 +8,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
-import Collapse from "@mui/material/Collapse";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -17,17 +16,14 @@ import InfoIcon from "@mui/icons-material/Info";
 
 import {
     CollapsableCardPanel,
-    StyledTooltip as Tooltip,
     MaterialUIThemedButton as BlueButton,
     CollapseWithClose,
     ComingSoonAlert,
 } from "@mui-wrappers/index";
 
-import { useFilterPanelStyles, FilterPageProps, FilterGroup } from "@table/TableFilters";
-import { DEFAULT_PVALUE_FILTER_VALUE } from "@components/Record/RecordTable/RecordTableFilters";
+import { DOCUMENTATION_PATH } from "@table/index";
+import { useFilterPanelStyles, FilterPageProps, FilterGroup, DEFAULT_PVALUE_FILTER_VALUE } from "@table/TableFilters";
 import { FilterChipBar } from "@table/TableSections";
-
-import { webAppUrl } from "ebrc-client/config";
 
 interface FilterDialog {
     handleClose: any;
@@ -35,7 +31,7 @@ interface FilterDialog {
 }
 
 const FilterHelpPanel: React.FC<{ isOpen: boolean; handleClose: any }> = React.memo(({ isOpen, handleClose }) => {
-    const imagePath = webAppUrl + "/images/help/table";
+    const imagePath = DOCUMENTATION_PATH + "/images";
     return (
         <CollapseWithClose isOpen={isOpen} handleClose={handleClose}>
             <Paper variant="outlined" elevation={1}>

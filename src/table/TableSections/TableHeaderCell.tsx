@@ -1,14 +1,16 @@
 //@ts-nocheck -- @types/react-table out of date / to be fixed in react-table v8
 import React from "react";
-import { Column } from "react-table";
-import TableCell from "@mui/material/TableCell";
-import TableSortLabel from "@mui/material/TableSortLabel";
+
 import cx from 'classnames';
 
+import { Column } from "react-table";
 
-import { HelpIcon } from "wdk-client/Components";
+import TableCell from "@mui/material/TableCell";
+import TableSortLabel from "@mui/material/TableSortLabel";
 
-import { useTableStyles } from '@viz/Table'
+import { HelpIcon } from "@mui-wrappers/Tooltips"
+
+import { useTableStyles } from "@table/index";
 
 interface TableHeaderCellProps {
     column: Column;
