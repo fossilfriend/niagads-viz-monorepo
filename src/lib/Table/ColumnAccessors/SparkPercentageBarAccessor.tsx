@@ -4,7 +4,7 @@ import { withStyles } from "@mui/material";
 import Box, { BoxProps } from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import { ColumnAccessor } from "@viz/Table/ColumnAccessors";
+import { ColumnAccessor } from "@table/ColumnAccessors";
 
 export const SparkPercentageBarAccessor: React.FC<ColumnAccessor> = ({ value }) => {
     

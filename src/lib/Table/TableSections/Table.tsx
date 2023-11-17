@@ -1,7 +1,7 @@
 // modeled after https://github.com/ggascoigne/react-table-example
 import React, { useMemo, useState, useEffect, useCallback, useRef, useLayoutEffect } from "react";
 import cx from "classnames";
-import { get } from "lodash";
+import get from "lodash.get"
 
 import MaUTable from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,7 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import { InfoAlert, CustomPanel } from "@m-ui/index";
+import { InfoAlert, CustomPanel } from "@mui-wrappers/index";
 
 import { DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@viz/LocusZoom";
 
@@ -33,7 +33,7 @@ import {
 
 import { useTableStyles, Table as TableProps, parseFieldValue, ROW_SELECTION_FIELD, RowCheckedState } from "@table/index";
 
-import { RowSelectCheckbox } from "@viz/Table/RowSelectors";
+import { RowSelectCheckbox } from "@table/RowSelectors";
 
 import {
     fuzzyTextFilter,
@@ -42,7 +42,7 @@ import {
     lessThanFilter,
     includesFilter,
     includesAnyFilter,
-} from "@viz/Table/TableFilters";
+} from "@table/TableFilters";
 
 import {
     alphanumericSort,

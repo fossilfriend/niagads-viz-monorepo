@@ -13,7 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 
-import { ROW_SELECTION_FIELD } from "@viz/Table";
+import { ROW_SELECTION_FIELD } from "@table/index";
 
 type HideColumnProps<T extends Record<string, unknown>> = {
     instance: TableInstance<T>;

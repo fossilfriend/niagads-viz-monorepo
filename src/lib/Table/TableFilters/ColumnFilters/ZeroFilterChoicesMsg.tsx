@@ -1,7 +1,7 @@
 import React from "react";
 
 import { makeStyles } from "@mui/styles";
-import { InfoAlert } from "@m-ui/Alerts"
+import { InfoAlert } from "@mui-wrappers/Alerts"
 
 const useStyles = makeStyles((theme) => ({
     alert: {

@@ -20,7 +20,7 @@ import ToggleIcon from "@mui/icons-material/ToggleOff";
 
 import { blue } from "@mui/material/colors";
 
-import { InfoAlert } from "@m-ui/Alerts";
+import { InfoAlert } from "@mui-wrappers/Alerts";
 
 const useStyles = makeStyles((theme) => ({
     title: {

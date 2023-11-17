@@ -1,5 +1,5 @@
 import React from "react";
-import { isObject } from "lodash";
+import isObject from "lodash.isobject";
 
 import {
     DefaultTextAccessor,
@@ -7,7 +7,7 @@ import {
     AnnotatedTextAccessor,
     LinkAccessor,
     LinkListAccessor,
-} from "@viz/Table/ColumnAccessors";
+} from "@table/ColumnAccessors";
 
 export const jsonAccessorType = (obj: any) => {
     if (Array.isArray(obj)) {

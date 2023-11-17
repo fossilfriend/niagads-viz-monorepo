@@ -16,7 +16,7 @@ import {
   StyledTooltip as Tooltip,
   DrawerProps,
   DrawerContentsProps,
-} from "@m-ui/index";
+} from "@mui-wrappers/index";
 
 const DRAWER_WIDTH = 400;
 const MAX_HEIGHT = 750;

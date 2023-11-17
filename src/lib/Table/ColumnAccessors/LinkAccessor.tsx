@@ -1,9 +1,9 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { StyledTooltip as Tooltip, CustomLink as Link} from "@components/MaterialUI";
+import { StyledTooltip as Tooltip, CustomLink as Link} from "@mui-wrappers/index";
 
-import { ColumnAccessor } from "@viz/Table/ColumnAccessors";
+import { ColumnAccessor } from "@table/ColumnAccessors";
 
 export const resolveLink = (url: string, value: string) => {
     const isRouterLink = !url.includes("http"); 

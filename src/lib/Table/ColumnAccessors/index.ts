@@ -1,5 +1,3 @@
-import { isObject } from "lodash";
-
 export * from "./ColumnAccessorUtils";
 export * from "./NASpan";
 export * from "./TextAccessors";

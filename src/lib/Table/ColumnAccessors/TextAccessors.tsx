@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { isObject, isString } from "lodash";
+import isObject from "lodash.isobject";
 
 import Box from "@mui/material/Box";
-import { StyledTooltip as Tooltip} from "@components/MaterialUI";
+import { StyledTooltip as Tooltip} from "@mui-wrappers/index";
 
-import { ColumnAccessor, JSONAccessor } from "@viz/Table/ColumnAccessors";
-import { parseFieldValue } from "@viz/Table";
+import { ColumnAccessor, JSONAccessor } from "@table/ColumnAccessors";
+import { parseFieldValue } from "@table/index";
 
 export const isJSON = (value: any) => {
     try {

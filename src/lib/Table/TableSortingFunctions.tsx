@@ -12,14 +12,14 @@ interface SortingFunction {
 }
 
 const getValue: any = (row: Row, columnId: string, retString: boolean = true) => {
-    const value = parseFieldValue(row.values[columnId], true);
+    const value = parseFieldValue(row.values[columnId], "N/A");
     return retString ? toString(value) : value;
 };
 
 const getBooleanValue: any = (row: Row, columnId: string) => {
     const rv = row.values[columnId];
-    const debug = parseFieldValue(row.values[columnId], false);
-    return parseFieldValue(row.values[columnId], false) === "Yes" ? 1 : 0;
+    const debug = parseFieldValue(row.values[columnId]);
+    return parseFieldValue(row.values[columnId]) === "Yes" ? 1 : 0;
 };
 
 export const barChartSort: SortingFunction = (rowA, rowB, columnId, desc) => {

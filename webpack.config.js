@@ -12,7 +12,7 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
       "@table": path.resolve(__dirname, "/src/lib/Table"),
-      "@m-ui": path.resolve(__dirname, "/src/lib/MaterialUI"),
+      "@mui-wrappers": path.resolve(__dirname, "/src/lib/MaterialUI"),
       "@root": path.resolve(__dirname, "src/lib/")
     },
   },

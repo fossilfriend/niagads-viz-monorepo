@@ -1,6 +1,6 @@
 import { Column } from "react-table";
 
-import { FilterGroup } from "@viz/Table/TableFilters";
+import { FilterGroup } from "@table/TableFilters";
 
 export type TableData = Record<string, string>;
 

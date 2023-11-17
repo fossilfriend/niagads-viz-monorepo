@@ -10,6 +10,10 @@
     },
     "devDependencies": {
         "@types/jest": "^29.5.3",
+        "@types/lodash.assign": "^4.2.9",
+        "@types/lodash.get": "^4.4.9",
+        "@types/lodash.isobject": "^3.0.9",
+        "@types/lodash.merge": "^4.6.9",
         "@types/node": "^20.4.4",
         "@types/react": "^18.2.16",
         "@types/react-dom": "^18.2.7",
@@ -31,6 +35,10 @@
         "@mui/material": "^5.14.2",
         "@mui/styles": "^5.14.1",
         "@uidotdev/usehooks": "^2.4.1",
+        "lodash.countby": "^4.6.0",
+        "lodash.get": "^4.4.2",
+        "lodash.isobject": "^3.0.2",
+        "lodash.merge": "^4.6.2",
         "react-table": "^7.8.0",
         "webpack-dev-server": "^4.15.1"
     }

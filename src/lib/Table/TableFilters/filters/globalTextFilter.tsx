@@ -1,8 +1,5 @@
 import { FilterValue, IdType, Row } from 'react-table';
-import { isString, get, isObject } from "lodash";
-
-
-import { parseFieldValue } from '@viz/Table'
+import { parseFieldValue } from '@table/index'
 
 export function globalTextFilter(rows: Array<Row<any>>, ids: Array<IdType<any>>, filterValue: FilterValue) {
     rows = rows.filter((row) => {

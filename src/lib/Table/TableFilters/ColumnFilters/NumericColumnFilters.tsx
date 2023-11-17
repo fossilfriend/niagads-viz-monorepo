@@ -10,7 +10,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormHelperText from "@mui/material/FormHelperText";
-import { StyledTooltip as Tooltip } from "@components/MaterialUI";
+import { StyledTooltip as Tooltip } from "@mui-wrappers/index";
 
 const getMinMax = (rows: Row[], id: IdType<any>) => {
     let min = rows.length ? rows[0].values[id] : 0;

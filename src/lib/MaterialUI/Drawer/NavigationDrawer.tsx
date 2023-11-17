@@ -21,7 +21,7 @@ import {
   StyledTooltip as Tooltip,
   DrawerProps, DrawerContentsProps,
   DRAWER_WIDTH,
-} from "@m-ui/index";
+} from "@mui-wrappers/index";
 
 const useDrawerStyles = (props: any) =>
   makeStyles((theme: Theme) => ({

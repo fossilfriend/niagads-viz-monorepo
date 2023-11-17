@@ -7,7 +7,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { withStyles } from "@mui/styles";
-import { muiTheme } from "@m-ui/index";
+import { muiTheme } from "@mui-wrappers/index";
 
 export const LabelButton = withStyles((theme) =>
   ({

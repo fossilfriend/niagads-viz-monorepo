@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { countBy, merge, get } from "lodash";
+import countBy from "lodash.countby";
+import merge from "lodash.merge";
 
 import { Column } from "react-table";
 
@@ -14,8 +15,8 @@ import {
 
 import { _color_blind_friendly_palettes as PALETTES } from "@viz/palettes";
 
-import { parseFieldValue } from "@viz/Table";
-import { useFilterStyles, ZeroFilterChoicesMsg } from "@viz/Table/TableFilters";
+import { parseFieldValue } from "@table/index";
+import { useFilterStyles, ZeroFilterChoicesMsg } from "@table/TableFilters";
 
 //@ts-ignore
 export function PieChartColumnFilter<T extends Record<string, unknown>>({
@@ -35,6 +36,7 @@ export function PieChartColumnFilter<T extends Record<string, unknown>>({
     const { id, filterValue, setFilter, render, preFilteredRows } = column;
     const [numFilterChoices, setNumFilterChoices] = useState<number>(null);
     const [selectedSlice, setSelectedSlice] = useState<string>(filterValue);
+    const [initialSlice, setInitialSlice] = useState<boolean>(filterValue || false);
 
     const classes = useFilterStyles();
 
@@ -59,7 +61,13 @@ export function PieChartColumnFilter<T extends Record<string, unknown>>({
         },
         events: {
             click: function (e: any) {
-                setSelectedSlice(selectedSlice === e.point.name ? undefined : e.point.name);
+                if (e.point.sliced) {
+                    setSelectedSlice(undefined);
+                }
+                else {
+                    setSelectedSlice(selectedSlice === e.point.name ? undefined : e.point.name);
+                }
+                initialSlice && setInitialSlice(false);
             },
         },
     };
@@ -93,11 +101,11 @@ export function PieChartColumnFilter<T extends Record<string, unknown>>({
                 labelFormatter: function () {
                     return this.name == "N/A"
                         ? '<span class="legend-text-with-tooltip" title="Click legend label to hide missing or N/A values on chart (click slice on chart to filter table)">' +
-                              this.name +
-                              "</span>"
+                        this.name +
+                        "</span>"
                         : '<span class="legend-text-with-tooltip" title="Click slice on chart to filter table for: ' + this.name + '">' +
-                              this.name +
-                              "</span>";
+                        this.name +
+                        "</span>";
                 },
                 useHTML: true,
             },
@@ -120,7 +128,7 @@ export function PieChartColumnFilter<T extends Record<string, unknown>>({
 
         preFilteredRows.forEach((row: any) => {
             //@ts-ignore
-            let value = parseFieldValue(row.values[id], true);
+            let value = parseFieldValue(row.values[id], "N/A");
             if (value) {
                 if (value.includes("//")) {
                     let vals = value.split(" // ");
@@ -129,7 +137,7 @@ export function PieChartColumnFilter<T extends Record<string, unknown>>({
                     });
                 } else if (ignoreNAs && value != "N/A") {
                     values.push(value);
-                } 
+                }
                 else if (value != "N/A" && value.toUpperCase() == value) {
                     values.push(value.toLowerCase());
                 }
@@ -148,11 +156,19 @@ export function PieChartColumnFilter<T extends Record<string, unknown>>({
         }
         for (const sliceId of Object.keys(counts)) {
             if (sliceId != "N/A") {
-                seriesData.push({ name: sliceId, y: counts[sliceId] });
+                if (initialSlice && sliceId == selectedSlice) {
+                    seriesData.push({
+                        name: sliceId, y: counts[sliceId],
+                        sliced: true, selected: true
+                    });
+                }
+                else {
+                    seriesData.push({ name: sliceId, y: counts[sliceId] });
+                }
             }
         }
         return merge({ name: id, data: seriesData }, seriesOptions);
-    }, [preFilteredRows, id]);
+    }, [id, preFilteredRows]);
 
     useEffect(() => {
         if (series && series.hasOwnProperty("data")) {

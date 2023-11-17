@@ -18,7 +18,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-import { ComingSoonAlert, StyledTooltip as Tooltip } from "@m-ui/index";
+import { ComingSoonAlert, StyledTooltip as Tooltip } from "@mui-wrappers/index";
 
 import { parseFieldValue } from "@table/index";
 import { useFilterStyles, ZeroFilterChoicesMsg } from "@table/TableFilters";

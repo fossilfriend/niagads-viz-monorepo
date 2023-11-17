@@ -22,7 +22,7 @@
     "resolveJsonModule": true,
     "paths": {
       "@table/*": ["./src/lib/Table/*"],
-      "@m-ui/*": ["./src/lib/MaterialUI/*"],
+      "@mui-wrappers/*": ["./src/lib/MaterialUI/*"],
       "@root/*": ["./src/lib/*"]
     }
   },

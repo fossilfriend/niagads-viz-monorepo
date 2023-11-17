@@ -8,7 +8,7 @@ import {
     ColumnAccessorType,
     DefaultTextAccessor,
     LinkAccessor,
-} from "@viz/Table/ColumnAccessors";
+} from "@table/ColumnAccessors";
 
 
 

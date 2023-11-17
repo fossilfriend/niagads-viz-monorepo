@@ -21,11 +21,11 @@ import {
     MaterialUIThemedButton as BlueButton,
     CollapseWithClose,
     ComingSoonAlert,
-} from "@components/MaterialUI";
+} from "@mui-wrappers/index";
 
-import { useFilterPanelStyles, FilterPageProps, FilterGroup } from "@viz/Table/TableFilters";
+import { useFilterPanelStyles, FilterPageProps, FilterGroup } from "@table/TableFilters";
 import { DEFAULT_PVALUE_FILTER_VALUE } from "@components/Record/RecordTable/RecordTableFilters";
-import { FilterChipBar } from "@viz/Table/TableSections";
+import { FilterChipBar } from "@table/TableSections";
 
 import { webAppUrl } from "ebrc-client/config";
 

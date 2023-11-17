@@ -3,7 +3,7 @@ import { useTheme, Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import { Drawer, Divider, Button, Box } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { DrawerProps, DrawerContentsProps } from "@m-ui/index";
+import { DrawerProps, DrawerContentsProps } from "@mui-wrappers/index";
 
 export const DRAWER_WIDTH = 300;
 export const SHIFT_X = 250;
