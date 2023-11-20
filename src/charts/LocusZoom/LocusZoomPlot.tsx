@@ -17,7 +17,7 @@ import Grid from "@mui/material/Grid"
 
 import { useWindowSize } from "@uidotdev/usehooks"
 
-import "locuszoom/dist/locuszoom.css";
+// TODO - import "locuszoom/dist/locuszoom.css";
 
 
 export const DEFAULT_FLANK = 100000;

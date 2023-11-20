@@ -31,7 +31,7 @@ export const CustomLink = React.forwardRef((props: LinkProps & CustomLinkProps, 
 
     return (
         <Link
-            innerRef={ref}
+            // innerRef={ref} -- TODO: fix this
             href={href}
             color={color ? color : "initial"}
             className={linkClassName}
