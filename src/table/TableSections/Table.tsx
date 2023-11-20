@@ -8,6 +8,11 @@ import React, {
     useLayoutEffect,
 } from "react";
 
+import "regenerator-runtime" 
+// NOTE: imported as bug fix b/c babel 7.18+ no longer includes regeneratorRuntime which react-tables 7.x needs
+// see https://github.com/TanStack/table/issues/3962; later issues note that the PR was never included in a release
+// so need the temp fix on our end
+
 import cx from "classnames";
 import get from "lodash.get";
 import { useLocalStorage } from "@uidotdev/usehooks";

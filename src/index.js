@@ -1,17 +1,21 @@
 import React from "react";
-import { render } from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider} from "@mui/material/styles";
 
 import { Table } from "@table/TableSections"
-import { data as tableData, clean_columns as tableColumns } from "@data/examples/table.js"
+import { data as tableData, clean_columns as tableColumns, options as tableOptions } from "@data/examples/table.js"
 
 const theme = createTheme();
+
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+
 
 const App = () => (
   <ThemeProvider theme={theme}>
     <h1>Hello React</h1>
-    <Table data={tableData} columns={tableColumns}></Table>
+    <Table data={tableData} columns={tableColumns} options={tableOptions}></Table>
   </ThemeProvider>
 );
 
-render(<App />, document.getElementById("root"));
+root.render(<App tab="home" />);
