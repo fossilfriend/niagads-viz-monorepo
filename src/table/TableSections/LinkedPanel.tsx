@@ -6,6 +6,7 @@ import { Collapse, Grid, Button } from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close";
 
 import { MemoLocusZoomPlot as LocusZoomPlot, DEFAULT_FLANK as LZ_DEFAULT_FLANK } from "@charts/LocusZoom";
+import config from "@data/locus_zoom/_config"
 
 export const useStyles = makeStyles((theme: Theme) =>
 ({
@@ -52,6 +53,7 @@ export const LinkedPanel: React.FC<LinkedPanelSection> = ({ isOpen, type, initia
                         population="ADSP"
                         setPlotState={updateActionTarget}
                         className={classes.bordered}
+                        serviceBaseUrl={config.serviceUrl}
                     />
                 )}
             </Collapse>

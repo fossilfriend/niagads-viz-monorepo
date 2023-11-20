@@ -1,4 +1,4 @@
-const data = [
+export const data = [
   {
     "dataset_accession": "NG00115",
     "consortium": null,
@@ -886,7 +886,7 @@ const data = [
   }
 ];
 
-const columns = [
+export const columns = [
     {
       "Header": "Accession",
       "canSort": true,
@@ -997,7 +997,7 @@ const columns = [
     }
   ];
 
-const clean_columns = [
+export const clean_columns = [
     {
       "Header": "Accession",
       "canSort": true,

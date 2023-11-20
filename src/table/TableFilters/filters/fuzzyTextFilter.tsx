@@ -2,7 +2,7 @@
 
 import { matchSorter } from 'match-sorter'
 import { FilterValue, IdType, Row } from 'react-table'
-import { parseFieldValue } from '@viz/Table'
+import { parseFieldValue } from '@table/index'
 
 export function fuzzyTextFilter<T extends Record<string, unknown>>(
   rows: Array<Row<T>>,
