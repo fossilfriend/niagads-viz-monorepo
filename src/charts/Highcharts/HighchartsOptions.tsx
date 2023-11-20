@@ -1,7 +1,6 @@
 import { Options, OptionsStackingValue } from 'highcharts';
-import { Term, Glossary } from '../../../data/glossary';
-import { merge } from 'lodash';
-import { _color_blind_friendly_palettes as PALETTES} from '../palettes';
+import merge from 'lodash.merge';
+import { _color_blind_friendly_palettes as PALETTES} from '@lib/palettes';
 
 /* const HIGHCHARTS_EXPORTING_MENU_ITEMS = [
     "printChart",
@@ -248,7 +247,7 @@ export function buildScatterChartOptions(options?: Options) {
     let plotOptions: Options = {
         chart: {
             type: "scatter",
-            zoomType: "xy"
+            zooming: {type: "xy"}
         }
     }
 

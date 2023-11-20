@@ -5,15 +5,15 @@ import merge from "lodash.merge";
 import { Column } from "react-table";
 
 import { Options } from "highcharts";
-import HighchartsPlot from "@viz/Highcharts/HighchartsPlot";
+import HighchartsPlot from "@charts/Highcharts/HighchartsPlot";
 import {
     addTitle,
     disableExport,
     applyCustomSeriesColor,
     backgroundTransparent,
-} from "@viz/Highcharts/HighchartsOptions";
+} from "@charts/Highcharts/HighchartsOptions";
 
-import { _color_blind_friendly_palettes as PALETTES } from "@viz/palettes";
+import { _color_blind_friendly_palettes as PALETTES } from "@lib/palettes";
 
 import { parseFieldValue } from "@table/index";
 import { useFilterStyles, ZeroFilterChoicesMsg } from "@table/TableFilters";

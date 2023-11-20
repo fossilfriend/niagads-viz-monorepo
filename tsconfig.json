@@ -17,7 +17,7 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "experimentalDecorators": true,
-    "typeRoots": ["./src/ambient_types", "node_modules/@types"],
+    "typeRoots": ["./src/lib/ambient_types", "node_modules/@types"],
     "outDir": "dist",
     "resolveJsonModule": true,
     "paths": {

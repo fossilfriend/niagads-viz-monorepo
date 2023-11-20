@@ -1,5 +1,5 @@
-import { LocusZoom } from "@viz/LocusZoom";
-import { _ldPopulationChoices } from "genomics-client/data/locus_zoom/_locusZoomProperties";
+import { LocusZoom } from "@charts/LocusZoom";
+import config from "@data/locus_zoom/_config";
 
 // copied from https://github.com/statgen/locuszoom/blob/a271a0321339fb223721476244ece2fa7dec9820/esm/helpers/layouts.js#L106
 // fossilfriend: b/c I couldn't figure out how to import it from the node_modules!! ... even though it is there, so
@@ -26,7 +26,7 @@ const ldlz2_pop_selector_menu = {
     button_title: "Select LD Population: ",
     custom_event_name: "widget_set_ldpop",
     state_field: "ld_pop",
-    options: _ldPopulationChoices,
+    options: config.populations,
 };
 
 export const standard_association_toolbar = (function () {
@@ -34,7 +34,7 @@ export const standard_association_toolbar = (function () {
     const base = LocusZoom.Layouts.get("toolbar", "standard_association");
     for (const [index, widget] of base.widgets.entries()) {
         if (widget.hasOwnProperty("tag") && widget.tag == "ld_population") {
-            base.widgets[index].options = _ldPopulationChoices;
+            base.widgets[index].options = config.populations;
         }
     }
     // base.widgets.push(deepCopy(ldlz2_pop_selector_menu));

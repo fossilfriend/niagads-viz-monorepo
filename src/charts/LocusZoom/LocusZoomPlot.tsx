@@ -1,6 +1,4 @@
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-
 
 import {
     LocusZoom,
@@ -15,10 +13,9 @@ import {
     _ldLegend
 } from ".";
 
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid"
 
-import { useDynamicWidth } from "genomics-client/hooks";
-import { RootState } from "wdk-client/Core/State/Types";
+import { useWindowSize } from "@uidotdev/usehooks"
 
 import "locuszoom/dist/locuszoom.css";
 
@@ -47,6 +44,7 @@ interface LocusZoomPlotProps {
     track: string;
     setPlotState?: any
     className?: string;
+    serviceBaseUrl: string;
 }
 
 
@@ -63,14 +61,14 @@ export const LocusZoomPlot: React.FC<LocusZoomPlotProps> = ({
     flank,
     genomeBuild,
     setPlotState,
-    className
+    className, serviceBaseUrl
 }) => {
     const [plot, setPlot] = useState<any>(null);
     //const interval: NodeJS.Timeout = useRef().current;
     const layoutRendered = useRef(false);
 
-    const width = useDynamicWidth() * (maxWidthAsRatioToBody || 0.5);
-    const webAppUrl = useSelector((state: RootState) => state.globalData?.siteConfig?.webAppUrl);
+    const size = useWindowSize();
+    const width = size.width * (maxWidthAsRatioToBody || 0.5);
 
     useLayoutEffect(() => {
         initializeLocusZoomPlot();
@@ -107,7 +105,7 @@ export const LocusZoomPlot: React.FC<LocusZoomPlotProps> = ({
 
     const initializeLocusZoomPlot = () => {
         const lzState = initializeLocusZoomState();
-        const plot = _buildLocusZoomPlot(divId, lzState, track, webAppUrl + "/service/locuszoom", width, genomeBuild);
+        const plot = _buildLocusZoomPlot(divId, lzState, track, serviceBaseUrl, width, genomeBuild);
         setPlot(plot);
     };
 

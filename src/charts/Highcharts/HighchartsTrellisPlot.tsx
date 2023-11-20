@@ -3,12 +3,12 @@ import { Options } from "highcharts";
 import HighchartsPlot, { HighchartsPlotProps } from "./HighchartsPlot";
 
 import "./HighchartsTrellisPlot.scss";
-import { Grid } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { theme } from "genomics-client/components/MaterialUI";
+import Grid  from "@mui/material/Grid";
+import { Theme } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+    ({
         root: {
             margin: "auto",
         },
