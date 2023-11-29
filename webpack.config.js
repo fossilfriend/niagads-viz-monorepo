@@ -71,6 +71,7 @@ module.exports = {
       },
     ],
   },
+  devtool: 'source-map',
   devServer: {
     hot: true,
     port: 3000,
