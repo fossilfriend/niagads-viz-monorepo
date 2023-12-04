@@ -41,6 +41,7 @@ import {
     TableInstance,
     useRowSelect,
     HeaderGroup,
+    Column
 } from "react-table";
 
 import {
@@ -50,6 +51,8 @@ import {
     ROW_SELECTION_FIELD,
     RowCheckedState,
 } from "@table/index";
+
+import { resolveColumnAccessor } from "@table/ColumnAccessors";
 
 import { RowSelectCheckbox } from "@table/RowSelectors";
 
@@ -89,6 +92,7 @@ export const Table: React.FC<TableProps> = ({
     data,
     options,
     onTableLoad,
+    allowRouterLinks
 }) => {
     const classes = useTableStyles();
 
@@ -167,6 +171,11 @@ export const Table: React.FC<TableProps> = ({
     };
 
     const tableProps = useMemo(() => {
+        // resolve the accessors
+        columns.forEach(function(element, index: number, cols: Column<{}>[]) {
+            cols[index].accessor = resolveColumnAccessor(cols[index].id, cols[index].accessor ? cols[index].accessor : "Default")
+        });
+
         let initialState = {
             pageIndex: 0,
             pageSize: 10,

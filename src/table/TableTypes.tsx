@@ -45,5 +45,6 @@ export interface Table {
     data: any;
     options: TableOptions
     onTableLoad?: any;
+    allowRouterLinks?: boolean;
 }
 
