@@ -6,16 +6,9 @@ import { StyledTooltip as Tooltip, CustomLink as Link} from "@mui-wrappers/index
 import { ColumnAccessor } from "@table/ColumnAccessors";
 
 export const resolveLink = (url: string, value: string) => {
-    const isRouterLink = !url.includes("http"); 
-    return isRouterLink ? (
-        <RouterLink key={url} to={url}>
-            {value}
-        </RouterLink>
-    ) : (
-        <Link key={url} href={url} color="initial">
-            {value}
-        </Link>
-    );
+    return <Link key={url} href={url}>
+        {value}
+    </Link>
 };
 
 // text with tooltip value = { value: string, url: string, tooltip: string}
