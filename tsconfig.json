@@ -17,13 +17,16 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "experimentalDecorators": true,
-    "typeRoots": ["./src/ambient_types", "node_modules/@types"],
+    "typeRoots": ["./src/lib/ambient_types", "node_modules/@types"],
     "outDir": "dist",
     "resolveJsonModule": true,
     "paths": {
-      "@table/*": ["./src/lib/Table/*"],
-      "@m-ui/*": ["./src/lib/MaterialUI/*"],
-      "@root/*": ["./src/lib/*"]
+      "@charts/*": ["./src/charts/*"],
+      "@table/*": ["./src/table/*"],
+      "@mui-wrappers/*": ["./src/mui-wrappers/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@data/*": ["./data/*"],
+      "@documentation/*": ["./documentation/*"]
     }
   },
   "exclude": ["dist/**/*"]

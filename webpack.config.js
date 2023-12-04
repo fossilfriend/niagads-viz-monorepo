@@ -1,4 +1,6 @@
 const HTMLWebpackPlugin = require("html-webpack-plugin");
+const InterpolateHTMLPlugin = require("interpolate-html-plugin");
+
 const path = require("path");
 
 module.exports = {
@@ -11,17 +13,21 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
-      "@table": path.resolve(__dirname, "/src/lib/Table"),
-      "@m-ui": path.resolve(__dirname, "/src/lib/MaterialUI"),
-      "@root": path.resolve(__dirname, "src/lib/")
+      "@charts": path.resolve(__dirname, "/src/charts"),
+      "@mui-wrappers": path.resolve(__dirname, "/src/mui-wrappers"),
+      "@table": path.resolve(__dirname, "/src/table"),
+      "@lib": path.resolve(__dirname, "/src/lib"),
+      "@data": path.resolve(__dirname, "/data"),
+      "@documentation": path.resolve(__dirname, "/documentation"),
     },
   },
 
-  /*  plugins: [
+  plugins: [
     new HTMLWebpackPlugin({
-      template: "./src/index.html",
+      template: "./public/index.html",
     }),
-  ], */
+    new InterpolateHTMLPlugin({ PUBLIC_URL: "/public" }),
+  ],
   module: {
     rules: [
       {
@@ -36,6 +42,11 @@ module.exports = {
             ],
           },
         },
+      },
+      {
+        test: /\.css/,
+        exclude: /node_modules/,
+        use: [{ loader: "css-loader" }],
       },
       {
         test: /\.(ts|tsx)$/,
@@ -60,6 +71,7 @@ module.exports = {
       },
     ],
   },
+  devtool: 'source-map',
   devServer: {
     hot: true,
     port: 3000,
