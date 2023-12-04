@@ -33,7 +33,7 @@ export const CustomLink = React.forwardRef((props: LinkProps & CustomLinkProps, 
         <Link
             // innerRef={ref} -- TODO: fix this
             href={href}
-            color={color ? color : "initial"}
+            color={color ? color : undefined}
             className={linkClassName}
             target={props.target ? props.target : "_blank"}
             rel="noopener"
