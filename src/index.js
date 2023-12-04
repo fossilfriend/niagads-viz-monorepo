@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createTheme, ThemeProvider} from "@mui/material/styles";
 
 import { Table } from "@table/TableSections"
-import { data as tableData, clean_columns as tableColumns, options as tableOptions } from "@data/examples/table.js"
+import { data as tableData, columns as tableColumns, options as tableOptions } from "@data/examples/table.js"
 
 const theme = createTheme();
 
@@ -13,7 +13,6 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 
 const App = () => (
   <ThemeProvider theme={theme}>
-    <h1>Hello React</h1>
     <Table data={tableData} columns={tableColumns} options={tableOptions}></Table>
   </ThemeProvider>
 );
