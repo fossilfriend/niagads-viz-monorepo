@@ -5,14 +5,12 @@
     "module": "index.js",
     "author": "fossilfriend",
     "scripts": {
-        "start": "webpack-dev-server --mode development",
-        "build": "webpack --mode production"
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
     },
     "devDependencies": {
-        "@babel/core": "^7.23.3",
-        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-        "@babel/plugin-transform-regenerator": "^7.23.3",
-        "@babel/runtime": "^7.23.4",
         "@types/highcharts": "^7.0.0",
         "@types/jest": "^29.5.3",
         "@types/lodash.assign": "^4.2.9",
@@ -25,10 +23,6 @@
         "@types/react-csv": "^1.1.8",
         "@types/react-dom": "^18.2.7",
         "@types/react-table": "^7.7.14",
-        "babel-cli": "^6.26.0",
-        "babel-loader": "^9.1.3",
-        "babel-plugin-transform-es2015-modules-commonjs-simple": "^6.7.4",
-        "babel-preset-react-app": "^10.0.1",
         "css-loader": "^6.8.1",
         "html-webpack-plugin": "^5.5.3",
         "interpolate-html-plugin": "^4.0.0",
@@ -36,9 +30,7 @@
         "react-dom": "^18.2.0",
         "style-loader": "^3.3.3",
         "ts-loader": "^9.4.4",
-        "typescript": "^4.9.5",
-        "webpack": "^5.88.2",
-        "webpack-cli": "^5.1.4"
+        "typescript": "^4.9.5"
     },
     "dependencies": {
         "@emotion/react": "^11.11.1",
@@ -47,6 +39,7 @@
         "@mui/lab": "^5.0.0-alpha.137",
         "@mui/material": "^5.14.2",
         "@mui/styles": "^5.14.1",
+        "@tanstack/react-table": "^8.11.8",
         "@uidotdev/usehooks": "^2.4.1",
         "classnames": "^2.3.2",
         "highcharts": "^11.2.0",
@@ -57,10 +50,10 @@
         "lodash.isobject": "^3.0.2",
         "lodash.merge": "^4.6.2",
         "match-sorter": "^6.3.1",
+        "next": "^14.1.0",
         "react-csv": "^2.2.2",
         "react-router-dom": "^6.19.0",
         "react-table": "^7.8.0",
-        "regenerator-runtime": "^0.14.0",
-        "webpack-dev-server": "^4.15.1"
+        "regenerator-runtime": "^0.14.0"
     }
 }

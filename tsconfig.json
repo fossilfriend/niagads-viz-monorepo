@@ -10,24 +10,62 @@
     "preserveConstEnums": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "strict": true,
     "alwaysStrict": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "moduleResolution": "node",
     "baseUrl": ".",
     "experimentalDecorators": true,
-    "typeRoots": ["./src/lib/ambient_types", "node_modules/@types"],
+    "typeRoots": [
+      "./src/lib/ambient_types",
+      "node_modules/@types"
+    ],
     "outDir": "dist",
     "resolveJsonModule": true,
     "paths": {
-      "@charts/*": ["./src/charts/*"],
-      "@table/*": ["./src/table/*"],
-      "@mui-wrappers/*": ["./src/mui-wrappers/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@data/*": ["./data/*"],
-      "@documentation/*": ["./documentation/*"]
-    }
+      "@charts/*": [
+        "./src/charts/*"
+      ],
+      "@table/*": [
+        "./src/table/*"
+      ],
+      "@mui-wrappers/*": [
+        "./src/mui-wrappers/*"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "@data/*": [
+        "./data/*"
+      ],
+      "@documentation/*": [
+        "./documentation/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "exclude": ["dist/**/*"]
+  "exclude": [
+    "dist/**/*"
+  ],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

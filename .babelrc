@@ -1,7 +1,0 @@
-{
-  "presets": [["react-app", { "absoluteRuntime": false }]],
-  "plugins": [
-    "@babel/plugin-transform-runtime"
-  ],
-  "sourceMaps": true
-}
