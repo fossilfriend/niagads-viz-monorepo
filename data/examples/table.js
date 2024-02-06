@@ -1230,7 +1230,7 @@ export const data = [
 
 export const columns = [
   {
-    Header: "Accession",
+    header: "Accession",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1239,7 +1239,7 @@ export const columns = [
     help: "NIAGADS accession number",
   },
   {
-    Header: "Track ID",
+    header: "Track ID",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1248,7 +1248,7 @@ export const columns = [
     show: false,
   },
   {
-    Header: "Dataset",
+    header: "Dataset",
     canSort: true,
     disable: true,
     accessorType: "Link",
@@ -1256,7 +1256,7 @@ export const columns = [
     sortType: "link",
   },
   {
-    Header: "Year",
+    header: "Year",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1265,7 +1265,7 @@ export const columns = [
     help: "Publication or release date (if data are unpublished)",
   },
   {
-    Header: "Attribution",
+    header: "Attribution",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1273,7 +1273,7 @@ export const columns = [
     sortType: "alphanumeric",
   },
   {
-    Header: "Consortium",
+    header: "Consortium",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1282,7 +1282,7 @@ export const columns = [
     filter: "select",
   },
   {
-    Header: "Description",
+    header: "Description",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1291,7 +1291,7 @@ export const columns = [
     show: false,
   },
   {
-    Header: "Neuropathology",
+    header: "Neuropathology",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1300,7 +1300,7 @@ export const columns = [
     filter: "pie",
   },
   {
-    Header: "Population",
+    header: "Population",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1309,7 +1309,7 @@ export const columns = [
     filter: "pie",
   },
   {
-    Header: "Biomarker",
+    header: "Biomarker",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1319,7 +1319,7 @@ export const columns = [
     show: false,
   },
   {
-    Header: "APOE Carrier Status",
+    header: "APOE Carrier Status",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1329,7 +1329,7 @@ export const columns = [
     show: false,
   },
   {
-    Header: "Covariates",
+    header: "Covariates",
     canSort: true,
     disable: true,
     accessorType: "Default",
@@ -1341,79 +1341,79 @@ export const columns = [
 
 export const clean_columns = [
   {
-    Header: "Accession",
+    header: "Accession",
     canSort: true,
     disable: true,
     id: "dataset_accession",
     help: "NIAGADS accession number",
   },
   {
-    Header: "Track ID",
+    header: "Track ID",
     canSort: true,
     disable: true,
     id: "track",
     show: false,
   },
   {
-    Header: "Dataset",
+    header: "Dataset",
     canSort: true,
     disable: true,
     id: "dataset_record_link",
   },
   {
-    Header: "Year",
+    header: "Year",
     canSort: true,
     disable: true,
     id: "publication_date",
     help: "Publication or release date (if data are unpublished)",
   },
   {
-    Header: "Attribution",
+    header: "Attribution",
     canSort: true,
     disable: true,
     id: "attribution",
   },
   {
-    Header: "Consortium",
+    header: "Consortium",
     canSort: true,
     disable: true,
     id: "consortium",
   },
   {
-    Header: "Description",
+    header: "Description",
     canSort: true,
     disable: true,
     id: "description",
     show: false,
   },
   {
-    Header: "Neuropathology",
+    header: "Neuropathology",
     canSort: true,
     disable: true,
     id: "neuropathology",
   },
   {
-    Header: "Population",
+    header: "Population",
     canSort: true,
     disable: true,
     id: "population",
   },
   {
-    Header: "Biomarker",
+    header: "Biomarker",
     canSort: true,
     disable: true,
     id: "biomarker",
     show: false,
   },
   {
-    Header: "APOE Carrier Status",
+    header: "APOE Carrier Status",
     canSort: true,
     disable: true,
     id: "genotype",
     show: false,
   },
   {
-    Header: "Covariates",
+    header: "Covariates",
     canSort: true,
     disable: true,
     id: "covariates",
