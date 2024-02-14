@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnAccessor } from "../Common/types";
+import { ColumnAccessor } from "../common/types";
 
 export const resolveLink = (url: string, value: string) => {
     return (

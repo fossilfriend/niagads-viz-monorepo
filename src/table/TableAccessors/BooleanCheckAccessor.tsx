@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnAccessor } from "../Common/types";
+import { ColumnAccessor } from "../common/types";
 
 export const BooleanCheckAccessor: React.FC<ColumnAccessor> = ({ value, className, htmlColor, muiColor }) => {
     if (value && ["true", "yes"].includes(value.toString().toLowerCase())) {

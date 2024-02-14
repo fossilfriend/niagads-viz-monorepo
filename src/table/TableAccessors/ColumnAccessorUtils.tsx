@@ -6,7 +6,7 @@ import {
     BooleanCheckAccessor,
     DefaultTextAccessor,
 } from ".";
-import { ColumnAccessorType } from "../Common/types";
+import { ColumnAccessorType } from "../common/types";
 
 
 

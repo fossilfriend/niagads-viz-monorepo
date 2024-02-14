@@ -5,8 +5,8 @@ import {
     LinkAccessor,
     LinkListAccessor,
 } from ".";
-import { isObject } from "../Common/TableUtils";
-import { ColumnAccessor } from "../Common/types";
+import { isObject } from "../common/TableUtils";
+import { ColumnAccessor } from "../common/types";
 
 export const jsonAccessorType = (obj: any) => {
     if (Array.isArray(obj)) {

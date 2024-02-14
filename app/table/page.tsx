@@ -1,6 +1,6 @@
 import Table from "@table/Table";
 import { data, columns } from "@data/examples/table";
-import { Column, Data } from "@table/Common/types";
+import { Column, Data } from "@table/common/types";
 
 const Page = () => {
     return (

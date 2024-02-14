@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import { JSONAccessor } from ".";
-import { parseFieldValue, isObject } from "../Common/TableUtils";
-import { ColumnAccessor } from "../Common/types";
+import { parseFieldValue, isObject } from "../common/TableUtils";
+import { ColumnAccessor } from "../common/types";
 
 export const isJSON = (value: any) => {
     try {
