@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import isObject from "lodash.isobject";
 
-import Box from "@mui/material/Box";
-import { StyledTooltip as Tooltip} from "@mui-wrappers/index";
-
-import { ColumnAccessor, JSONAccessor } from "@table/ColumnAccessors";
-import { parseFieldValue } from "@table/index";
+import { JSONAccessor } from ".";
+import { parseFieldValue, isObject } from "../common/TableUtils";
+import { ColumnAccessor } from "../common/types";
 
 export const isJSON = (value: any) => {
     try {
@@ -13,7 +10,6 @@ export const isJSON = (value: any) => {
     } catch (e) {
         // catch numbers, nulls, booleans
         return isObject(value) && value != null;
-        // return false;
     }
 
     // catch numbers, nulls, booleans
@@ -44,21 +40,21 @@ export const ClobTextAccessor: React.FC<ColumnAccessor> = ({ value, maxLength = 
     return isJSON(value) && "tooltip" in value ? (
         <AnnotatedTextAccessor value={{ value: value.slice(0, maxLength - 3) + "...", tooltip: value.tooltip }} />
     ) : isExpanded ? (
-        <Box>
+        <div>
             {value} <a onClick={toggleIsExpanded}>Show less</a>
-        </Box>
+        </div>
     ) : (
-        <Box>
+        <div>
             {`${value.slice(0, maxLength - 3)}...`} <a onClick={toggleIsExpanded}>Show more</a>
-        </Box>
+        </div>
     );
 };
 
 export const ColoredTextAccessor: React.FC<ColumnAccessor> = ({ value, className, muiColor }) => {
     return (
-        <Box className={className ? className : ""} component="span" color={muiColor ? muiColor : ""}>
+        <span className={className ? className : ""} color={muiColor ? muiColor : ""}>
             {value}
-        </Box>
+        </span>
     );
 };
 
@@ -67,8 +63,8 @@ export const ColoredTextAccessor: React.FC<ColumnAccessor> = ({ value, className
 
 export const AnnotatedTextAccessor: React.FC<ColumnAccessor> = ({ value }) => {
     return (    
-        <Tooltip title={value.tooltip} arial-label={value.tooltip}>
-           <Box component="span" className="annotated-text">{value.value}</Box>
-        </Tooltip>
+        <div title={value.tooltip} arial-label={value.tooltip}>
+           <span className="annotated-text">{value.value}</span>
+        </div>
     );
 };

@@ -1,14 +1,12 @@
 import React from "react";
-
 import {
     NASpan,
     SparkPercentageBarAccessor,
     ColoredTextAccessor,
     BooleanCheckAccessor,
-    ColumnAccessorType,
     DefaultTextAccessor,
-    LinkAccessor,
-} from "@table/ColumnAccessors";
+} from ".";
+import { ColumnAccessorType } from "../common/types";
 
 
 

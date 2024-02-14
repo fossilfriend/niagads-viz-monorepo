@@ -1,18 +1,6 @@
-export interface Dataset {
-    dataset_accession: string;
-    consortium: string | null,
-    description: string;
-    biomarker: string | null,
-    population: string;
-    genotype: string | null,
-    dataset_record_link: Record<string, string>;
-    covariates: string | null;
-    attribution: string;
-    name: string;
-    publication_date: string | null;
-    track: string;
-    neuropathology: string;
-}
+export type AllowableTableDataValue = string | number | boolean | { [key: string] : string };
+
+export type Data = Record<string, AllowableTableDataValue>;
 
 export interface Column<T> {
     header: string;

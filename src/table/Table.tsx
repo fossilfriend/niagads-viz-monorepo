@@ -1,26 +1,31 @@
-'use client'
+"use client";
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from "react";
 import {
     flexRender,
     getCoreRowModel,
     getPaginationRowModel,
     useReactTable,
     SortingState,
-} from '@tanstack/react-table';
-import { Column } from './Common/types';
-import { resolveColumnAccessor } from './TableAccessors';
-import PaginationControls from './Components/PaginationControls';
+} from "@tanstack/react-table";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faSort,
+    faSortUp,
+    faSortDown,
+} from "@fortawesome/free-solid-svg-icons";
+
+import { Column, Data } from "./common/types";
+import { resolveColumnAccessor } from "./TableAccessors";
+import PaginationControls from "./components/PaginationControls";
 
 interface TableProps<T> {
-    data: T[];
+    data: Data[];
     columns: Column<T>[];
-};
+}
 
-const Table: React.FC<TableProps<any>> = ({
-    data,
-    columns
-}) => {
+const Table: React.FC<TableProps<any>> = ({ data, columns }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
 
     const resolvedColumns = useMemo(() => {
@@ -34,50 +39,50 @@ const Table: React.FC<TableProps<any>> = ({
     const table = useReactTable({
         data,
         columns: resolvedColumns,
-        state: { sorting, },
+        state: { sorting },
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
     });
 
     return (
-        <div className="p-2">
-            <table>
+        <>
+            <table className="table-auto">
                 <thead>
-                    {table.getHeaderGroups().map(headerGroup => (
+                    {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
-                            {headerGroup.headers.map(header => {
+                            {headerGroup.headers.map((header) => {
                                 return (
                                     <th key={header.id} colSpan={header.colSpan}>
                                         {header.isPlaceholder ? null : (
                                             <div
                                                 {...{
                                                     className: header.column.getCanSort()
-                                                        ? 'cursor-pointer select-none'
-                                                        : '',
+                                                        ? "cursor-pointer select-none"
+                                                        : "",
                                                     onClick: header.column.getToggleSortingHandler(),
-                                                }}
-                                            >
+                                                }}>
                                                 {flexRender(
                                                     header.column.columnDef.header,
                                                     header.getContext()
                                                 )}
                                                 {{
-                                                    asc: ' 🔼',
-                                                    desc: ' 🔽',
+                                                    sort: <FontAwesomeIcon icon={faSort} />,
+                                                    asc: <FontAwesomeIcon icon={faSortUp} />,
+                                                    desc: <FontAwesomeIcon icon={faSortDown} />,
                                                 }[header.column.getIsSorted() as string] ?? null}
                                             </div>
                                         )}
                                     </th>
-                                )
+                                );
                             })}
                         </tr>
                     ))}
                 </thead>
                 <tbody>
-                    {table.getRowModel().rows.map(row => (
+                    {table.getRowModel().rows.map((row) => (
                         <tr key={row.id}>
-                            {row.getVisibleCells().map(cell => (
+                            {row.getVisibleCells().map((cell) => (
                                 <td key={cell.id}>
                                     <>{cell.renderValue()}</>
                                 </td>
@@ -86,12 +91,9 @@ const Table: React.FC<TableProps<any>> = ({
                     ))}
                 </tbody>
             </table>
-            <PaginationControls
-                table={table}
-            />
-        </div>
-    )
-} 
+            <PaginationControls table={table} />
+        </>
+    );
+};
 
 export default Table;
-

@@ -1,14 +1,12 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-
-import { StyledTooltip as Tooltip, CustomLink as Link} from "@mui-wrappers/index";
-
-import { ColumnAccessor } from "@table/ColumnAccessors";
+import { ColumnAccessor } from "../common/types";
 
 export const resolveLink = (url: string, value: string) => {
-    return <Link key={url} href={url}>
-        {value}
-    </Link>
+    return (
+        <a key={url} href={url}>
+            {value}
+        </a>
+    );
 };
 
 // text with tooltip value = { value: string, url: string, tooltip: string}
@@ -16,9 +14,9 @@ export const LinkAccessor: React.FC<ColumnAccessor> = ({ value }) => {
     return Array.isArray(value) ? (
         <LinkListAccessor value={value} />
     ) : "tooltip" in value && value.tooltip != "" ? (
-        <Tooltip key={Math.random().toString(36).slice(2)} title={value.tooltip} arial-label={value.tooltip} arrow>
+        <div title={value.tooltip} arial-label={value.tooltip}>
             {resolveLink(value.url, value.value)}
-        </Tooltip>
+        </div>
     ) : (
         resolveLink(value.url, value.value)
     );

@@ -1,6 +1,6 @@
-import Table from "src/table-updated/Table";
+import Table from "@table/Table";
 import { data, columns } from "@data/examples/table";
-import { Column, Dataset } from "src/table-updated/Common/types";
+import { Column, Data } from "@table/common/types";
 
 const Page = () => {
     return (
@@ -8,7 +8,7 @@ const Page = () => {
             <h1>Table Test</h1>
             <Table
                 data={data}
-                columns={columns as Column<Dataset>[]}
+                columns={columns as Column<Data>[]}
             />
         </>
     )

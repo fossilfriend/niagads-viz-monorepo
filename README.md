@@ -7,3 +7,8 @@
 
 ## Javascript / React
 
+# Next Steps - Developer notes:
+
+* investigate [tsdx](https://tsdx.io/) as alternative / in addition to next.js to generate the library package
+  * can use tailwind (see https://www.youtube.com/watch?v=Fh-xdSf9uH0)
+  * may need to extract example app out into its own project 
