@@ -1,6 +1,6 @@
-import Table from "@table/Table";
+import Table from "niagads-viz-js/Table";
 import { data, columns } from "@data/examples/table";
-import { Column, Data } from "@table/common/types";
+import { Column, Data } from "niagads-viz-js/common/types";
 
 const Page = () => {
     return (

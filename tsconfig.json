@@ -29,19 +29,16 @@
     "resolveJsonModule": true,
     "paths": {
       "@charts/*": [
-        "./src/charts/*"
+        "./src/components/charts/*"
       ],
       "@table/*": [
-        "./src/table/*"
+        "src/components/table/*"
       ],
       "@mui-wrappers/*": [
-        "./src/mui-wrappers/*"
+        "./src/components/mui-wrappers/*"
       ],
       "@lib/*": [
         "./src/lib/*"
-      ],
-      "@data/*": [
-        "./data/*"
       ],
       "@documentation/*": [
         "./documentation/*"
