@@ -1,36 +1,22 @@
 import React, { useState } from "react";
 
-import { JSONAccessor } from ".";
-import { parseFieldValue, isObject } from "../common/TableUtils";
-import { ColumnAccessor } from "../common/types";
+import { isJSON, TextRenderer, JSONRenderer } from "@renderers/index";
 
-export const isJSON = (value: any) => {
-    try {
-        value = JSON.parse(value);
-    } catch (e) {
-        // catch numbers, nulls, booleans
-        return isObject(value) && value != null;
-    }
 
-    // catch numbers, nulls, booleans
-    return isObject(value) && value != null;
-    
-};
-
-export const DefaultTextAccessor: React.FC<ColumnAccessor> = ({ value, maxLength = 100 }) => {
+export const DefaultText: React.FC<TextRenderer> = ({ value, maxLength = 100 }) => {
     if (isJSON(value)) {
-        return <JSONAccessor value={value} />;
+        return <JSONRenderer value={value} />;
     }
     if (value.toString().length > maxLength) {
-        return <ClobTextAccessor value={value} maxLength={maxLength} />;
+        return <Clob value={value} maxLength={maxLength} />;
     }
     // catch numerics
-    return parseFieldValue(value);
+    return value
 };
 
 // large text, show more or tooltip
 // if not JSON & no tooltip, show more
-export const ClobTextAccessor: React.FC<ColumnAccessor> = ({ value, maxLength = 100 }) => {
+export const Clob: React.FC<TextRenderer> = ({ value, maxLength = 100 }) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
     const toggleIsExpanded = () => {
@@ -38,7 +24,7 @@ export const ClobTextAccessor: React.FC<ColumnAccessor> = ({ value, maxLength = 
     };
 
     return isJSON(value) && "tooltip" in value ? (
-        <AnnotatedTextAccessor value={{ value: value.slice(0, maxLength - 3) + "...", tooltip: value.tooltip }} />
+        <AnnotatedText value={{ value: value.slice(0, maxLength - 3) + "...", tooltip: value.tooltip }} />
     ) : isExpanded ? (
         <div>
             {value} <a onClick={toggleIsExpanded}>Show less</a>
@@ -50,7 +36,7 @@ export const ClobTextAccessor: React.FC<ColumnAccessor> = ({ value, maxLength = 
     );
 };
 
-export const ColoredTextAccessor: React.FC<ColumnAccessor> = ({ value, className, muiColor }) => {
+export const ColoredText: React.FC<TextRenderer> = ({ value, className, muiColor }) => {
     return (
         <span className={className ? className : ""} color={muiColor ? muiColor : ""}>
             {value}
@@ -61,7 +47,7 @@ export const ColoredTextAccessor: React.FC<ColumnAccessor> = ({ value, className
 // text with tooltip value = { value: string, tooltip: string}
 // so technically, takes JSON
 
-export const AnnotatedTextAccessor: React.FC<ColumnAccessor> = ({ value }) => {
+export const AnnotatedText: React.FC<TextRenderer> = ({ value }) => {
     return (    
         <div title={value.tooltip} arial-label={value.tooltip}>
            <span className="annotated-text">{value.value}</span>

@@ -16,9 +16,9 @@ import {
     faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { Column, Data } from "./common/types";
-import { resolveColumnAccessor } from "./TableAccessors";
-import PaginationControls from "./components/PaginationControls";
+import { Column, Data } from "@table/types";
+import { resolveColumnAccessor } from "@table/utils";
+import PaginationControls from "@table/PaginationControls";
 
 interface TableProps<T> {
     data: Data[];

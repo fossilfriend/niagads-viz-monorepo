@@ -1,6 +1,11 @@
+import { TextRendererType , TextRenderer } from "@renderers/types";
+
 export type AllowableTableDataValue = string | number | boolean | { [key: string] : string };
 
 export type Data = Record<string, AllowableTableDataValue>;
+
+export type ColumnAccessorType = TextRendererType;
+export interface ColumnAccessor extends TextRenderer {};
 
 export interface Column<T> {
     header: string;
@@ -15,21 +20,3 @@ export interface Column<T> {
     accessorFn?: (row: T) => any;
 }
 
-export type ColumnAccessorType =
-    | "PercentageBar"
-    | "Default"
-    | "BooleanCheck"
-    | "ScientificNotation"
-    | "Float"
-    | "ColoredText"
-    | "Link";
-
-export interface ColumnAccessor {
-    value?: any;
-    object?: any;
-    muiColor?: any; // one of
-    htmlColor?: string;
-    className?: string;
-    maxLength?: number;
-    userProps?: any;
-}

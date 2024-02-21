@@ -29,10 +29,13 @@
     "resolveJsonModule": true,
     "paths": {
       "@charts/*": [
-        "./src/components/charts/*"
+        "./src/components/Chart/*"
+      ],
+      "@renderers/*": [
+        "./src/components/TextRenderer/*"
       ],
       "@table/*": [
-        "src/components/table/*"
+        "src/components/Table/*"
       ],
       "@mui-wrappers/*": [
         "./src/components/mui-wrappers/*"
@@ -63,6 +66,6 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "data/examples/table.js"  ]
+    "**/*.tsx",
+ "data/examples/table.js"  ]
 }

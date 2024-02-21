@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnAccessor } from "../common/types";
+import { ColumnAccessor } from "./types";
 
 export const RowSelectButtonAccessor: React.FC<ColumnAccessor> = ({ value, userProps }) => {
     return (
