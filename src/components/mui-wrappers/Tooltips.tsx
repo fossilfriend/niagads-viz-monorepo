@@ -6,7 +6,7 @@ import { Tooltip, Typography, IconButton } from "@mui/material";
 import MUIHelpIcon from "@mui/icons-material/Help";
 import { blue } from "@mui/material/colors";
 
-import { safeHtml } from "@lib/ComponentUtils";
+import { safeHtml } from "@lib/utils"
 
 export const StyledTooltip = withStyles((theme: Theme) => ({
   tooltip: {
