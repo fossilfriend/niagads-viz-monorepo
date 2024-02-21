@@ -1,3 +1,6 @@
+# rollup
+.rollup.cache
+
 # npm/node
 package-lock.json
 
