@@ -1,6 +1,6 @@
 import React from "react"
 
-import { parseFieldValue, ColumnAccessor, ColumnAccessorType } from "@table/index"
+import { parseFieldValue, ColumnAccessor, ColumnAccessorType } from  "@table/index"
 
 import {
     BooleanCheck as BooleanCheckAccessor,
