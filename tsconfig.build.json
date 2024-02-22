@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "declarationDir": "dist/dts"
+    },
+    "exclude": [
+        "node_modules",
+        "build",
+        "dist",
+        "scripts",
+        "acceptance-tests",
+        "webpack",
+        "jest",
+        "stories/**"
+    ]
+}
