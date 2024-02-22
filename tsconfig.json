@@ -42,7 +42,7 @@
             "@renderers/*": ["components/TextRenderer/*"],
             "@table/*": ["components/Table/*"],
             "@components/*": ["components/*"],
-            "@mui-wrappers/*": [".components/mui-wrappers/*"],
+            "@mui-wrappers/*": ["components/mui-wrappers/*"],
             "@lib/*": ["lib/*"],
             "@utils/*": ["utils/*"],
             "@common/*": ["common/*"]
