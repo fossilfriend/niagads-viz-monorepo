@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
+import * as lz from "locuszoom";
+const LocusZoom = lz.default as any;
 
 import {
-    LocusZoom,
     CustomAssociationAdapter,
     CustomGeneAdapter,
     CustomRecombAdapter,
@@ -11,7 +12,7 @@ import {
     standard_genes_tooltip,
     _ldColorScale,
     _ldLegend
-} from ".";
+} from "@components/LocusZoom";
 
 import Grid from "@mui/material/Grid"
 

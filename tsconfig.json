@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "module": "esnext",
-        "target": "es2021",
+        "target": "es6",
         "lib": [
             "dom",
             "dom.iterable",
@@ -24,26 +24,24 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
-        "incremental": true,
         "isolatedModules": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true,
         "baseUrl": "./src",
 
         "typeRoots": [
-            "./src/lib/ambient_types",
-            "node_modules/@types"
+            "node_modules/@types",
+            "node_modules/niagads-ambient-types"
         ],
 
         "outDir": "dist",
 
         "paths": {
-            "@charts/*": ["components/Chart/*"],
+            "@charts/*": ["components/Chart/Highcharts/*"],
             "@renderers/*": ["components/TextRenderer/*"],
             "@table/*": ["components/Table/*"],
             "@components/*": ["components/*"],
             "@mui-wrappers/*": ["components/mui-wrappers/*"],
-            "@lib/*": ["lib/*"],
             "@utils/*": ["utils/*"],
             "@common/*": ["common/*"]
         },

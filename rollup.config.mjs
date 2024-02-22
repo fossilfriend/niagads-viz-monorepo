@@ -3,7 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser'; // generate minified bundle
 import external from 'rollup-plugin-peer-deps-external';
-import postcss from 'rollup-plugin-postcss'; 
+import postcss from 'rollup-plugin-postcss';
 import { visualizer } from 'rollup-plugin-visualizer'; // generate bundle stats
 
 // handling the ambient types - https://stackoverflow.com/a/70111116
@@ -15,6 +15,7 @@ import del from 'rollup-plugin-delete';
 import { getFiles } from './scripts/buildUtils';
 
 const extensions = ['.js', '.ts', '.jsx', '.tsx'];
+const declarations = [ "*.d.ts", "**/*.d.ts", "**/*.d.cts", "**/*.d.mts" ]
 
 // format cjs = CommonJS
 
@@ -23,7 +24,6 @@ export default [{
         './src/index.ts',
         ...getFiles('./src/common', extensions),
         ...getFiles('./src/components', extensions),
-        ...getFiles('./src/lib', extensions),
         ...getFiles('./src/hooks', extensions),
         ...getFiles('./src/utils', extensions),
     ],
@@ -39,14 +39,14 @@ export default [{
     plugins: [
         resolve(),
         commonjs(),
-        external(), 
+        external(),
         typescript({
             tsconfig: './tsconfig.json',
             declaration: true,
-            declarationDir: 'dist'
+            declarationDir: 'dist/dts',
         }),
         postcss(),
-        terser(),       
+        terser(),
         visualizer({
             filename: 'bundle-analysis.html',
             open: true,
@@ -54,7 +54,7 @@ export default [{
     ],
 },
 {
-    input: './dist/dts/index.d.ts',
+    input: ['./dist/dts/index.d.ts'],
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [dts(), del({ hook: "buildEnd", targets: "./dist/dts" }),],
 }

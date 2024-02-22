@@ -1,4 +1,5 @@
-import { LocusZoom } from "@charts/LocusZoom";
+import * as lz from "locuszoom";
+const LocusZoom = lz.default as any;
 import config from "@common/lz_config";
 
 // copied from https://github.com/statgen/locuszoom/blob/a271a0321339fb223721476244ece2fa7dec9820/esm/helpers/layouts.js#L106

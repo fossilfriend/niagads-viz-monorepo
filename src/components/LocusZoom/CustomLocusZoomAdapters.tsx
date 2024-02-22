@@ -1,5 +1,5 @@
 import * as lz from "locuszoom";
-export const LocusZoom = lz.default as any;
+const LocusZoom = lz.default as any;
 
 const DEFAULT_LD_POPULATION = 'ADSP';
 
