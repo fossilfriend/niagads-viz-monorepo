@@ -26,8 +26,8 @@ export const CustomLink = React.forwardRef((props: LinkProps & CustomLinkProps, 
     const { href, color, children, className, style } = props;
     const classes = useStyles();
 
-    const linkStyle = style ? (style === "secondary" ? classes.secondary : null) : null;
-    const linkClassName = className ? (style ? className + " " + linkStyle : className) : style ? linkStyle : null;
+    const linkStyle = style ? (style === "secondary" ? classes.secondary : undefined) : undefined;
+    const linkClassName = className ? (linkStyle ? className + " " + linkStyle : className) : linkStyle ? linkStyle : undefined;
 
     return (
         <Link
