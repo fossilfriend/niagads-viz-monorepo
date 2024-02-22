@@ -68,6 +68,7 @@ export const LocusZoomPlot: React.FC<LocusZoomPlotProps> = ({
     const layoutRendered = useRef(false);
 
     const size = useWindowSize();
+    //@ts-ignore -- ignore size.width might be null
     const width = size.width * (maxWidthAsRatioToBody || 0.5);
 
     useLayoutEffect(() => {
@@ -95,7 +96,7 @@ export const LocusZoomPlot: React.FC<LocusZoomPlotProps> = ({
         return initializeLocusZoomStateFromSpan(span ? span : variant, flank, variant);
     }
 
-    const initializeLocusZoomStateFromSpan = (span: string, flank: number, variant: string) => ({
+    const initializeLocusZoomStateFromSpan = (span: string, flank: number | undefined, variant: string) => ({
         chr: "chr" + span.split(":")[0],
         start: parseInt(span.split(":")[1]) - (flank ? flank : DEFAULT_FLANK),
         end: parseInt(span.split(":")[1]) + (flank ? flank : DEFAULT_FLANK),
@@ -105,13 +106,13 @@ export const LocusZoomPlot: React.FC<LocusZoomPlotProps> = ({
 
     const initializeLocusZoomPlot = () => {
         const lzState = initializeLocusZoomState();
-        const plot = _buildLocusZoomPlot(divId, lzState, track, serviceBaseUrl, width, genomeBuild);
+        const plot = _buildLocusZoomPlot(divId ? divId : "locus-zoom", lzState, track, serviceBaseUrl, width, genomeBuild);
         setPlot(plot);
     };
 
     return (
         <Grid container alignItems="center" direction="column">
-            <div id={divId ? divId : "locus-zoom"} className={className ? className : null}/>
+            <div id={divId ? divId : "locus-zoom"} className={className ? className : undefined}/>
         </Grid>
     );
 };

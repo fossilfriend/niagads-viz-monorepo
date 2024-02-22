@@ -5,6 +5,11 @@ import { terser } from 'rollup-plugin-terser'; // generate minified bundle
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss'; 
 import { visualizer } from 'rollup-plugin-visualizer'; // generate bundle stats
+
+// handling the ambient types - https://stackoverflow.com/a/70111116
+import { dts } from 'rollup-plugin-dts';
+import del from 'rollup-plugin-delete';
+
 // import tailwind from 'rollup-plugin-tailwindcss';
 
 import { getFiles } from './scripts/buildUtils';
@@ -13,7 +18,7 @@ const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 
 // format cjs = CommonJS
 
-export default {
+export default [{
     input: [
         './src/index.ts',
         ...getFiles('./src/common', extensions),
@@ -47,7 +52,13 @@ export default {
             open: true,
         }),
     ],
+},
+{
+    input: './dist/dts/index.d.ts',
+    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    plugins: [dts(), del({ hook: "buildEnd", targets: "./dist/dts" }),],
 }
+]
 
 // external: ['react', 'react-dom']
 /*

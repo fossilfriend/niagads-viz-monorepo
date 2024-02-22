@@ -34,7 +34,7 @@ export interface HighchartsPlotProps {
     callback?: ChartCallbackFunc;
 }
 
-export function buildOptions(data: any, properties: any, options: Options) {
+export function buildOptions(data: any, properties: any, options: Options | undefined) {
     let opts = buildChartOptions(properties.type);
 
     if (data) {

@@ -1,5 +1,5 @@
 import { LocusZoom } from "@charts/LocusZoom";
-import config from "@data/locus_zoom/_config";
+import config from "@common/lz_config";
 
 // copied from https://github.com/statgen/locuszoom/blob/a271a0321339fb223721476244ece2fa7dec9820/esm/helpers/layouts.js#L106
 // fossilfriend: b/c I couldn't figure out how to import it from the node_modules!! ... even though it is there, so
