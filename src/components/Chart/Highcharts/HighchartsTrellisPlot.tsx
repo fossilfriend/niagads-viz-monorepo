@@ -2,7 +2,7 @@ import React from "react";
 import { Options } from "highcharts";
 import HighchartsPlot, { HighchartsPlotProps } from "./HighchartsPlot";
 
-import "./HighchartsTrellisPlot.scss";
+// import "./HighchartsTrellisPlot.scss";
 import Grid  from "@mui/material/Grid";
 import { Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";

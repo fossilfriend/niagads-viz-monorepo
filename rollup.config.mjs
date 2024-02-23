@@ -3,10 +3,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser'; // generate minified bundle
 import external from 'rollup-plugin-peer-deps-external';
+//import external from 'rollup-plugin-auto-external';  
 import postcss from 'rollup-plugin-postcss';
 import { visualizer } from 'rollup-plugin-visualizer'; // generate bundle stats
-
-// handling the ambient types - https://stackoverflow.com/a/70111116
 import { dts } from 'rollup-plugin-dts';
 import del from 'rollup-plugin-delete';
 
@@ -36,14 +35,17 @@ export default [{
             preserveModulesRoot: 'src'
         }
     ],
+    external: [/node_modules/],
     plugins: [
         resolve(),
         commonjs(),
         external(),
         typescript({
-            tsconfig: './tsconfig.json',
-            declaration: true,
-            declarationDir: 'dist/dts',
+            tsconfig: './tsconfig.build.json',
+            typeRoots: [
+                "node_modules/@types",
+                "node_modules/niagads-ambient-types"
+            ],
         }),
         postcss(),
         terser(),

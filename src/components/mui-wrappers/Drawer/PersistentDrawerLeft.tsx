@@ -3,15 +3,9 @@ import { useTheme, Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import { Drawer, Divider, Button, Box } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { DrawerProps, DrawerContentsProps } from "@mui-wrappers/index";
+import { DrawerProps, DrawerContentsProps, DRAWER_WIDTH, DrawerState, SHIFT_X } from "./types";
 
-export const DRAWER_WIDTH = 300;
-export const SHIFT_X = 250;
-export interface DrawerState {
-  isOpen: boolean;
-  handleClose?: any;
-  handleOpen?: any;
-}
+
 
 export const contentStyles = (theme: Theme) => ({
   content: {

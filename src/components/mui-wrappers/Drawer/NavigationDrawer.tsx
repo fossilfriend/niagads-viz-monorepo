@@ -17,11 +17,8 @@ import {
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-import {
-  StyledTooltip as Tooltip,
-  DrawerProps, DrawerContentsProps,
-  DRAWER_WIDTH,
-} from "@mui-wrappers/index";
+import { StyledTooltip as Tooltip } from "@mui-wrappers/Tooltips";
+import { DrawerProps, DrawerContentsProps, DRAWER_WIDTH } from "./types"
 
 const useDrawerStyles = (props: any) =>
   makeStyles((theme: Theme) => ({

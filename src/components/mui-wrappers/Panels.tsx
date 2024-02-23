@@ -12,11 +12,11 @@ import {
     Collapse,
     CardContent,
 } from "@mui/material";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import { lighten } from "@mui/material/styles";
-import { DownArrowRow } from "@mui-wrappers/index";
+import { DownArrowRow } from "@mui-wrappers/GridElements/DownArrowRow";
 
 export interface PanelProps {
     webAppUrl?: string;

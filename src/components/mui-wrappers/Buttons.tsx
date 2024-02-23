@@ -1,10 +1,9 @@
 import React from "react";
 
 import { withStyles } from "@mui/styles";
-import { muiTheme } from "@mui-wrappers/index"
+import { muiTheme } from "@mui-wrappers/theme"
 import { ButtonProps, ThemeProvider } from "@mui/material";
 import Button from "@mui/material/Button";
-
 
 export const LabelButton = withStyles((theme) =>
   ({

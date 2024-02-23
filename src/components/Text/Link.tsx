@@ -1,5 +1,5 @@
 import React from "react";
-import { TextRenderer } from "@renderers/types";
+import { TextRenderer } from "@text/types";
 
 export const resolveLink = (url: string, value: string) => {
     return (

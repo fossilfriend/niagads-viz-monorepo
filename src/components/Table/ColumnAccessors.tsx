@@ -1,6 +1,7 @@
 import React from "react"
 
-import { parseFieldValue, ColumnAccessor, ColumnAccessorType } from  "@table/index"
+import { ColumnAccessor, ColumnAccessorType } from  "@table/types"
+import { parseFieldValue } from "@table/utils";
 
 import {
     BooleanCheck as BooleanCheckAccessor,
@@ -8,11 +9,51 @@ import {
     SparkPercentageBar as SparkPercentageBarAccessor,
     Link as LinkAccessor,
     LinkList as LinkListAccessor,
-    JSONRenderer as JSONAccessor,
+    FormattedJSON as JSONAccessor,
     isJSON,
     Clob,
     ColoredText as ColoredTextAccessor,
-} from "@renderers/index"
+    resolveNAs
+} from "@text/index"
+
+
+export const resolveColumnAccessor = (
+    key: string,
+    accessorType: ColumnAccessorType | any = "Default"
+) => {
+    const MemoSparkPercentageBarAccessor = React.memo(SparkPercentageBarAccessor);
+    const MemoBooleanCheckAccessor = React.memo(BooleanCheckAccessor);
+    const MemoColoredTextAccessor = React.memo(ColoredTextAccessor);
+    const MemoDefaultTextAccessor = React.memo(DefaultTextAccessor);
+
+    switch (accessorType) {
+        case "PercentageBar":
+            return (row: any) =>
+                resolveNAs(
+                    row[key],
+                    <MemoSparkPercentageBarAccessor
+                        value={{ value: row[key], percentage: row[key] * 100 }}
+                    />
+                );
+        case "BooleanCheck":
+            return (row: any) => <MemoBooleanCheckAccessor value={row[key]} />;
+        case "ColoredText":
+            return (row: any) =>
+                resolveNAs(
+                    row[key],
+                    <MemoColoredTextAccessor value={row[key]} htmlColor="red" />
+                );
+        case "Link":
+            return (row: any) =>
+                resolveNAs(row[key], <MemoDefaultTextAccessor value={row[key]} />);
+        case "ScientificNotation":
+        case "Float":
+        default:
+            return (row: any) =>
+                resolveNAs(row[key], <MemoDefaultTextAccessor value={row[key]} />);
+    }
+};
+
 
 
 export const DefaultTextAccessor: React.FC<ColumnAccessor> = ({ value, maxLength = 100 }) => {

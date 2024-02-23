@@ -1,8 +1,6 @@
-import { createTheme } from '@mui/material/styles';
-import { primaryThemeOptions, muiThemeOptions } from "./theme";
 
-export const theme = createTheme(primaryThemeOptions);
-export const muiTheme = createTheme(muiThemeOptions);
+export { theme, muiTheme  } from "./theme";
+
 export * from "./styles";
 
 export * from "./Tooltips";

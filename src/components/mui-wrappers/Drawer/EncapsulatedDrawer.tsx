@@ -12,11 +12,9 @@ import clsx from "clsx";
 import { useTheme, Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 
-import {
-    StyledTooltip as Tooltip,
-    DrawerProps,
-    DrawerContentsProps,
-} from "@mui-wrappers/index";
+
+import { StyledTooltip as Tooltip } from "@mui-wrappers/Tooltips";
+import { DrawerProps, DrawerContentsProps, } from "./types"
 
 const DRAWER_WIDTH = 400;
 const MAX_HEIGHT = 750;

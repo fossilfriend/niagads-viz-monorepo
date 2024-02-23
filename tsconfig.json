@@ -38,7 +38,7 @@
 
         "paths": {
             "@charts/*": ["components/Chart/Highcharts/*"],
-            "@renderers/*": ["components/TextRenderer/*"],
+            "@text/*": ["components/Text/*"],
             "@table/*": ["components/Table/*"],
             "@components/*": ["components/*"],
             "@mui-wrappers/*": ["components/mui-wrappers/*"],
@@ -53,6 +53,7 @@
         "scripts",
         "webpack",
         "example",
-        "postcss.config.js"
+        "postcss.config.js",
+        "**/*.scss"
     ],
 }

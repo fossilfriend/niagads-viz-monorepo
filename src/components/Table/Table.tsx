@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Column, Data } from "@table/types";
-import { resolveColumnAccessor } from "@table/utils";
+import { resolveColumnAccessor } from "@table/ColumnAccessors";
 import PaginationControls from "@table/PaginationControls";
 
 interface TableProps<T> {

@@ -1,10 +1,9 @@
 export type { TextRendererType, TextRenderer } from "./types"
-export { resolveNAs, isJSON, isObject } from "./utils";
+export { isJSON, isObject, resolveNAs } from "./utils";
 
 export * from "./NASpan";
 export * from "./BooleanCheck";
 export { Link, LinkList } from "./Link";
 export { SparkPercentageBar } from "./SparkPercentageBar";
-export { JSONRenderer } from "./JSON";
-export * from "./Text";
+export { DefaultText, AnnotatedText, ColoredText, FormattedJSON, Clob} from "./Text";
 

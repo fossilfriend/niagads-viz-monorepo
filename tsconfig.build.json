@@ -8,10 +8,8 @@
         "node_modules",
         "build",
         "dist",
+        "example",
         "scripts",
-        "acceptance-tests",
-        "webpack",
-        "jest",
         "stories/**"
     ]
 }

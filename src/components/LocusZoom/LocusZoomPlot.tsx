@@ -6,13 +6,16 @@ import {
     CustomAssociationAdapter,
     CustomGeneAdapter,
     CustomRecombAdapter,
-    CustomLDServerAdapter,
+    CustomLDServerAdapter
+} from "./CustomLocusZoomAdapters"
+
+import {
     standard_association_toolbar,
     standard_association_tooltip,
     standard_genes_tooltip,
     _ldColorScale,
     _ldLegend
-} from "@components/LocusZoom";
+} from "./CustomLocusZoomLayouts";
 
 import Grid from "@mui/material/Grid"
 
