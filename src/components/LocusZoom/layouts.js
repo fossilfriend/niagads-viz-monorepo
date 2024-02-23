@@ -1,11 +1,10 @@
-import * as lz from "locuszoom";
-const LocusZoom = lz.default as any;
-import config from "@common/lz_config";
+import LocusZoom from "locuszoom"
+import config from "./config"
 
 // copied from https://github.com/statgen/locuszoom/blob/a271a0321339fb223721476244ece2fa7dec9820/esm/helpers/layouts.js#L106
 // fossilfriend: b/c I couldn't figure out how to import it from the node_modules!! ... even though it is there, so
 // TODO: fix this / import
-function deepCopy(item: any) {
+function deepCopy(item) {
     // FIXME: initial attempt to replace this with a more efficient deep clone method caused merge() to break; revisit in future.
     //   Replacing this with a proper clone would be the key blocker to allowing functions and non-JSON values (like infinity) in layout objects
     return JSON.parse(JSON.stringify(item));

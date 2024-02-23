@@ -1,16 +1,14 @@
-import * as lz from "locuszoom";
-const LocusZoom = lz.default as any;
+import LocusZoom from "locuszoom";
+import config from "./config"
 
-const DEFAULT_LD_POPULATION = 'ADSP';
-
-export interface RequestOptions {
+/*export interface RequestOptions {
     chr?: string;
     start?: number;
     end?: number;
     ld_population?: string;
     ld_refvar?: string;
     track?: string;
-}
+}*/
 
 const AssociationLZ = LocusZoom.Adapters.get("AssociationLZ"),
     LDServer = LocusZoom.Adapters.get("LDServer"),
@@ -23,17 +21,16 @@ export class CustomAssociationAdapter extends AssociationLZ {
         config.prefix_namespace = false;
         super(config);
     }*/
-    // start! -> the ! is a non-null assertion operator in TypeScript
 
-    _getURL(request_options: RequestOptions) {
+    _getURL(request_options) {
         // Every adapter receives the info from plot.state, plus any additional request options calculated/added in the function `_buildrequest_options`
         // The inputs to the function can be used to influence what query is constructed. Eg, since the current view region is stored in `plot.state`:
         let { chr, start, end, track } = request_options;
         // Fetch the region of interest from a hypothetical REST API that uses query parameters to define the region query, for a given study URL such as `data.example/gwas/<id>/?chr=_&start=_&end=_`
-        return `${this._url}/gwas?track=${track}&chromosome=${chr}&start=${Math.trunc(start!)}&end=${Math.trunc(end!)}`;
+        return `${this._url}/gwas?track=${track}&chromosome=${chr}&start=${Math.trunc(start)}&end=${Math.trunc(end)}`;
     }
 
-    _buildRequestOptions(plot_state: any, ...dependent_data: any) {
+    _buildRequestOptions(plot_state, ...dependent_data) {
         const initialState = this._config.initial_state;
         const requestOptions = Object.assign({
             chr: plot_state.chr ? plot_state.chr : initialState.chr,
@@ -45,7 +42,7 @@ export class CustomAssociationAdapter extends AssociationLZ {
         return requestOptions;
     }
 
-    _normalizeResponse(raw_response: any, request_options: RequestOptions) {
+    _normalizeResponse(raw_response, request_options) {
         const { chr } = request_options;
 
         // for some strange reason; the raw_response is a string
@@ -56,7 +53,7 @@ export class CustomAssociationAdapter extends AssociationLZ {
         if (response.data.variant == null)
             return [];
 
-        const records = response.data.variant.map((variant: string, index: number) => (
+        const records = response.data.variant.map((variant, index) => (
             {
                 variant: variant,
                 pvalue: response.data.pvalue[index],
@@ -71,12 +68,12 @@ export class CustomAssociationAdapter extends AssociationLZ {
 }
 
 export class CustomRecombAdapter extends RecombLZ {
-    _getURL(request_options: RequestOptions) {
+    _getURL(request_options) {
         const { chr, start, end } = request_options;
-        return `${this._url}/recomb?chromosome=${chr}&start=${Math.trunc(start!)}&end=${Math.trunc(end!)}`;
+        return `${this._url}/recomb?chromosome=${chr}&start=${Math.trunc(start)}&end=${Math.trunc(end)}`;
     }
 
-    _buildRequestOptions(plot_state: any, ...dependent_data: any) {
+    _buildRequestOptions(plot_state, ...dependent_data) {
         const initialState = this._config.initial_state;
         const requestOptions = Object.assign({
             chr: plot_state.chr ? plot_state.chr : initialState.chr,
@@ -89,23 +86,23 @@ export class CustomRecombAdapter extends RecombLZ {
 }
 
 export class CustomLDServerAdapter extends LDServer {
-    constructor(config: any) {
+    constructor(config) {
         super(config);
     }
 
     // modified from https://statgen.github.io/locuszoom/docs/api/data_adapters.js.html#line478
     // added types
-    __find_ld_refvar(state: any, assoc_data: any): string {
+    __find_ld_refvar(state, assoc_data) {
         const assoc_variant_name = this._findPrefixedKey(assoc_data[0], 'variant');
         const assoc_logp_name = this._findPrefixedKey(assoc_data[0], 'log_pvalue');
 
-        let refvar: string = "";
-        let best_hit: any = {};
+        let refvar = "";
+        let best_hit = {};
 
         // Determine the reference variant (via user selected OR automatic-per-track)
         if (state.ldrefvar) { // passed by state
             refvar = state.ldrefvar;
-            best_hit = assoc_data.find((item: string) => item[assoc_variant_name] === refvar) || {};
+            best_hit = assoc_data.find((item) => item[assoc_variant_name] === refvar) || {};
         }
         else {
             // find highest log-value and associated var spec
@@ -147,13 +144,13 @@ export class CustomLDServerAdapter extends LDServer {
         return refvar;
     }
 
-    _getURL(request_options: RequestOptions) {
+    _getURL(request_options) {
         const { ld_population, ld_refvar } = request_options;
         return `${this._url}/linkage?population=${ld_population}&variant=${ld_refvar}`;
     }
 
 
-    _buildRequestOptions(plot_state: any, assoc_data: any) {
+    _buildRequestOptions(plot_state, assoc_data) {
         if (!assoc_data) {
             throw new Error('LD request must depend on association data');
         }
@@ -175,7 +172,7 @@ export class CustomLDServerAdapter extends LDServer {
             ? plot_state.ld_population
             : initialState.population
                 ? initialState.population
-                : DEFAULT_LD_POPULATION;
+                : config.DEFAULT_LD_POPULATION;
 
         const requestOptions = Object.assign({}, base, { ld_population });
 
@@ -187,7 +184,7 @@ export class CustomLDServerAdapter extends LDServer {
     // repeated chromosome (chromosome1, chromosome2), reference variant (variant1), 
     // and positional info (position1, position2)
     // and renames r_squared to correlation
-    _normalizeResponse(raw_response: any, request_options: RequestOptions) {
+    _normalizeResponse(raw_response, request_options) {
         const { ld_refvar } = request_options;
 
         // ld_refvar undefined b/c no association data in span
@@ -212,7 +209,7 @@ export class CustomLDServerAdapter extends LDServer {
             return [ ldSelf ]
         }
 
-        const records = raw_response.data.linked_variant.map((lv: string, index: number) => (
+        const records = raw_response.data.linked_variant.map((lv, index) => (
             {
                 variant1: ld_refvar,
                 variant2: lv,
@@ -234,12 +231,12 @@ export class CustomLDServerAdapter extends LDServer {
 /*LDLZSource.prototype.*/
 
 export class CustomGeneAdapter extends GeneLZ {
-    _getURL(request_options: RequestOptions) {
+    _getURL(request_options) {
         const { chr, start, end } = request_options;
-        return `${this._url}/gene?chromosome=${chr}&start=${Math.trunc(start!)}&end=${Math.trunc(end!)}`;
+        return `${this._url}/gene?chromosome=${chr}&start=${Math.trunc(start)}&end=${Math.trunc(end)}`;
     }
 
-    _buildRequestOptions(plot_state: any, ...dependent_data: any) {
+    _buildRequestOptions(plot_state, ...dependent_data) {
         const initialState = this._config.initial_state;
 
         const requestOptions = Object.assign({
