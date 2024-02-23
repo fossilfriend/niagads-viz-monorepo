@@ -24,7 +24,7 @@ export default [{
         ...getFiles('./src/common', extensions),
         ...getFiles('./src/components', extensions),
         ...getFiles('./src/hooks', extensions),
-        ...getFiles('./src/utils', extensions),
+        ...getFiles('./src/utils', extensions)
     ],
     output: [
         {
@@ -42,10 +42,6 @@ export default [{
         external(),
         typescript({
             tsconfig: './tsconfig.build.json',
-            typeRoots: [
-                "node_modules/@types",
-                "node_modules/niagads-ambient-types"
-            ],
         }),
         postcss(),
         terser(),
@@ -55,12 +51,13 @@ export default [{
         }),
     ],
 },
-{
+
+]
+/*{
     input: ['./dist/dts/index.d.ts'],
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [dts(), del({ hook: "buildEnd", targets: "./dist/dts" }),],
-}
-]
+}*/
 
 // external: ['react', 'react-dom']
 /*

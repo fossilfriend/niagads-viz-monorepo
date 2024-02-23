@@ -2,7 +2,8 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "declaration": true,
-        "declarationDir": "dist/dts"
+        "declarationDir": "dist/dts",
+        "emitDeclarationOnly": false,
     },
     "exclude": [
         "node_modules",
@@ -10,6 +11,6 @@
         "dist",
         "example",
         "scripts",
-        "stories/**"
+        "stories"
     ]
 }
