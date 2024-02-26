@@ -1,7 +1,7 @@
 import React from "react"
 
-import { ColumnAccessor, ColumnAccessorType } from  "@table/types"
-import { parseFieldValue } from "@table/utils";
+import { ColumnAccessor, ColumnAccessorType } from  "./types"
+import { parseFieldValue } from "./utils";
 
 import {
     BooleanCheck as BooleanCheckAccessor,
@@ -14,7 +14,7 @@ import {
     Clob,
     ColoredText as ColoredTextAccessor,
     resolveNAs
-} from "@text/index"
+} from "../Text"
 
 
 export const resolveColumnAccessor = (

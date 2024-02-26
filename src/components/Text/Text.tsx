@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 import { isJSON, isObject } from "@text/utils"
-import { TextRenderer } from "@text/types"
+import { TextRenderer } from "./types"
 import { Link, LinkList } from "@text/Link"
 
 const resolveObjectType = (obj: any) => {

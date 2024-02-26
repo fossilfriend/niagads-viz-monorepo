@@ -14,7 +14,7 @@ import {
     faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { Column, Data } from "@table/types";
+import { Column, Data } from "./types";
 import { resolveColumnAccessor } from "@table/ColumnAccessors";
 import PaginationControls from "@table/PaginationControls";
 

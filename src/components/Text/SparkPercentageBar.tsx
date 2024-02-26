@@ -6,7 +6,7 @@ import { withStyles } from "@mui/styles";
 import Box, { BoxProps } from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import { TextRenderer } from "@text/types";
+import { TextRenderer } from "./types";
 
 /* note: this may not render correctly; in mui 4.x, the Box element had the `clone` prop; not sure why, but
 deprecated in 5 (see https://mui.com/material-ui/migration/v5-component-changes/#remove-clone-prop) so just removed it

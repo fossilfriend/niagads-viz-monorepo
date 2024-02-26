@@ -1,4 +1,4 @@
-import { TextRendererType , TextRenderer } from "@text/types";
+import { TextRendererType , TextRenderer } from "../Text";
 
 export type AllowableTableDataValue = string | number | boolean | { [key: string] : string };
 

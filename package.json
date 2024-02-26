@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "author": "fossilfriend,bug-sam",
     "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
+    "module": "dist/esm/index.mjs",
     "scripts": {
         "build": "rollup -c --bundleConfigAsCjs"
     },

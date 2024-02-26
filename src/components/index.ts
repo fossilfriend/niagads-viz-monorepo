@@ -1,1 +1,5 @@
-export { Table } from "@table/index"
+export { Table } from "./Table"
+export * from "./Text"
+export * from "./Chart/Highcharts"
+export { LocusZoomPlot, MemoLocusZoomPlot} from "./LocusZoom"
+export * from "./mui-wrappers"
