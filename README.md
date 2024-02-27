@@ -25,7 +25,7 @@ npm install git+https://github.com/NIAGADS/niagads-viz-js.git#BRANCH --legacy-pe
 
 ## StoryBook
 
-TBA
+* TODO: generate story hierarchy from project hierarchy: https://storybook.js.org/docs/configure#configure-story-loading
 
 ## Run `example` app
 

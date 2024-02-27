@@ -11,6 +11,6 @@
         "dist",
         "example",
         "scripts",
-        "stories"
+        "src/stories"
     ]
 }
