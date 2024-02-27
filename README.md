@@ -23,6 +23,33 @@ To install a specific branch:
 npm install git+https://github.com/NIAGADS/niagads-viz-js.git#BRANCH --legacy-peer-deps
 ```
 
+## StoryBook
+
+TBA
+
+## Run `example` app
+
+> NOTE: Requires `next.js`: you may need to pre-install `next` npm package
+
+```bash
+git clone https://github.com/NIAGADS/niagads-viz-js.git 
+cd niagads-viz-js/example
+npm install --legacy-peer-deps
+```
+
+### Dev
+
+```bash
+npm run dev
+```
+
+### Prod
+
+```bash
+npm run start
+```
+
+
 ## VSCode Configurations
 
 ### Tailwind
