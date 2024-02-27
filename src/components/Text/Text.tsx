@@ -107,7 +107,7 @@ export const ColoredText: React.FC<TextRenderer> = ({ value, className, color })
 export const AnnotatedText: React.FC<TextRenderer> = ({ value, color }) => {
     return (    
         <div title={value.tooltip} arial-label={value.tooltip}>
-           <span className="underline decoration-dashed decoration-blue-500">{value.value}</span>
+           <span className="underline decoration-dashed decoration-blue-500 underline-offset-4">{value.value}</span>
         </div>
     );
 };
