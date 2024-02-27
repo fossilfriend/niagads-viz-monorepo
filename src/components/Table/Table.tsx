@@ -14,12 +14,12 @@ import {
     faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { Column, Data } from "./types";
+import { Column, TableData } from "./types";
 import { resolveColumnAccessor } from "@table/ColumnAccessors";
 import PaginationControls from "@table/PaginationControls";
 
 interface TableProps<T> {
-    data: Data[];
+    data: TableData[];
     columns: Column<T>[];
 }
 

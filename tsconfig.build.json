@@ -3,7 +3,7 @@
     "compilerOptions": {
         "declaration": true,
         "declarationDir": "dist/dts",
-        "emitDeclarationOnly": false,
+        "emitDeclarationOnly": true,
     },
     "exclude": [
         "node_modules",
