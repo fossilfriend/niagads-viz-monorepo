@@ -81,11 +81,11 @@ export const Clob: React.FC<TextRenderer> = ({ value, maxLength = 100 }) => {
         <AnnotatedText value={{ value: value.slice(0, maxLength - 3) + "...", tooltip: value.tooltip }} />
     ) : isExpanded ? (
         <div>
-            {value} <a onClick={toggleIsExpanded}>Show less</a>
+            {value} <a className="cursor-pointer decoration-dashed" onClick={toggleIsExpanded}>Show less</a>
         </div>
     ) : (
         <div>
-            {`${value.slice(0, maxLength - 3)}...`} <a onClick={toggleIsExpanded}>Show more</a>
+            {`${value.slice(0, maxLength - 3)}...`} <a className="cursor-pointer decoration-dashed" onClick={toggleIsExpanded}>Show more</a>
         </div>
     );
 };
