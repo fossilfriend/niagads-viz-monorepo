@@ -67,7 +67,7 @@ export const LocusZoomPlot: React.FC<LocusZoomPlotProps> = ({
 
 
     useEffect(() => {
-        plot && setPlotState(plot);
+        plot && setPlot(plot);
     }, [plot]);
 
     function initializeLocusZoomState() {
