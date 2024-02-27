@@ -5,3 +5,11 @@ const _color_blind_friendly_palettes = {
 };
 
 export {_color_blind_friendly_palettes}
+
+
+type RGB = `rgb(${number}, ${number}, ${number})`;
+type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
+type HEX = `#${string}`;
+type STANDARD_COLORS = 'red' | 'blue' | 'green' | 'gold' | 'grey' | 'black' | 'white'
+
+export type COLOR = RGB | RGBA | HEX | STANDARD_COLORS

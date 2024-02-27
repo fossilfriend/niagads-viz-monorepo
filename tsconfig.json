@@ -43,7 +43,8 @@
             "@components/*": ["components/*"],
             "@mui-wrappers/*": ["components/mui-wrappers/*"],
             "@utils/*": ["utils/*"],
-            "@common/*": ["common/*"]
+            "@common/*": ["common/*"],
+            "@root/*" : ["./*"]
         },
     },
     "exclude": [

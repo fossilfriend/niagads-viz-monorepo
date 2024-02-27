@@ -41,7 +41,7 @@ export const resolveColumnAccessor = (
             return (row: any) =>
                 resolveNAs(
                     row[key],
-                    <MemoColoredTextAccessor value={row[key]} htmlColor="red" />
+                    <MemoColoredTextAccessor value={row[key]} color="red" />
                 );
         case "Link":
             return (row: any) =>

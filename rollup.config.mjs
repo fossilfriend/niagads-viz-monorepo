@@ -7,15 +7,13 @@ import postcss from "rollup-plugin-postcss";
 import { visualizer } from "rollup-plugin-visualizer"; // generate bundle stats
 import { dts } from "rollup-plugin-dts";
 import del from "rollup-plugin-delete";
+//import tailwind from 'rollup-plugin-tailwindcss';
+import tailwindcss from 'tailwindcss';
 
-// import tailwind from 'rollup-plugin-tailwindcss';
 
 import { getFiles } from "./scripts/buildUtils";
 
 const extensions = [".js", ".ts", ".jsx", ".tsx"];
-const declarations = ["*.d.ts", "**/*.d.ts", "**/*.d.cts", "**/*.d.mts"];
-
-// format cjs = CommonJS
 
 export default [
     {
@@ -43,7 +41,17 @@ export default [
             typescript({
                 tsconfig: "./tsconfig.build.json",
             }),
-            postcss(),
+            postcss({
+                config: {
+                    path: './postcss.config.js',
+                },
+                extensions: ['.css'],
+                minimize: true,
+                inject: {
+                    insertAt: 'top',
+                },
+                plugins: [tailwindcss('./tailwind.config.js')],
+            }),
             terser(),
             visualizer({
                 filename: "bundle-analysis.html",
@@ -52,19 +60,21 @@ export default [
         ],
     },
     {
-        input: ["./dist/dts/src/index.d.ts"],
+        input: ["./dist/dts/index.d.ts"],
         output: [{ file: "./dist/index.d.ts", format: "es" }],
         plugins: [dts(), del({ hook: "buildEnd", targets: "./dist/dts" })],
+        external: [/\.css$/u] // HACK: Fix for this problem https://github.com/Swatinem/rollup-plugin-dts/issues/165]
     },
 ];
+
 /*
-*/
+
 // external: ['react', 'react-dom']
-/*
 tailwind({
-            input: 'path/to/entry.css', // required
-            // Tailor the emitted stylesheet to the bundle by removing any unused CSS
-            // (highly recommended when packaging for distribution).
-            purge: false,
-        }),
+    input: './src/index.css',
+    purge: false,
+}),
+
+
+
         */

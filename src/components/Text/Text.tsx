@@ -4,6 +4,7 @@ import { isJSON, isObject } from "@text/utils"
 import { TextRenderer } from "./types"
 import { Link, LinkList } from "@text/Link"
 
+
 const resolveObjectType = (obj: any) => {
     if (Array.isArray(obj)) {
         if ("url" in obj[0]) {
@@ -89,9 +90,11 @@ export const Clob: React.FC<TextRenderer> = ({ value, maxLength = 100 }) => {
     );
 };
 
-export const ColoredText: React.FC<TextRenderer> = ({ value, className, muiColor }) => {
+
+
+export const ColoredText: React.FC<TextRenderer> = ({ value, className, color }) => {
     return (
-        <span className={className ? className : ""} color={muiColor ? muiColor : ""}>
+        <span style={{color: `${color}`}} className={className ? className : undefined}>
             {value}
         </span>
     );
@@ -100,10 +103,11 @@ export const ColoredText: React.FC<TextRenderer> = ({ value, className, muiColor
 // text with tooltip value = { value: string, tooltip: string}
 // so technically, takes JSON
 
-export const AnnotatedText: React.FC<TextRenderer> = ({ value }) => {
+
+export const AnnotatedText: React.FC<TextRenderer> = ({ value, color }) => {
     return (    
         <div title={value.tooltip} arial-label={value.tooltip}>
-           <span className="annotated-text">{value.value}</span>
+           <span className="underline decoration-dashed decoration-blue-500">{value.value}</span>
         </div>
     );
 };
