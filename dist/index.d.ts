@@ -11,12 +11,18 @@ declare const resolveJSONFieldValue: (value: string) => any;
 declare const resolveNullFieldValue: (value: string | null, nullStr?: string) => any;
 declare const parseFieldValue: (value: any, nullStr?: string) => any;
 
+type RGB = `rgb(${number}, ${number}, ${number})`;
+type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
+type HEX = `#${string}`;
+type STANDARD_COLORS = 'red' | 'blue' | 'green' | 'gold' | 'grey' | 'black' | 'white';
+type COLOR = RGB | RGBA | HEX | STANDARD_COLORS;
+
 type TextRendererType = "PercentageBar" | "Default" | "BooleanCheck" | "ScientificNotation" | "Float" | "ColoredText" | "Link";
 interface TextRenderer {
     value?: any;
     object?: any;
     muiColor?: any;
-    htmlColor?: string;
+    color?: COLOR;
     className?: string;
     maxLength?: number;
     userProps?: any;
@@ -260,7 +266,7 @@ interface CustomLinkProps {
 }
 declare const CustomLink: React$1.ForwardRefExoticComponent<Omit<_mui_material.LinkOwnProps & _mui_material_OverridableComponent.CommonProps & Omit<Omit<React$1.DetailedHTMLProps<React$1.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>, "ref"> & {
     ref?: ((instance: HTMLAnchorElement | null) => void) | React$1.RefObject<HTMLAnchorElement> | null | undefined;
-}, "zIndex" | "order" | "gridColumn" | "gridRow" | "margin" | "height" | "maxHeight" | "minHeight" | "width" | "maxWidth" | "minWidth" | "flex" | "flexShrink" | "flexGrow" | "flexBasis" | "gridAutoColumns" | "gridAutoRows" | "gridTemplateColumns" | "gridTemplateRows" | "gap" | "borderRadius" | "borderColor" | "padding" | "fontFamily" | "fontSize" | "fontWeight" | "lineHeight" | "letterSpacing" | "boxShadow" | "className" | "children" | "p" | "style" | "border" | "borderTop" | "borderRight" | "borderBottom" | "borderLeft" | "display" | "displayPrint" | "overflow" | "textOverflow" | "visibility" | "whiteSpace" | "flexDirection" | "flexWrap" | "justifyContent" | "alignItems" | "alignContent" | "alignSelf" | "justifyItems" | "justifySelf" | "columnGap" | "rowGap" | "gridAutoFlow" | "gridTemplateAreas" | "gridArea" | "bgcolor" | "color" | "position" | "top" | "right" | "bottom" | "left" | "boxSizing" | "m" | "mt" | "mr" | "mb" | "ml" | "mx" | "my" | "pt" | "pr" | "pb" | "pl" | "px" | "py" | "marginTop" | "marginRight" | "marginBottom" | "marginLeft" | "marginX" | "marginY" | "marginInline" | "marginInlineStart" | "marginInlineEnd" | "marginBlock" | "marginBlockStart" | "marginBlockEnd" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingLeft" | "paddingX" | "paddingY" | "paddingInline" | "paddingInlineStart" | "paddingInlineEnd" | "paddingBlock" | "paddingBlockStart" | "paddingBlockEnd" | "typography" | "fontStyle" | "textAlign" | "textTransform" | "sx" | "align" | "classes" | "underline" | "paragraph" | "variant" | "gutterBottom" | "noWrap" | "variantMapping" | "TypographyClasses"> & {
+}, "className" | "children" | "p" | "style" | "color" | "border" | "borderTop" | "borderRight" | "borderBottom" | "borderLeft" | "borderColor" | "borderRadius" | "display" | "displayPrint" | "overflow" | "textOverflow" | "visibility" | "whiteSpace" | "flexBasis" | "flexDirection" | "flexWrap" | "justifyContent" | "alignItems" | "alignContent" | "order" | "flex" | "flexGrow" | "flexShrink" | "alignSelf" | "justifyItems" | "justifySelf" | "gap" | "columnGap" | "rowGap" | "gridColumn" | "gridRow" | "gridAutoFlow" | "gridAutoColumns" | "gridAutoRows" | "gridTemplateColumns" | "gridTemplateRows" | "gridTemplateAreas" | "gridArea" | "bgcolor" | "zIndex" | "position" | "top" | "right" | "bottom" | "left" | "boxShadow" | "width" | "maxWidth" | "minWidth" | "height" | "maxHeight" | "minHeight" | "boxSizing" | "m" | "mt" | "mr" | "mb" | "ml" | "mx" | "my" | "pt" | "pr" | "pb" | "pl" | "px" | "py" | "margin" | "marginTop" | "marginRight" | "marginBottom" | "marginLeft" | "marginX" | "marginY" | "marginInline" | "marginInlineStart" | "marginInlineEnd" | "marginBlock" | "marginBlockStart" | "marginBlockEnd" | "padding" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingLeft" | "paddingX" | "paddingY" | "paddingInline" | "paddingInlineStart" | "paddingInlineEnd" | "paddingBlock" | "paddingBlockStart" | "paddingBlockEnd" | "typography" | "fontFamily" | "fontSize" | "fontStyle" | "fontWeight" | "letterSpacing" | "lineHeight" | "textAlign" | "textTransform" | "sx" | "align" | "classes" | "underline" | "paragraph" | "variant" | "gutterBottom" | "noWrap" | "variantMapping" | "TypographyClasses"> & {
     component?: React$1.ElementType<any, keyof React$1.JSX.IntrinsicElements> | undefined;
 } & CustomLinkProps, "ref"> & React$1.RefAttributes<unknown>>;
 

@@ -1,1 +1,1 @@
-{"version":3,"file":"NASpan.js","sources":["../../../../src/components/Text/NASpan.tsx"],"sourcesContent":[null],"names":["NASpan","value","className","React"],"mappings":"qBAGO,MAAMA,EAAiC,EAAEC,QAAM,MAAOC,YAAU,UAE/DC,wBAAMD,UAAWA,GACZD"}
+{"version":3,"file":"NASpan.js","sources":["../../../src/components/Text/NASpan.tsx"],"sourcesContent":[null],"names":["NASpan","value","className","React"],"mappings":"qBAGO,MAAMA,EAAiC,EAAEC,QAAM,MAAOC,YAAU,UAE/DC,wBAAMD,UAAWA,GACZD"}
