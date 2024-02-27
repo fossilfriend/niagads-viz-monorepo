@@ -1,14 +1,49 @@
 # NIAGADS Visualization Toolkit
 
-## Example ReactApp
+> **NOTE: until `Material-UI` is removed,  `npm install` must be run with the `--legacy-peer-deps` option.**
 
-* until react-tables migration is complete, run `npm install` with the `--legacy-peer-deps` option
-* must set environmental variable `NODE_ENV=development` before running `npm start`
+## Component Library Build for Development
 
-## Javascript / React
+```bash
+git clone https://github.com/NIAGADS/niagads-viz-js.git 
+cd niagads-viz-js
+npm install --legacy-peer-deps
+npm run build
+```
 
-# Next Steps - Developer notes:
+## Import Component Library into 3rd-Party App
 
-* investigate [tsdx](https://tsdx.io/) as alternative / in addition to next.js to generate the library package
-  * can use tailwind (see https://www.youtube.com/watch?v=Fh-xdSf9uH0)
-  * may need to extract example app out into its own project 
+```bash
+npm install git+https://github.com/NIAGADS/niagads-viz-js.git --legacy-peer-deps
+```
+
+To install a specific branch:
+
+```bash
+npm install git+https://github.com/NIAGADS/niagads-viz-js.git#BRANCH --legacy-peer-deps
+```
+
+## VSCode Configurations
+
+### Tailwind
+
+> VSCode will not understand `tailwind` @ directives (`@tailwind`) out of the box. Recommendations are as follows:
+
+* install [Tailwind CSS IntelliSense Extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+* edit `settings.json` as follows:
+
+```json
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}
+```
+
+* if you do not want to install the extension, there are [other possible solutions](https://byby.dev/at-rule-tailwind).
+
+## Next Steps - Developer notes
+
+### TODOs/Issues
+
+* `table.js` example throws a runtime error in the `highcharts` `exporting.js` module due to attempting to use `hasOwnProperty` on a `null` -- may go away when filtering is in place; otherwise may need to re-evaluate dependency rollup
