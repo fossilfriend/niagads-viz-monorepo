@@ -1,4 +1,3 @@
-const SERVICE_BASE_URL = "SERVICE_URL_TBD";
 
 const _populations = [
     { display_name: "ADSP 17K", value: "ADSP" },
@@ -12,6 +11,5 @@ const _populations = [
 export default {
     DEFAULT_LD_POPULATION: "ADSP",
     DEFAULT_FLANK: 100000,
-    populations: _populations,
-    serviceUrl: SERVICE_BASE_URL,
+    populations: _populations
 };
