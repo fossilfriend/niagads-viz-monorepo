@@ -25,6 +25,13 @@ npm install git+https://github.com/NIAGADS/niagads-viz-js.git#BRANCH --legacy-pe
 
 ## StoryBook
 
+```bash
+git clone https://github.com/NIAGADS/niagads-viz-js.git 
+cd niagads-viz-js
+npm install --legacy-peer-deps
+npm run storybook
+```
+
 * TODO: generate story hierarchy from project hierarchy: https://storybook.js.org/docs/configure#configure-story-loading
 
 ## Run `example` app
@@ -48,7 +55,6 @@ npm run dev
 ```bash
 npm run start
 ```
-
 
 ## VSCode Configurations
 
