@@ -1,3 +1,5 @@
+import { COLOR } from "../../common/palettes"
+
 export type TextRendererType =
     | "PercentageBar"
     | "Default"
@@ -11,7 +13,7 @@ export interface TextRenderer {
     value?: any;
     object?: any;
     muiColor?: any; // one of
-    htmlColor?: string;
+    color?: COLOR;
     className?: string;
     maxLength?: number;
     userProps?: any;
