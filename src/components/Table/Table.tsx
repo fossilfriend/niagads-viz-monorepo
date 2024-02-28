@@ -7,12 +7,7 @@ import {
     SortingState,
 } from "@tanstack/react-table";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faSort,
-    faSortUp,
-    faSortDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { BarsArrowUpIcon, BarsArrowDownIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
 
 import { Column, TableData } from "./types";
 import { resolveColumnAccessor } from "@table/ColumnAccessors";
@@ -65,9 +60,9 @@ const Table: React.FC<TableProps<any>> = ({ data, columns }) => {
                                                     header.getContext()
                                                 )}
                                                 {{
-                                                    sort: <FontAwesomeIcon icon={faSort} />,
-                                                    asc: <FontAwesomeIcon icon={faSortUp} />,
-                                                    desc: <FontAwesomeIcon icon={faSortDown} />,
+                                                    sort: <ArrowsUpDownIcon className="h4 text-blue-600 pl-px" />,
+                                                    asc: <BarsArrowUpIcon className="h-4 text-blue-600 pl-px"/>,
+                                                    desc: <BarsArrowDownIcon className="h-4 text-blue-600 pl-px"/>,
                                                 }[header.column.getIsSorted() as string] ?? null}
                                             </div>
                                         )}

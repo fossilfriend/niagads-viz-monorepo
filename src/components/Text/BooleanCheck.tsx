@@ -1,21 +1,13 @@
 import React from "react"
 
-import Box from "@mui/material/Box"
-import CheckIcon from "@mui/icons-material/Check"
+import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 
 import { TextRenderer } from "./types"
 
-export const BooleanCheck: React.FC<TextRenderer> = ({ value, className, color, muiColor }) => {
+export const BooleanCheck: React.FC<TextRenderer> = ({ value, className, color }) => {
     if (value && ["true", "yes"].includes(value.toString().toLowerCase())) {
         return (
-            <Box component="span">
-            <CheckIcon
-                className={className ? className : undefined}
-                color={muiColor ? muiColor : undefined}
-                htmlColor={color ? color : undefined}
-                fontSize="inherit"
-            ></CheckIcon>
-        </Box>
+            <CheckBadgeIcon style={{color: `${color}`}} className={className ? className : "h-6"}/>
         );
     }
     return null;
