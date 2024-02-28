@@ -16,7 +16,6 @@ import Data from "highcharts/modules/data";
 Data(Highcharts);
 
 import Heatmap from "highcharts/modules/heatmap";
-
 Heatmap(Highcharts);
 
 require("highcharts/highcharts-more")(Highcharts); // bubble plot & others

@@ -6,7 +6,7 @@ import { useWindowSize } from "@uidotdev/usehooks"
 import { initialize } from "./plot";
 import config from "./config";
 
-// TODO - import "locuszoom/dist/locuszoom.css";
+import "locuszoom/dist/locuszoom.css";
 
 
 export const DEFAULT_FLANK = 100000;

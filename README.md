@@ -34,6 +34,13 @@ npm run storybook
 
 * TODO: generate story hierarchy from project hierarchy: https://storybook.js.org/docs/configure#configure-story-loading
 
+### Auto-Doc
+
+```bash
+npm run storybook-doc
+```
+
+
 ## Run `example` app
 
 > NOTE: Requires `next.js`: you may need to pre-install `next` npm package
@@ -56,9 +63,11 @@ npm run dev
 npm run start
 ```
 
-## VSCode Configurations
+## Developer Notes
 
-### Tailwind
+### VSCode Configurations
+
+#### Tailwind
 
 > VSCode will not understand `tailwind` @ directives (`@tailwind`) out of the box. Recommendations are as follows:
 
@@ -75,7 +84,15 @@ npm run start
 
 * if you do not want to install the extension, there are [other possible solutions](https://byby.dev/at-rule-tailwind).
 
-## Next Steps - Developer notes
+### JavaScript Configuration
+
+#### CORS
+
+> Storybook needs to query GenomicsDB API for LocusZoom
+
+see [.storybook/middleware.js](.storybook/middleware.js) for proxy configuration
+
+TODOs: proxy for example app
 
 ### TODOs/Issues
 
