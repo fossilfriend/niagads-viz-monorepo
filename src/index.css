@@ -4,6 +4,9 @@
 
 @layer base {
     a {
-        @apply text-blue-600 underline;
+        @apply text-blue-800 no-underline hover:underline;
+    }
+    html {
+        font-family: "Open Sans", system-ui, sans-serif;
     }
 }
