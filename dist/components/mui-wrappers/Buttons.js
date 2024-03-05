@@ -1,2 +1,0 @@
-import{__rest as e}from"/home/allenem/projects/viz/niagads-viz-js/node_modules/tslib/tslib.es6.js";import t from"react";import{withStyles as r}from"@mui/styles";import{muiTheme as o}from"./theme.js";import{ThemeProvider as m}from"@mui/material";import i from"@mui/material/Button";const s=r((e=>({root:{"&:hover":{backgroundColor:"white"},justifyContent:"left"}})))(i),l=r=>{var{children:s}=r,l=e(r,["children"]);return t.createElement(m,{theme:o},t.createElement(i,Object.assign({},l),s))};export{s as LabelButton,l as MaterialUIThemedButton};
-//# sourceMappingURL=Buttons.js.map

@@ -1,2 +1,0 @@
-import o from"react";import e from"@mui/material/Box";import r from"@mui/icons-material/Check";const t=({value:t,className:i,color:m,muiColor:l})=>t&&["true","yes"].includes(t.toString().toLowerCase())?o.createElement(e,{component:"span"},o.createElement(r,{className:i||void 0,color:l||void 0,htmlColor:m||void 0,fontSize:"inherit"})):null;export{t as BooleanCheck};
-//# sourceMappingURL=BooleanCheck.js.map
