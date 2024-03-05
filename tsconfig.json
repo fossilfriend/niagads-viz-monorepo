@@ -1,71 +1,60 @@
 {
-  "compilerOptions": {
-    "sourceMap": true,
-    "strictNullChecks": false,
-    "target": "es2017",
-    "module": "esnext",
-    "allowJs": true,
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "allowSyntheticDefaultImports": true,
-    "noImplicitReturns": true,
-    "jsx": "preserve",
-    "strict": true,
-    "alwaysStrict": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "experimentalDecorators": true,
-    "typeRoots": [
-      "./src/lib/ambient_types",
-      "node_modules/@types"
-    ],
-    "outDir": "dist",
-    "resolveJsonModule": true,
-    "paths": {
-      "@charts/*": [
-        "./src/charts/*"
-      ],
-      "@table/*": [
-        "./src/table/*"
-      ],
-      "@mui-wrappers/*": [
-        "./src/mui-wrappers/*"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@data/*": [
-        "./data/*"
-      ],
-      "@documentation/*": [
-        "./documentation/*"
-      ]
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "es6",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "sourceMap": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "esModuleInterop": true,
+        "allowJs": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "alwaysStrict": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "isolatedModules": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "baseUrl": "./src",
+
+        "typeRoots": [
+            "node_modules/@types",
+            "node_modules/niagads-ambient-types"
+        ],
+
+        "outDir": "dist",
+
+        "paths": {
+            "@charts/*": ["components/Chart/Highcharts/*"],
+            "@text/*": ["components/Text/*"],
+            "@table/*": ["components/Table/*"],
+            "@components/*": ["components/*"],
+            "@mui-wrappers/*": ["components/mui-wrappers/*"],
+            "@utils/*": ["utils/*"],
+            "@common/*": ["common/*"],
+            "@root/*" : ["./*"]
+        },
     },
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  },
-  "exclude": [
-    "dist/**/*"
-  ],
-  "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
-, "data/examples/table.js"  ]
+    "exclude": [
+        "node_modules",
+        "build",
+        "dist",
+        "scripts",
+        "webpack",
+        "example",
+        "postcss.config.js",
+        "**/*.scss"
+    ],
 }
