@@ -1,4 +1,5 @@
-// adapted from: https://github.com/TanStack/table/blob/3e760e3eab4dfc1c7168e418741566e42ba7dd25/packages/table-core/src/sortingFns.ts
+// adapted from https://github.com/NIAGADS/GenomicsDBWebsite/blob/e0b8a04abdf5aa8471a762908eb9e80bb8e0b6c0/Site/webapp/wdkCustomization/js/client/components/Visualizations/Table/TableSortingFunctions.tsx
+// originally adapted from: https://github.com/TanStack/table/blob/3e760e3eab4dfc1c7168e418741566e42ba7dd25/packages/table-core/src/sortingFns.ts
 // basically, wrappers to parseValues from objects in the table
 // and catch N/A's to treat them like null values
 
