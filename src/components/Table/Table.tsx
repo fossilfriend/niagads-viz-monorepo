@@ -7,7 +7,6 @@ import {
     SortingState,
     getSortedRowModel,
     createColumnHelper,
-    BuiltInSortingFn,
     ColumnDef,
 } from "@tanstack/react-table";
 
@@ -16,7 +15,7 @@ import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/2
 import { Column, TableData } from "./types";
 import { resolveColumnAccessor } from "@table/ColumnAccessors";
 import PaginationControls from "@table/PaginationControls";
-import sortingFunctions from "./TableSortingFunctions";
+import { CustomSortingFn, CustomSortingFunctions} from "./TableSortingFunctions";
 
 interface TableProps<T> {
     data: T[];
@@ -38,7 +37,7 @@ const Table: React.FC<TableProps<TableData>> = ({ data, columns }) => {
                 {
                     id: col.id,
                     cell: c => c.getValue(),
-                    sortingFn: col.sortType as BuiltInSortingFn,
+                    sortingFn: CustomSortingFunctions[col.sortType as CustomSortingFn],
                     enableSorting: col.canSort,
                 }
             ))
@@ -60,7 +59,7 @@ const Table: React.FC<TableProps<TableData>> = ({ data, columns }) => {
             minSize: 20,
             maxSize: Number.MAX_SAFE_INTEGER,
         },
-        sortingFns: sortingFunctions,
+        sortingFns: CustomSortingFunctions,
     });
 
     return (
