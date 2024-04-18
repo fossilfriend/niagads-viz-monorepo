@@ -3,15 +3,15 @@
 // basically, wrappers to parseValues from objects in the table
 // and catch N/A's to treat them like null values
 
-import { Row } from "@tanstack/react-table";
+import { Row, SortingFn } from "@tanstack/react-table";
 import { parseFieldValue } from "./utils";
 import { TableData } from "./types";
 
 const reSplitAlphaNumeric = /([0-9]+)/gm;
 
-interface SortingFunction {
+/* interface SortingFunction {
     (rowA: Row<TableData>, rowB: Row<TableData>, columnId: string): number;
-}
+}*/
 
 const getValue: any = (row: Row<TableData>, columnId: string, retString: boolean = true) => {
     const value = row.getValue(columnId);
@@ -25,11 +25,11 @@ const getBooleanValue: any = (row: Row<TableData>, columnId: string) => {
     return parsed === "Yes" ? 1 : 0;
 };
 
-export const barChartSort: SortingFunction = (rowA, rowB, columnId, ) => {
+export const barChartSort: SortingFn<any> = (rowA, rowB, columnId, ) => {
     return compareAlphanumeric(getValue(rowA, columnId), getValue(rowB, columnId));
 };
 
-export const booleanFlagSort: SortingFunction = (rowA, rowB, columnId, ) => {
+export const booleanFlagSort: SortingFn<any> = (rowA, rowB, columnId, ) => {
     const a = getBooleanValue(rowA, columnId),
         b = getBooleanValue(rowB, columnId);
 
@@ -38,11 +38,11 @@ export const booleanFlagSort: SortingFunction = (rowA, rowB, columnId, ) => {
     return 0;
 };
 
-export const linkSort: SortingFunction = (rowA, rowB, columnId, ) => {
+export const linkSort: SortingFn<any> = (rowA, rowB, columnId, ) => {
     return compareBasic(getValue(rowA, columnId).toLowerCase(), getValue(rowB, columnId).toLowerCase());
 };
 
-export const scientificNotationSort: SortingFunction = (rowA, rowB, columnId, ) => {
+export const scientificNotationSort: SortingFn<any> = (rowA, rowB, columnId, ) => {
     let a = getValue(rowA, columnId, false),
         b = getValue(rowB, columnId, false);
     (a = a === null || a === undefined ? -Infinity : a), (b = b === null || b === undefined ? -Infinity : b);
@@ -53,27 +53,27 @@ export const scientificNotationSort: SortingFunction = (rowA, rowB, columnId, ) 
     return 0;
 };
 
-export const alphanumericSort: SortingFunction = (rowA, rowB, columnId) => {
+export const alphanumericSort: SortingFn<any> = (rowA, rowB, columnId) => {
     return compareAlphanumeric(getValue(rowA, columnId).toLowerCase(), getValue(rowB, columnId).toLowerCase());
 };
 
-export const alphanumericCaseSensitiveSort: SortingFunction = (rowA, rowB, columnId) => {
+export const alphanumericCaseSensitiveSort: SortingFn<any> = (rowA, rowB, columnId) => {
     return compareAlphanumeric(getValue(rowA, columnId), getValue(rowB, columnId));
 };
 
 // The text filter is more basic (less numeric support)
 // but is much faster
-export const textSort: SortingFunction = (rowA, rowB, columnId) => {
+export const textSort: SortingFn<any> = (rowA, rowB, columnId) => {
     return compareBasic(getValue(rowA, columnId).toLowerCase(), getValue(rowB, columnId).toLowerCase());
 };
 
 // The text filter is more basic (less numeric support)
 // but is much faster
-export const textCaseSensitiveSort: SortingFunction = (rowA, rowB, columnId) => {
+export const textCaseSensitiveSort: SortingFn<any> = (rowA, rowB, columnId) => {
     return compareBasic(getValue(rowA, columnId), getValue(rowB, columnId));
 };
 
-export const basicSort: SortingFunction = (rowA, rowB, columnId) => {
+export const basicSort: SortingFn<any> = (rowA, rowB, columnId) => {
     return compareBasic(getValue(rowA, columnId, false), getValue(rowB, columnId, false));
 };
 
@@ -165,7 +165,7 @@ function compareAlphanumeric(aStr: string, bStr: string) {
     return a.length - b.length;
 }
 
-const TableSortingFunctions = {
+export const CustomSortingFunctions = {
     alphanumeric: alphanumericSort,
     alphanumericCaseSensitive: alphanumericCaseSensitiveSort,
     basic: basicSort,
@@ -177,4 +177,5 @@ const TableSortingFunctions = {
     scientificNotation: scientificNotationSort,
 };
 
-export default TableSortingFunctions;
+export type CustomSortingFn = keyof typeof CustomSortingFunctions;
+
