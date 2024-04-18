@@ -14,7 +14,7 @@ export interface Column<T> {
     disable: boolean;
     accessorType: ColumnAccessorType
     id: string;
-    sortType: string;
+    sortType?: string;
     help?: string;
     show?: boolean;
     filter?: string;
