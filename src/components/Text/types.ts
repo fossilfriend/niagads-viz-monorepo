@@ -1,4 +1,4 @@
-import { Color } from "../../common/palettes"
+import { COLOR } from "../../common/palettes"
 
 export type TextRendererType =
     | "PercentageBar"
@@ -12,7 +12,8 @@ export type TextRendererType =
 export interface TextRenderer {
     value?: any;
     object?: any;
-    color?: Color;
+    muiColor?: any; // one of
+    color?: COLOR;
     className?: string;
     maxLength?: number;
     userProps?: any;

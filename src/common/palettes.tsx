@@ -12,4 +12,4 @@ type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 type HEX = `#${string}`;
 type STANDARD_COLORS = 'red' | 'blue' | 'green' | 'gold' | 'grey' | 'black' | 'white'
 
-export type Color = RGB | RGBA | HEX | STANDARD_COLORS
+export type COLOR = RGB | RGBA | HEX | STANDARD_COLORS
