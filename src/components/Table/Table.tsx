@@ -12,10 +12,10 @@ import {
 
 import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
 
-import { Column, TableData } from "./types";
+import { Column, TableData } from "./deprecated/types";
 import { resolveColumnAccessor } from "@table/ColumnAccessors";
 import PaginationControls from "@table/PaginationControls";
-import { CustomSortingFn, CustomSortingFunctions} from "./TableSortingFunctions";
+import { CustomSortingFn, CustomSortingFunctions} from "./Column/sorting";
 
 interface TableProps<T> {
     data: T[];

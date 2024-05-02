@@ -1,7 +1,8 @@
 import React from "react"
 
-import { ColumnAccessor, ColumnAccessorType } from  "./types"
+import { ColumnAccessor, ColumnAccessorType } from  "./deprecated/types"
 import { parseFieldValue } from "./utils";
+import { ColumnFormat } from "./Column/types"
 
 import {
     BooleanCheck as BooleanCheckAccessor,
@@ -21,6 +22,7 @@ export const resolveColumnAccessor = (
     key: string,
     accessorType: ColumnAccessorType | any = "Default"
 ) => {
+
     const MemoSparkPercentageBarAccessor = React.memo(SparkPercentageBarAccessor);
     const MemoBooleanCheckAccessor = React.memo(BooleanCheckAccessor);
     const MemoColoredTextAccessor = React.memo(ColoredTextAccessor);

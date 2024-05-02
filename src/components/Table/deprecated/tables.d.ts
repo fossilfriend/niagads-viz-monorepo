@@ -1,4 +1,4 @@
-import { TextRendererType , TextRenderer } from "../Text";
+import { TextRendererType , TextRenderer } from "../../Text";
 
 export type ColumnAccessorType = TextRendererType;
 
