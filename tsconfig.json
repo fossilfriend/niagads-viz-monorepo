@@ -28,7 +28,7 @@
         "experimentalDecorators": true,
         "resolveJsonModule": true,
         "baseUrl": "./src",
-
+        "noErrorTruncation": true,
         "typeRoots": [
             "node_modules/@types",
             "node_modules/niagads-ambient-types"
