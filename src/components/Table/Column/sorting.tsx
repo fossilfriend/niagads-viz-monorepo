@@ -5,7 +5,7 @@
 
 import { Row, SortingFn } from "@tanstack/react-table";
 import { parseFieldValue } from "../utils";
-import { TableData } from "../deprecated/types";
+import { TableData } from "../deprecated/tables";
 
 const reSplitAlphaNumeric = /([0-9]+)/gm;
 
