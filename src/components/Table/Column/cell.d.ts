@@ -27,20 +27,20 @@ export type BadgeIconType = keyof typeof BadgeIcons;
 
 type RawValueType = string | number | boolean
 
-export type DefaultCell = {
-    type: "default"
+export type UnformattedCell = {
+    type: "unformatted"
     value: RawValueType | null
     naString: 'NA'
 }
 
 
-export type FloatCell = Expand<Modify<DefaultCell,
+export type FloatCell = Expand<Modify<UnformattedCell,
     { type: "float", value: number | null, precision?: number }>>
 
 export type ScientificNotationCell = Expand<Modify<FloatCell,
     { type: "scientific_notation" }>>
 
-export type TextCell = Expand<Modify<DefaultCell,
+export type TextCell = Expand<Modify<UnformattedCell,
     { type: "text", value: RawValueType | null, truncateTo?: number }>>
 
 export type AnnotatedTextCell = Expand<Modify<TextCell,
@@ -69,8 +69,8 @@ export type LinkCell = Expand<Modify<AnnotatedTextCell,
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type NumericCell = DefaultCell | PercentageBarCell | FloatCell | ScientificNotationCell | BadgeCell
-export type StringCell = DefaultCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
+export type NumericCell = UnformattedCell | PercentageBarCell | FloatCell | ScientificNotationCell | BadgeCell
+export type StringCell = UnformattedCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
 export type Cell = NumericCell | StringCell
 
 // create CellTypes which is a list string keys corresponding to allowable "types" of cells
