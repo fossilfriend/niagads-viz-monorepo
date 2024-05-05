@@ -1,5 +1,6 @@
-import { CellTypes, RawValueType } from "./cell";
-import { CustomSortingFunctions } from "@table/deprecated/sorting";
+import { RawValueType } from "@common/types"
+import { CellTypes } from "./cell";
+import { CustomSortingFunctions } from "@table/deprecated/sorting"
 
 export interface SortConfig {
     enable: boolean // enable sorting on this columnt
@@ -25,7 +26,7 @@ export interface UserDefinedColumn {
     sort?: SortConfig
     filter?: FilterConfig 
     hide?: boolean
-    required?: boolean
+    required?: boolean // if required = true then hide = false 
 }
 
 const typeGuard = (userColumn: any): userColumns is UserDefinedColumn => {

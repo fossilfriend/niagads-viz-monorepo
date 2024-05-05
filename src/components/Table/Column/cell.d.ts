@@ -1,7 +1,5 @@
 import { ReactNode } from 'react'
 
-import { Modify, TypeMapper, Expand } from "@utils/typeMapping"
-
 import {
     CheckIcon, CheckCircleIcon,
     ExclamationCircleIcon, ExclamationTriangleIcon,
@@ -9,8 +7,10 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { Color } from "@common/palettes"
-import { responseInterceptor } from 'http-proxy-middleware';
+import { RawValueType } from '@common/types'
+import { Modify, TypeMapper, Expand } from "@utils/typeMapping"
 import { resolveNAs } from '@text/utils';
+
 
 const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
 const INTERNAL_NA_STR = 'NA'
@@ -25,14 +25,13 @@ const BadgeIcons = {
 
 export type BadgeIconType = keyof typeof BadgeIcons;
 
-type RawValueType = string | number | boolean
+export type UserDefinedCell = RawValueType | Record<string, RawValueType | RawValueType[]>
 
 export type UnformattedCell = {
     type: "unformatted"
     value: RawValueType | null
     naString: 'NA'
 }
-
 
 export type FloatCell = Expand<Modify<UnformattedCell,
     { type: "float", value: number | null, precision?: number }>>
@@ -116,3 +115,7 @@ export const getCellValue: RawCellValue = (cellProps: Cell | Cell[]) => {
 }
 
 
+// validate & transform incoming UserDefinedCells into Cells
+const resolveCell: Cell = (userCell: UserDefinedCell) => {
+
+}
