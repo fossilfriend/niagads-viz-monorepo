@@ -1,15 +1,17 @@
-import { CellTypes } from "./cell";
+import { CellTypes, RawValueType } from "./cell";
 import { CustomSortingFunctions } from "@table/deprecated/sorting";
 
 export interface SortConfig {
-    enable: boolean
-    asc?: boolean
+    enable: boolean // enable sorting on this columnt
+    initial?: 'asc' | 'desc' | 'none' // optional: flag if table will be sorted by this column when rendered, missing = none
     //sortingFn?: CustomSortingFunctions
 }
 
 export interface FilterConfig {
-    enable: boolean
-    enableGlobalFilter?: boolean
+    enable: boolean // enable filtering on this column
+    enableGlobalFilter?: boolean // include in global text search filter
+    group?: string // optional: filter group (must match a filter group specified in table properties)
+    initial?: RawValueType | null // optional: table will be initially filtered by this column / value, missing or null = no initial filter
     // filterFn?: 
     // filterInterface?:
 }
@@ -18,14 +20,15 @@ export interface FilterConfig {
 export interface UserDefinedColumn {
     header: string
     id: string
-    dataType?: CellTypes
+    info?: string
+    type?: CellTypes
     sort?: SortConfig
     filter?: FilterConfig 
-    show?: boolean
-    info?: string
+    hide?: boolean
+    required?: boolean
 }
 
-const typeGuard = (userColumn: any): userColumns is UserDefinedColumn {
+const typeGuard = (userColumn: any): userColumns is UserDefinedColumn => {
     return arg && arg.prop && typeof(arg.prop) == 'number';
 }
 
