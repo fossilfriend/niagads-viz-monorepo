@@ -1,41 +1,38 @@
-import React, {useMemo}  from "react"
+import React, { useMemo } from "react"
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
 
 import { _hasOwnProperty } from "@common/utils"
 
 import { SortConfig, UserDefinedColumn } from "./column"
 import { Cell, CellTypes, getCellValue } from "./cell"
-import { TableRow, UserDefinedTableProps, TableProps } from "./table"
+import { TableRow, UserDefinedTable, TableProps } from "./table"
 import { renderCell } from "./rendering"
 
 
-
 // FIXME: type of return should be custom sorting function
-const __resolveSortingFn = (options:SortConfig) => {
+const __resolveSortingFn = (options: SortConfig) => {
     // ! point here says that as this point, we know options will not be undefined
     return _hasOwnProperty('sortingFn', options) ? options.sortingFn : 'alphanumeric'
 }
 
-const Table: React.FC<UserDefinedTableProps> = (props) => {
-    // const tableOptions = props.options !== undefined ? props.options : undefined;
+const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
 
     const tableOptions: any = useMemo(() => {
         // from column definitions
-            // hidden columns
-            // initial sort
-            // initial filter
+        // hidden columns
+        // initial sort
+        // initial filter
     }, [])
 
-    const columns:any = useMemo(() => {
-        const columnHelper = createColumnHelper<TableRow>()
+    const resolvedColumns: any = useMemo(() => {
+        const columnHelper = createColumnHelper<TableRow>();
+        const columnDefs: ColumnDef<TableRow>[] = [];
 
-        const resolvedColumns: ColumnDef<TableRow>[] = []
         // TODO: add display column w/checkboxes if need row selection 
-        // if __hasOption('rowSelection', props.options) { resolvedColumns.push(columHelper.display(...)) } // add display column w/checkboxes
+        // if _hasOwnProperty('rowSelection', props.options) { resolvedColumns.push(columHelper.display(...)) } // add display column w/checkboxes
 
-        props.columns.map((col: UserDefinedColumn) => {
-
-            resolvedColumns.push(
+        columns.map((col: UserDefinedColumn) => {
+            columnDefs.push(
                 columnHelper.accessor(row => getCellValue(col.id),
                     {
                         id: col.id,
@@ -45,31 +42,14 @@ const Table: React.FC<UserDefinedTableProps> = (props) => {
 
                 )
             )
-        })
-        
-        },
-    []);
-  /*
-const resolvedColumns = useMemo<ColumnDef<TableData>[]>(() => {
-    const columnHelper = createColumnHelper<TableData>();
+        });
 
-    const resolved: ColumnDef<TableData>[] = [];
+        return columnDefs;
+    }, []);
 
-    columns.forEach((col) => {
-        resolved.push(columnHelper.accessor(
-            resolveColumnAccessor(col.id, col.accessorType),
-            {
-                id: col.id,
-                cell: c => c.getValue(),
-                sortingFn: CustomSortingFunctions[col.sortType as CustomSortingFn],
-                enableSorting: col.canSort,
-            }
-        ))
-    });
-
-    return resolved;
-}, [columns]);*/
-
+    console.log(resolvedColumns);
 
     return <div></div>
 }
+
+export default Table

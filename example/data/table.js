@@ -1388,7 +1388,25 @@ export const EXAMPLE_TABLE_2 = {
             accessorType: "PercentageBar",
             id: "frequency",
             sortType: "stackedBar",
-            "disableGlobalFilter": true
+            disableGlobalFilter: true
         }
     ]
 };
+
+export const EXAMPLE_TABLE_3 = {
+    data: [], columns: [{
+        header: "Population",
+        id: "population",
+        info: "sample population"
+    }], options: {}
+}
+/*
+header: string
+id: string
+info?: string
+type?: CellTypes
+sort?: SortConfig
+filter?: FilterConfig 
+hide?: boolean
+required?: boolean // if required = true then hide = false 
+*/

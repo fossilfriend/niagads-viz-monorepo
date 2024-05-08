@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Table  from '@table/Table';
-import { EXAMPLE_TABLE_3 as table } from '../../example/data/table.js';
+import { Table, TableData, Column } from '@table/index';
+import { EXAMPLE_TABLE_1 as table } from '../../example/data/table.js';
 
 const meta: Meta<typeof Table> = {
   title: 'NIAGADS-VIZ/Table',
@@ -19,8 +19,7 @@ type Story = StoryObj<typeof Table>;
 
 export const Default: Story = {
     args: {
-       columns: table.columns,
-       options: table.options,
-       data: table.data
+        data: table.data,
+        columns: table.columns as Column<TableData>[]
     }
 };

@@ -29,10 +29,19 @@ export interface TableProps {
 
 type UserDefinedTableRow = Record<string, UserDefinedCell | UserDefinedCell[] >
 type UserDefinedTableData = UserDefinedTableRow[]
-export interface UserDefinedTableProps {
-    options?: TableProps
-    columns: UserDefinedColumn[]
-    data: UserDefinedTableData
+
+// to satisfy type script --> what we expect from the user at a bare minimum
+export interface UserDefinedTable {
+    options?: Record<string, any>
+    columns: Record<string, any>
+    data: Record<string, any>[]
+}
+
+// FIXME: not sure if this intermediary is necessary
+export interface UnresolvedTable {
+    options: TableProps,
+    columns: UserDefinedColumn,
+    data: UserDefinedData
 }
 
 export type TableRow = Record<string, Cell | Cell[]>;
