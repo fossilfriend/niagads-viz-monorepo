@@ -1,18 +1,19 @@
 import React, {useMemo}  from "react"
-
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
+
+import { _hasOwnProperty } from "@common/utils"
+
 import { SortConfig, UserDefinedColumn } from "./column"
 import { Cell, CellTypes, getCellValue } from "./cell"
 import { TableRow, UserDefinedTableProps, TableProps } from "./table"
 import { renderCell } from "./rendering"
 
-// TODO: move to common utils?
-const __hasOption = (key:string, options: Record<string, any>) => (options !== undefined && options.hasOwnProperty(key))
+
 
 // FIXME: type of return should be custom sorting function
 const __resolveSortingFn = (options:SortConfig) => {
     // ! point here says that as this point, we know options will not be undefined
-    return __hasOption('sortingFn', options) ? options.sortingFn : 'alphanumeric'
+    return _hasOwnProperty('sortingFn', options) ? options.sortingFn : 'alphanumeric'
 }
 
 const Table: React.FC<UserDefinedTableProps> = (props) => {
