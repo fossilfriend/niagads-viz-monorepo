@@ -42,7 +42,6 @@
             "@table/*": ["components/Table/*"],
             "@components/*": ["components/*"],
             "@mui-wrappers/*": ["components/mui-wrappers/*"],
-            "@utils/*": ["utils/*"],
             "@common/*": ["common/*"],
             "@root/*" : ["./*"]
         },

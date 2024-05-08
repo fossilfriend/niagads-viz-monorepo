@@ -8,7 +8,7 @@ import {
 
 import { Color } from "@common/palettes"
 import { RawValueType } from '@common/types'
-import { Modify, TypeMapper, Expand } from "@utils/typeMapping"
+import { Modify, TypeMapper, Expand } from "@common/types"
 import { resolveNAs } from '@text/utils';
 
 

@@ -46,8 +46,6 @@ const Table: React.FC<UserDefinedTableProps> = (props) => {
             )
         })
         
-
-       
         },
     []);
   /*

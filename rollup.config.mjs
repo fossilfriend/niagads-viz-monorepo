@@ -21,8 +21,6 @@ export default [
             "./src/index.ts",
             ...getFiles("./src/common", extensions),
             ...getFiles("./src/components", extensions),
-            ...getFiles("./src/hooks", extensions),
-            ...getFiles("./src/utils", extensions),
         ],
         output: [
             {
