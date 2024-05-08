@@ -16,7 +16,7 @@ export interface RowSelectOptions {
     multiSelect?: boolean // optional: allow selection of multiple rows, false if missing
 }
 
-export interface TableOptions {
+export interface TableProps {
     title?: string
     id?:string // optional: internal id for the table; if not provided will be generated from name
     info?: string // optional: descriptive text describing the table for info popup
@@ -30,14 +30,13 @@ export interface TableOptions {
 type UserDefinedTableRow = Record<string, UserDefinedCell | UserDefinedCell[] >
 type UserDefinedTableData = UserDefinedTableRow[]
 export interface UserDefinedTableProps {
-    options?: TableOptions
+    options?: TableProps
     columns: UserDefinedColumn[]
     data: UserDefinedTableData
 }
 
 export type TableRow = Record<string, Cell | Cell[]>;
 export type TableData = TableRow[]
-
 
 
 // transform UserDefintedTableRows into TableRows
