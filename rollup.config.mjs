@@ -40,6 +40,7 @@ export default [
             external(),
             typescript({
                 tsconfig: "./tsconfig.build.json",
+                exclude: ["**/__deprecated__/"]
             }),
             postcss({
                 config: {

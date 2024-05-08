@@ -1,6 +1,8 @@
+import {createColumnHelper, ColumnDef} from "react-table"
+
 import { RawValueType } from "@common/types"
 import { CellTypes } from "./cell";
-import { CustomSortingFunctions } from "@table/deprecated/sorting"
+import { CustomSortingFunctions } from "@table/__deprecated__/sorting"
 
 export interface SortConfig {
     enable: boolean // enable sorting on this columnt
@@ -29,11 +31,15 @@ export interface UserDefinedColumn {
     required?: boolean // if required = true then hide = false 
 }
 
-const typeGuard = (userColumn: any): userColumns is UserDefinedColumn => {
-    return arg && arg.prop && typeof(arg.prop) == 'number';
-}
+/* const typeGuard = (userColumn: any): userColumns is UserDefinedColumn => {
+    return arg && arg.prop && typeof (arg.prop) == 'number';
+} */
+
+
 
 export const resolveColumnDefs = (userColumns: UserDefinedColumn[]) => {
+
+    // iterate over the columns, and resolve
 
 }
 

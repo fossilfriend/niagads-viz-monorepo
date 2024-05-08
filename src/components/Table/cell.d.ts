@@ -85,15 +85,21 @@ const isNull = (value: RawValueType | null) => {
     return value == null
 }
 
-const resolveNull:RawValueType = (props: CellProps) => {
+const resolveNull: RawValueType = (props: CellProps) => {
     return isNull(props.value) ? props.nullStr : props.value
 }
 
-const resolveBooleanNull:RawValueType = (props: BooleanCellProps) => {
-    if (isNull(props.value) && props.nullAsFalse) {
-        return false
+// TODO - not sure on this one; do we want it to return a boolean or a string?
+const resolveBooleanNull: RawValueType = (props: BooleanCellProps) => {
+    if (isNull(props.value)) {
+        if (props.nullAsFalse) {
+            return props.falseStr !== undefined ? props.falseStr : 'FALSE'
+        }
+        else {
+            return resolveNull(props)
+        }
     }
-    return resolveNull(props)
+    return props.trueStr !== undefined ? props.trueStr : 'TRUE'
 }
 
 // cell accessor function; gets the value; resolves nulls
@@ -116,6 +122,6 @@ export const getCellValue: RawCellValue = (cellProps: Cell | Cell[]) => {
 
 
 // validate & transform incoming UserDefinedCells into Cells
-const resolveCell: Cell = (userCell: UserDefinedCell) => {
+const resolveCell: Cell = (userCell: UserDefinedCell, cellType: CellTypes) => {
 
 }

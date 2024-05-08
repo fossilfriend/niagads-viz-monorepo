@@ -1,2 +1,2 @@
-export type { TableData, Column } from "./deprecated/tables"
-export { default as Table } from "./Table";
+//export type { TableData, Column } from "./__deprecated__/tables"
+//export { default as Table } from "./Table";

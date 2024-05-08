@@ -1,5 +1,6 @@
-import { Cell, UserDefinedCell, resolveCell } from "./Column/cell"
-import { UserDefinedColumn } from "./Column/column"
+import { Column } from "react-table"
+import { Cell, UserDefinedCell, resolveCell } from "./cell"
+import { UserDefinedColumn } from "./column"
 import { FileFormat, RawValueType } from "@common/types"
 
 export interface FilterGroup {
@@ -14,8 +15,9 @@ export interface RowSelectOptions {
     selectType: 'highlight' | 'checkbox' // how row selection is indicated
     multiSelect?: boolean // optional: allow selection of multiple rows, false if missing
 }
+
 export interface TableOptions {
-    name: string,
+    title?: string
     id?:string // optional: internal id for the table; if not provided will be generated from name
     info?: string // optional: descriptive text describing the table for info popup
     canFilter?: boolean // optional: table can be filtered; false if misssing
@@ -27,8 +29,8 @@ export interface TableOptions {
 
 type UserDefinedTableRow = Record<string, UserDefinedCell | UserDefinedCell[] >
 type UserDefinedTableData = UserDefinedTableRow[]
-export interface UserDefinedTable {
-    options: TableOptions
+export interface UserDefinedTableProps {
+    options?: TableOptions
     columns: UserDefinedColumn[]
     data: UserDefinedTableData
 }
@@ -39,11 +41,12 @@ export type TableData = TableRow[]
 
 
 // transform UserDefintedTableRows into TableRows
-const resolveTableRow: TableRow = (userRow: UserDefinedTableRow) => {
+const resolveTableRow: TableRow = (userRow: UserDefinedTableRow, columns: Column[]) => {
 
 }
 
 // transform UserDefinedTableData into TableData
 export const resolveTableData:TableData = (userData: UserDefinedTableData) => {
-    
+        // resolve columns
+        // map over rows w/resolved columns and resolve row to assemble data
 }
