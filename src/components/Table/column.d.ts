@@ -7,7 +7,7 @@ import { CustomSortingFunctions } from "@table/__deprecated__/sorting"
 export interface SortConfig {
     enable: boolean // enable sorting on this columnt
     initial?: 'asc' | 'desc' | 'none' // optional: flag if table will be sorted by this column when rendered, missing = none
-    //sortingFn?: CustomSortingFunctions
+    sortingFn?: string // TODO: should be keys for CustomSortingFunctions / SortingFns
 }
 
 export interface FilterConfig {
