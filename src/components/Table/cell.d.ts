@@ -122,6 +122,7 @@ export const getCellValue: RawCellValue = (cellProps: Cell | Cell[]) => {
 
 
 // validate & transform incoming UserDefinedCells into Cells
-const resolveCell: Cell = (userCell: UserDefinedCell, cellType: CellTypes) => {
-
+export const resolveCell = (userCell: UserDefinedCell) => {
+    const c:Cell = undefined
+    return c
 }
