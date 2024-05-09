@@ -1,12 +1,17 @@
+
+
 import React, { useMemo } from "react"
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
 
 import { _hasOwnProperty } from "@common/utils"
 
-import { SortConfig, UserDefinedColumn } from "./column"
-import { Cell, CellTypes, getCellValue } from "./cell"
-import { TableRow, UserDefinedTable, TableProps } from "./table"
-import { renderCell } from "./rendering"
+import { SortConfig, UserDefinedColumn } from "./Column"
+import { Cell, CellTypes, getCellValue, renderCell } from "./Cell"
+import { UserDefinedTable, UserTableProps } from "./UserDefinedTable"
+
+
+type TableRow = Record<string, Cell | Cell[]>;
+type TableData = TableRow[]
 
 
 // FIXME: type of return should be custom sorting function
@@ -24,32 +29,35 @@ const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
         // initial filter
     }, [])
 
-    const resolvedColumns: any = useMemo(() => {
+    const resolvedColumns = useMemo(() => {
         const columnHelper = createColumnHelper<TableRow>();
         const columnDefs: ColumnDef<TableRow>[] = [];
-
         // TODO: add display column w/checkboxes if need row selection 
         // if _hasOwnProperty('rowSelection', props.options) { resolvedColumns.push(columHelper.display(...)) } // add display column w/checkboxes
 
         columns.map((col: UserDefinedColumn) => {
+            
             columnDefs.push(
-                columnHelper.accessor(row => getCellValue(col.id),
+                //columnHelper.accessor()
+                columnHelper.accessor(row => getCellValue(row[col.id]),
                     {
                         id: col.id,
+                        // header: renderCellHeader(col.header, col.info),
                         cell: props => renderCell(props.getValue() as Cell),
                         // sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }
-
                 )
             )
         });
-
         return columnDefs;
     }, []);
 
-    console.log(resolvedColumns);
+    const resolvedData = useMemo(() => {
 
-    return <div></div>
+    }, [])
+
+
+    return <div>{JSON.stringify(resolvedColumns)}</div>
 }
 
 export default Table

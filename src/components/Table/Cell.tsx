@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 import {
     CheckIcon, CheckCircleIcon,
@@ -15,6 +15,8 @@ import { resolveNAs } from '@text/utils';
 const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
 const INTERNAL_NA_STR = 'NA'
 
+type NAString = 'NA' | 'N/A' | 'NULL' | '.' | ''
+
 const BadgeIcons = {
     check: CheckIcon,
     solidCheck: CheckCircleIcon,
@@ -30,7 +32,7 @@ export type UserDefinedCell = RawValueType | Record<string, RawValueType | RawVa
 export type UnformattedCell = {
     type: "unformatted"
     value: RawValueType | null
-    naString: 'NA'
+    naString?: NAString
 }
 
 export type FloatCell = Expand<Modify<UnformattedCell,
@@ -79,18 +81,18 @@ export type CellTypes = keyof CellTypeMapper
 // extract / resolve cell values for sort, filter, and download
 
 const isNull = (value: RawValueType | null) => {
-    if (value && typeof value === 'string' && NA_STRINGS.includes(value.toUpperCase)) {
+    if (value && typeof value === 'string' && NA_STRINGS.includes(value.toUpperCase())) {
         return true
     }
     return value == null
 }
 
-const resolveNull: RawValueType = (props: CellProps) => {
-    return isNull(props.value) ? props.nullStr : props.value
+const resolveNull = (props: Cell): RawValueType => {
+    return isNull(props.value) ? !props.naString : !props.value
 }
 
-// TODO - not sure on this one; do we want it to return a boolean or a string?
-const resolveBooleanNull: RawValueType = (props: BooleanCellProps) => {
+// TODO: - not sure on this one; do we want it to return a boolean or a string?
+const resolveBooleanNull = (props: BooleanCell): RawValueType => {
     if (isNull(props.value)) {
         if (props.nullAsFalse) {
             return props.falseStr !== undefined ? props.falseStr : 'FALSE'
@@ -103,7 +105,7 @@ const resolveBooleanNull: RawValueType = (props: BooleanCellProps) => {
 }
 
 // cell accessor function; gets the value; resolves nulls
-export const getCellValue: RawCellValue = (cellProps: Cell | Cell[]) => {
+export const getCellValue = (cellProps: Cell | Cell[]): any => {
     if (Array.isArray(cellProps)) {
         // recursively get the values from the list items
         // and concatenate w/ '//' delimiter
@@ -123,6 +125,15 @@ export const getCellValue: RawCellValue = (cellProps: Cell | Cell[]) => {
 
 // validate & transform incoming UserDefinedCells into Cells
 export const resolveCell = (userCell: UserDefinedCell) => {
-    const c:Cell = undefined
+    const c:Cell = {value: 5, type:"unformatted", naString: INTERNAL_NA_STR}
     return c
+}
+
+
+export const renderCell = (cell: Cell) => {
+    return <div>JSON.stringify(cell)</div>
+}
+
+export const renderCellHeader = (label: string, helpText: string) => {
+    return <div>label</div>
 }

@@ -1,7 +1,6 @@
-import {createColumnHelper, ColumnDef} from "react-table"
 
 import { RawValueType } from "@common/types"
-import { CellTypes } from "./cell";
+import { CellTypes } from "./Cell/TypeCheckers";
 import { CustomSortingFunctions } from "@table/__deprecated__/sorting"
 
 export interface SortConfig {
