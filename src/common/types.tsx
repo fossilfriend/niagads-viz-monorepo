@@ -1,5 +1,7 @@
+import { error } from "console";
+
 export type FileFormat = 'csv' | 'json' | 'xlsx' | 'xml' 
-export type RawValueType = string | number | boolean
+export type BasicType = string | number | boolean
 
 //  TYPE MAPPING
 
@@ -39,3 +41,4 @@ export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 export type ExpandRecursively<T> = T extends object
   ? T extends infer O ? { [K in keyof O]: ExpandRecursively<O[K]> } : never
   : T;
+

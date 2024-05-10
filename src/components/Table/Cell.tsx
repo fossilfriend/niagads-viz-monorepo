@@ -7,9 +7,9 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { Color } from "@common/palettes"
-import { RawValueType } from '@common/types'
+import { BasicType } from '@common/types'
 import { Modify, TypeMapper, Expand } from "@common/types"
-import { resolveNAs } from '@text/utils';
+import { isJSON } from '@text/utils';
 
 
 const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
@@ -27,22 +27,19 @@ const BadgeIcons = {
 
 export type BadgeIconType = keyof typeof BadgeIcons;
 
-export type UserDefinedCell = RawValueType | Record<string, RawValueType | RawValueType[]>
+export type UserDefinedCell = BasicType | Record<string, BasicType | BasicType[]>
 
-export type UnformattedCell = {
-    type: "unformatted"
-    value: RawValueType | null
+export type BasicCell = {
+    type: "basic"
+    value: string | null
     naString?: NAString
 }
 
-export type FloatCell = Expand<Modify<UnformattedCell,
-    { type: "float", value: number | null, precision?: number }>>
+export type FloatCell = Expand<Modify<BasicCell,
+    { type: "float", value: number | null, precision?: number, useScientificNotation?: boolean }>>
 
-export type ScientificNotationCell = Expand<Modify<FloatCell,
-    { type: "scientific_notation" }>>
-
-export type TextCell = Expand<Modify<UnformattedCell,
-    { type: "text", value: RawValueType | null, truncateTo?: number }>>
+export type TextCell = Expand<Modify<BasicCell,
+    { type: "text", truncateTo?: number }>>
 
 export type AnnotatedTextCell = Expand<Modify<TextCell,
     { type: "annotated_text", color?: Color, tooltip?: ReactNode | string }>>
@@ -60,18 +57,13 @@ export type BooleanCell = Expand<Modify<BadgeCell,
     }>>
 
 export type LinkCell = Expand<Modify<AnnotatedTextCell,
-    { type: "link", url: string, openNewTab?: boolean }>>
-
-/* export type LinkListCell = {
-    type: "link_list",
-    value: LinkCell[]
-} */
+    { type: "link", url: string}>>
 
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type NumericCell = UnformattedCell | PercentageBarCell | FloatCell | ScientificNotationCell | BadgeCell
-export type StringCell = UnformattedCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
+export type NumericCell =  PercentageBarCell | FloatCell
+export type StringCell = BasicCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
 export type Cell = NumericCell | StringCell
 
 // create CellTypes which is a list string keys corresponding to allowable "types" of cells
@@ -80,25 +72,25 @@ export type CellTypes = keyof CellTypeMapper
 
 // extract / resolve cell values for sort, filter, and download
 
-const isNull = (value: RawValueType | null) => {
+const __isNull = (value: BasicType | null) => {
     if (value && typeof value === 'string' && NA_STRINGS.includes(value.toUpperCase())) {
         return true
     }
-    return value == null
+    return value === null || value === undefined
 }
 
-const resolveNull = (props: Cell): RawValueType => {
-    return isNull(props.value) ? !props.naString : !props.value
+const __resolveNull = (props: Cell): BasicType => {
+    return __isNull(props.value) ? !props.naString : !props.value
 }
 
 // TODO: - not sure on this one; do we want it to return a boolean or a string?
-const resolveBooleanNull = (props: BooleanCell): RawValueType => {
-    if (isNull(props.value)) {
+const __resolveBooleanNull = (props: BooleanCell): BasicType => {
+    if (__isNull(props.value)) {
         if (props.nullAsFalse) {
             return props.falseStr !== undefined ? props.falseStr : 'FALSE'
         }
         else {
-            return resolveNull(props)
+            return __resolveNull(props)
         }
     }
     return props.trueStr !== undefined ? props.trueStr : 'TRUE'
@@ -115,18 +107,25 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
         const cellType: CellTypes = cellProps.type
         switch (cellType) {
             case "boolean":
-                return resolveBooleanNull(cellProps as BooleanCell)
+                return __resolveBooleanNull(cellProps as BooleanCell)
             default:
-                return resolveNull(cellProps)
+                return __resolveNull(cellProps)
         }
     }
+}
+
+const __resolveBasicCell = (userCell: UserDefinedCell) => {
+    
 }
 
 
 // validate & transform incoming UserDefinedCells into Cells
 export const resolveCell = (userCell: UserDefinedCell) => {
-    const c:Cell = {value: 5, type:"unformatted", naString: INTERNAL_NA_STR}
-    return c
+    if (isJSON(userCell)) {
+
+    }
+    else return __resolveBasicCell(userCell);
+   
 }
 
 
@@ -137,3 +136,4 @@ export const renderCell = (cell: Cell) => {
 export const renderCellHeader = (label: string, helpText: string) => {
     return <div>label</div>
 }
+

@@ -1,5 +1,5 @@
 
-import { RawValueType } from "@common/types"
+import { BasicType } from "@common/types"
 import { CellTypes } from "./Cell/TypeCheckers";
 import { CustomSortingFunctions } from "@table/__deprecated__/sorting"
 
@@ -13,7 +13,7 @@ export interface FilterConfig {
     enable: boolean // enable filtering on this column
     enableGlobalFilter?: boolean // include in global text search filter
     group?: string // optional: filter group (must match a filter group specified in table properties)
-    initial?: RawValueType | null // optional: table will be initially filtered by this column / value, missing or null = no initial filter
+    initial?: BasicType | null // optional: table will be initially filtered by this column / value, missing or null = no initial filter
     // filterFn?: 
     // filterInterface?:
 }
@@ -30,7 +30,7 @@ export interface UserDefinedColumn {
     required?: boolean // if required = true then hide = false 
 }
 
-/* const typeGuard = (userColumn: any): userColumns is UserDefinedColumn => {
+/* const typeGuard = (arg: any): arg is UserDefinedColumn => {
     return arg && arg.prop && typeof (arg.prop) == 'number';
 } */
 

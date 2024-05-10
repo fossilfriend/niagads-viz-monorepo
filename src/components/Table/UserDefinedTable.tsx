@@ -1,7 +1,7 @@
 import { Column } from "react-table"
 import { Cell, UserDefinedCell, resolveCell } from "./Cell/TypeCheckers"
 import { UserDefinedColumn } from "./Column"
-import { FileFormat, RawValueType } from "@common/types"
+import { FileFormat, BasicType } from "@common/types"
 
 export interface FilterGroup {
     name: string // filter group name
