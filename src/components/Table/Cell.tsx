@@ -29,16 +29,18 @@ export type BadgeIconType = keyof typeof BadgeIcons;
 
 export type UserDefinedCell = BasicType | Record<string, BasicType | BasicType[]>
 
-export type BasicCell = {
-    type: "basic"
-    value: string | null
+export type AbstractCell = {
+    type: "abstract"
+    value: BasicType | null
     naString?: NAString
 }
 
-export type FloatCell = Expand<Modify<BasicCell,
+export type StringCell = Expand<Modify<AbstractCell, {type: "string", value: string}>>
+
+export type FloatCell = Expand<Modify<AbstractCell,
     { type: "float", value: number | null, precision?: number, useScientificNotation?: boolean }>>
 
-export type TextCell = Expand<Modify<BasicCell,
+export type TextCell = Expand<Modify<AbstractCell,
     { type: "text", truncateTo?: number }>>
 
 export type AnnotatedTextCell = Expand<Modify<TextCell,
@@ -62,9 +64,8 @@ export type LinkCell = Expand<Modify<AnnotatedTextCell,
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type NumericCell =  PercentageBarCell | FloatCell
-export type StringCell = BasicCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
-export type Cell = NumericCell | StringCell
+export type Cell =  PercentageBarCell | FloatCell | AbstractCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
+
 
 // create CellTypes which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
@@ -114,7 +115,7 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
     }
 }
 
-const __resolveBasicCell = (userCell: UserDefinedCell) => {
+const __resolveAbstractCell = (userCell: UserDefinedCell) => {
     
 }
 
@@ -124,7 +125,7 @@ export const resolveCell = (userCell: UserDefinedCell) => {
     if (isJSON(userCell)) {
 
     }
-    else return __resolveBasicCell(userCell);
+    else return __resolveAbstractCell(userCell);
    
 }
 
