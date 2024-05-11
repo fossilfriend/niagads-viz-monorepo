@@ -1,6 +1,6 @@
 
 import { BasicType } from "@common/types"
-import { CellTypes } from "./Cell/TypeCheckers";
+import { CellTypes } from "./Cell";
 import { CustomSortingFunctions } from "@table/__deprecated__/sorting"
 
 export interface SortConfig {
@@ -23,22 +23,11 @@ export interface UserDefinedColumn {
     header: string
     id: string
     info?: string
-    type?: CellTypes
+    type: CellTypes 
     sort?: SortConfig
     filter?: FilterConfig 
     hide?: boolean
     required?: boolean // if required = true then hide = false 
 }
 
-/* const typeGuard = (arg: any): arg is UserDefinedColumn => {
-    return arg && arg.prop && typeof (arg.prop) == 'number';
-} */
-
-
-
-export const resolveColumnDefs = (userColumns: UserDefinedColumn[]) => {
-
-    // iterate over the columns, and resolve
-
-}
 
