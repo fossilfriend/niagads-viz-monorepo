@@ -6,12 +6,14 @@ import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
 import { _hasOwnProperty } from "@common/utils"
 
 import { SortConfig, UserDefinedColumn } from "./Column"
-import { Cell, CellTypes, getCellValue, renderCell } from "./Cell"
-import { UserDefinedTable, UserTableProps } from "./UserDefinedTable"
+import { Cell, CellTypes, UserDefinedCell, getCellValue, renderCell } from "./Cell"
+import { UserDefinedTable, UserDefinedRow, UserTableProps } from "./UserDefinedTable"
 
 
 type TableRow = Record<string, Cell | Cell[]>;
 type TableData = TableRow[]
+
+
 
 
 // FIXME: type of return should be custom sorting function
@@ -35,8 +37,7 @@ const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
         // TODO: add display column w/checkboxes if need row selection 
         // if _hasOwnProperty('rowSelection', props.options) { resolvedColumns.push(columHelper.display(...)) } // add display column w/checkboxes
 
-        columns.map((col: UserDefinedColumn) => {
-            
+        columns.forEach((col: UserDefinedColumn) => {  
             columnDefs.push(
                 //columnHelper.accessor()
                 columnHelper.accessor(row => getCellValue(row[col.id]),
@@ -53,7 +54,18 @@ const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
     }, []);
 
     const resolvedData = useMemo(() => {
+        const tableData: TableData = []
+        const tableRow: TableRow = {}
+        data.map((row: UserDefinedRow) => {
+            // validate columns
+            asserts __validateColumn
+            for (const [columnId, value] of Object.entries(row)) {
 
+                //const cellType = resolveCellType(columns)
+            }
+    
+        });
+        return tableData;
     }, [])
 
 
