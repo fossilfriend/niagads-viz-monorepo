@@ -1,5 +1,5 @@
 import { Column } from "react-table"
-import { Cell, UserDefinedCell, resolveCell } from "./Cell/TypeCheckers"
+import { Cell, UserDefinedCell } from "./Cell"
 import { UserDefinedColumn } from "./Column"
 import { FileFormat, BasicType } from "@common/types"
 
@@ -27,22 +27,16 @@ export interface UserTableProps {
 }
 
 
-type UserDefinedTableRow = Record<string, UserDefinedCell | UserDefinedCell[] >
-type UserDefinedTableData = UserDefinedTableRow[]
+export type UserDefinedRow = Record<string, UserDefinedCell | UserDefinedCell[] >
+type UserDefinedTableData = UserDefinedRow[]
 
 // to satisfy type script --> what we expect from the user at a bare minimum
 export interface UserDefinedTable {
-    options?: Record<string, any>
-    columns: Record<string, any>
-    data: Record<string, any>[]
-}
-
-// FIXME: not sure if this intermediary is necessary
-export interface UnresolvedTable {
-    options: UserTableProps,
-    columns: UserDefinedColumn,
+    options?: UserTableProps
+    columns: UserDefinedColumn[]
     data: UserDefinedTableData
 }
+
 
 
 
