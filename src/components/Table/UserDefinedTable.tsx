@@ -27,7 +27,7 @@ export interface UserTableProps {
 }
 
 
-export type UserDefinedRow = Record<string, UserDefinedCell | UserDefinedCell[] >
+export type UserDefinedRow = Record<string, UserDefinedCell | UserDefinedCell[]>
 type UserDefinedTableData = UserDefinedRow[]
 
 // to satisfy type script --> what we expect from the user at a bare minimum
