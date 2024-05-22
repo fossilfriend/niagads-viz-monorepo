@@ -20,13 +20,13 @@ const __resolveSortingFn = (options: SortConfig) => {
     return _hasOwnProperty('sortingFn', options) ? options.sortingFn : 'alphanumeric'
 }
 
-const __resolveCell = (userCell: UserDefinedCell | UserDefinedCell[], column: UserDefinedColumn) => {
+const __resolveCell = (userCell: UserDefinedCell | UserDefinedCell[], column: UserDefinedColumn, index:number) => {
     try {
         const cell = resolveCell(userCell, column?.type)
         return cell
     }
     catch (e: any) {
-        throw Error("Validation Error parsing field value for column `" + column.id + "`.\n" + e.message)
+        throw Error("Validation Error parsing field value for row " + index + " column `" + column.id + "`.\n" + e.message)
     }
 }
 
@@ -73,21 +73,17 @@ const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
 
     const resolvedData = useMemo(() => {
         const tableData: TableData = []
-       
-        try {
-            data.forEach((row: UserDefinedRow) => {
-                const tableRow: TableRow = {}
-                // validate columns
-                //asserts __validateColumn
-                for (const [columnId, value] of Object.entries(row)) {
 
+        try {
+            data.forEach((row: UserDefinedRow, index:number) => {
+                const tableRow: TableRow = {}
+                for (const [columnId, value] of Object.entries(row)) {
                     let currentColumn = getColumn(columnId, columns)
                     if (currentColumn === undefined) {
                         throw new Error("Invalid column name found in table data definition `" + columnId + "`");
                     }
 
-                    tableRow[columnId] = __resolveCell(value, currentColumn)
-                    
+                    tableRow[columnId] = __resolveCell(value, currentColumn, index)
                 }
 
                 tableData.push(tableRow)
@@ -100,7 +96,10 @@ const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
     }, [columns])
 
 
-    return <div>{JSON.stringify(resolvedColumns)}</div>
+    return <div>
+        <h3>Columns: {JSON.stringify(resolvedColumns)}</h3>
+        <p> Data: {JSON.stringify(resolvedData)}</p>
+    </div>
 }
 
 
