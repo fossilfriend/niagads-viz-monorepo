@@ -1394,17 +1394,34 @@ export const EXAMPLE_TABLE_2 = {
 };
 
 export const EXAMPLE_TABLE_3 = {
-    data: [], columns: [{
-        header: "Population",
-        id: "population",
-        info: "sample population"
-    }], options: {}
+    data: [
+        { population: "european", state: true },
+        { population: "african american", state: false },
+        { state: null, population: "asian" },
+       // { state: true, population: {value: "other", tooltip:"non-standard population" }}
+    ],
+
+    columns: [
+        {
+            header: "Population",
+            id: "population",
+            info: "sample population",
+        },
+        {
+            header: "State",
+            id: "state",
+            info: "boolean test"
+        },
+
+    ],
+
+    options: {}
 }
 /*
 header: string
 id: string
 info?: string
-type?: CellTypes
+type?: CellType
 sort?: SortConfig
 filter?: FilterConfig 
 hide?: boolean
