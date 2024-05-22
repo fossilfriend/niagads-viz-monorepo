@@ -26,7 +26,7 @@ const BadgeIcons = {
 
 export type BadgeIconType = keyof typeof BadgeIcons;
 
-export type UserDefinedCell = BasicType | Record<string, BasicType | BasicType[]>
+export type UserDefinedCell = BasicType | Record<string, BasicType | BasicType[]> | null
 
 export type AbstractCell = {
     type: "abstract"
@@ -64,7 +64,6 @@ export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
 export type Cell =  PercentageBarCell | FloatCell | AbstractCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
-
 
 // create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>

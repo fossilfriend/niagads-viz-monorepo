@@ -1397,7 +1397,7 @@ export const EXAMPLE_TABLE_3 = {
     data: [
         { population: "european", state: true },
         { population: "african american", state: false },
-        { state: null, population: "asian" },
+        { population: "asian", state:null },
        // { state: true, population: {value: "other", tooltip:"non-standard population" }}
     ],
 
