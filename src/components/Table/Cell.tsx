@@ -11,7 +11,6 @@ import { BasicType } from '@common/types'
 import { Modify, TypeMapper, Expand } from "@common/types"
 import { isJSON } from '@text/utils';
 
-
 const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
 const INTERNAL_NA_STR = 'NA'
 
@@ -67,9 +66,27 @@ export type PercentageBarCell = Expand<Modify<FloatCell,
 export type Cell =  PercentageBarCell | FloatCell | AbstractCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
 
 
-// create CellTypes which is a list string keys corresponding to allowable "types" of cells
+// create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
-export type CellTypes = keyof CellTypeMapper
+export type CellType = keyof CellTypeMapper
+const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "text", "annotated_text", "badge",  "link", "percentage_bar"]
+
+
+// validates cell type specified at runtime or by user is valid
+// if cell type is undefined, returns "abstract"
+export const validateCellType = (ctype: string | undefined): CellType => {
+    if (ctype === undefined) {
+        return "abstract" as CellType
+    }
+
+    if (typeof ctype === 'string' && CELL_TYPE_VALIDATION_REFERENCE.includes(ctype)) {
+        return ctype as CellType // type assertion satisfies compiler
+    }
+
+    throw new Error("Invalid data type `" + ctype + "`");
+}
+
+
 
 // extract / resolve cell values for sort, filter, and download
 
@@ -105,7 +122,7 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
         return cellProps.map((item) => getCellValue(item)).join(" // ");
     }
     else {
-        const cellType: CellTypes = cellProps.type
+        const cellType: CellType = cellProps.type
         switch (cellType) {
             case "boolean":
                 return __resolveBooleanNull(cellProps as BooleanCell)
@@ -115,17 +132,28 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
     }
 }
 
-const __resolveAbstractCell = (userCell: UserDefinedCell) => {
-    
+// TODO: do we want to review the whole column to infer data type or just assume strings if no cellType is specified?
+// issue: what if first value is null?
+const __resolveCell = (userCell: UserDefinedCell, cellType: string | undefined) => {
+    //const cType: CellType === cellType ? "string"
+    return userCell
 }
 
 
 // validate & transform incoming UserDefinedCells into Cells
-export const resolveCell = (userCell: UserDefinedCell) => {
-    if (isJSON(userCell)) {
-
+//@ts-ignore
+export const resolveCell = (userCell: UserDefinedCell | UserDefinedCell[], cellType: string | undefined) => {
+    if (Array.isArray(userCell)) {
+        return userCell.map((cell: UserDefinedCell) => {return resolveCell(cell, cellType)})
     }
-    else return __resolveAbstractCell(userCell);
+
+    if (isJSON(userCell)) {
+        if (cellType === undefined || cellType === "abstract") {
+            throw Error("`type` must be specified in the column defintion to interpret structured values: " + JSON.stringify(userCell))
+        }
+    }
+
+    return __resolveCell(userCell, cellType);
    
 }
 
