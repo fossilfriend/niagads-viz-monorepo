@@ -1395,22 +1395,41 @@ export const EXAMPLE_TABLE_2 = {
 
 export const EXAMPLE_TABLE_3 = {
     data: [
-        { population: "european", state: true },
-        { population: "african american", state: false },
-        { population: "asian", state:null },
-       // { state: true, population: {value: "other", tooltip:"non-standard population" }}
+        { label: "r1", population: "european", state: true, count: 5, percent: 0.5 },
+        { label: "r2", population: "african american", state: false, count: 6, percent: 0.0000000001 },
+        { label: "r3", population: "asian", state: null, count: 0 },
+        { label: "r4", state: true, population: { value: "other", tooltip: "non-standard population" }, percent: null },
     ],
 
     columns: [
         {
+            header: "Label",
+            id: "label"
+        },
+        {
             header: "Population",
             id: "population",
             info: "sample population",
+            type: "text"
         },
         {
             header: "State",
             id: "state",
-            info: "boolean test"
+            info: "boolean test",
+            type: "boolean"
+        },
+        {
+            header: "Count",
+            id: "count",
+            info: "integer test"
+        },
+        {
+            header: "Percent",
+            id: "percent",
+            info: "numeric test",
+            type: "float",
+            precision: 2,
+            useScientificNotation: true
         },
 
     ],
