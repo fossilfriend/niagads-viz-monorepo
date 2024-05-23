@@ -137,11 +137,9 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
 // does some error checking:
 // 1. makes sure user specified a cell type to the parent column if cell value is an object/JSON
 
-// FIXME: return-value type; so can remove @ts-ignore flag
-// @ts-ignore
-export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellType | undefined) => {
+export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellType | undefined): GenericCell | GenericCell[] => {
     if (Array.isArray(cell)) {
-        return cell.map((c: GenericCell) => (resolveCell(c, cellType)))
+        return cell.map((c: GenericCell) => (resolveCell(c, cellType) as GenericCell))
     }
 
     let resolvedCellType = cellType === undefined ? "abstract" : cellType
