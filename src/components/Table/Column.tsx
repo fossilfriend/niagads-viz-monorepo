@@ -19,7 +19,7 @@ export interface FilterConfig {
 }
 
 // allowable fields provided by users
-export interface UserDefinedColumn {
+export interface GenericColumn {
     header: string
     id: string
     info?: string
@@ -30,7 +30,7 @@ export interface UserDefinedColumn {
     required?: boolean // if required = true then hide = false 
 }
 
-export const getColumn = (columnId:string, columns:UserDefinedColumn[]) => {
+export const getColumn = (columnId:string, columns:GenericColumn[]) => {
     return columns.find(col => col.id === columnId)
 }
 
