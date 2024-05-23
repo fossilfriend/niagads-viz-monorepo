@@ -68,6 +68,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     {
                         id: col.id,
                         // header: renderCellHeader(col.header, col.info),
+                        // TODO: renderCell does not need col.type b/c type will be in the value
                         cell: props => renderCell(props.getValue() as Cell, col.type!),
                         // sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }
