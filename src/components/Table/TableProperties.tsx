@@ -16,7 +16,7 @@ export interface RowSelectOptions {
     multiSelect?: boolean // optional: allow selection of multiple rows, false if missing
 }
 
-export interface TableOptions {
+export interface TableConfig {
     title?: string
     id?:string // optional: internal id for the table; if not provided will be generated from name
     info?: string // optional: descriptive text describing the table for info popup
