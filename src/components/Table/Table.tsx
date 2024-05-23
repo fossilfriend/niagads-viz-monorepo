@@ -1,3 +1,6 @@
+// TODO: put sorting back in
+// TODO: filtering
+
 import React, { useMemo, useState, useEffect } from "react"
 import { withErrorBoundary } from "react-error-boundary";
 import {
@@ -23,9 +26,9 @@ import PaginationControls from "./PaginationControls";
 
 
 const TAILWIND_TABLE = {
-    table: "table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-collapse",
-    thead: "uppercase text-xs text-left text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400",
-    th: "px-2",
+    table: "table-auto", //"table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-collapse",
+    thead: "", //"uppercase text-xs text-left text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400",
+    th: "", //"px-2",
     htr: "",
     td: "",
     dtr: "hover:bg-gray-50 bg-white border-b dark:bg-gray-800 odd:border-gray-700"
@@ -60,6 +63,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
 
     const [sorting, setSorting] = useState<SortingState>([]);
 
+    // TODO: parse table options from column definitions to set the following
+    // to be later passed to the useReactTable config
     const tableOptions: any = useMemo(() => {
         // from column definitions
         // hidden columns
@@ -83,13 +88,13 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                 throw Error("Error processing column definition for `" + col.id + "`.\n" + e.message)
             }
             columnDefs.push(
-                //columnHelper.accessor()
                 columnHelper.accessor(row => getCellValue(row[col.id as keyof typeof row] as Cell),
                     {
                         id: col.id,
+                        // TODO: custom renderer for cell headers that has information bubbles
                         // header: renderCellHeader(col.header, col.info),
-                        cell: props => renderCell(props.getValue() as Cell),
-                        // sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
+                        cell: props => renderCell(props.cell.row.original[col.id] as Cell),
+                        // TODO: sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }
                 )
             )
@@ -111,7 +116,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     throw new Error(`Missing columns in row ${index}: each row must provide a value for every column`)
                 }
 
-                // 
                 const tableRow: TableRow = {}
                 for (const [columnId, value] of Object.entries(row)) {
                     let currentColumn = getColumn(columnId, columns)
@@ -137,10 +141,10 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         data: resolvedData, 
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
         /*state: { sorting },
         onSortingChange: setSorting,
-        getSortedRowModel: getSortedRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),      
         defaultColumn: {
             size: 150,
             minSize: 20,
