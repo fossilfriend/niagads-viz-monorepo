@@ -166,7 +166,7 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
 
 
 export const renderCell = (cell: Cell) => {
-    return <div>{cell.type} - {JSON.stringify(cell)}</div>
+    return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
 }
 
 export const renderCellHeader = (label: string, helpText: string) => {
