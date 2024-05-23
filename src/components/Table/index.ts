@@ -1,4 +1,2 @@
-export * from "./utils";
-export type { TableData, Column } from "./types"
-export * from "./ColumnAccessors";
-export { default as Table } from "./Table";
+//export type { TableData, Column } from "./__deprecated__/tables"
+//export { default as Table } from "./Table";

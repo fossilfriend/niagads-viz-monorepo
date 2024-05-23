@@ -1,4 +1,4 @@
-export * from "./Table"
+//export * from "./Table"
 export * from "./Text"
 export * from "./Chart/Highcharts"
 export { LocusZoomPlot, MemoLocusZoomPlot} from "./LocusZoom"

@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnAccessor } from "./types";
+import { ColumnAccessor } from "./deprecated/tables";
 
 export const RowSelectButtonAccessor: React.FC<ColumnAccessor> = ({ value, userProps }) => {
     return (

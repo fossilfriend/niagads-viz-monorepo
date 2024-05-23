@@ -10,20 +10,6 @@ export const resolveNAs = (value: string, altValue: any = null) => {
     return altValue != null ? altValue : value;
 };
 
-export const isObject = (a: any) => a instanceof Object;
-
-export const isJSON = (value: any) => {
-    try {
-        value = JSON.parse(value);
-    } catch (e) {
-        // catch numbers, nulls, booleans
-        return isObject(value) && value != null;
-    }
-
-    // catch numbers, nulls, booleans
-    return isObject(value) && value != null;
-    
-};
 
 
 

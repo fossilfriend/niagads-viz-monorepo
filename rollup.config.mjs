@@ -21,8 +21,6 @@ export default [
             "./src/index.ts",
             ...getFiles("./src/common", extensions),
             ...getFiles("./src/components", extensions),
-            ...getFiles("./src/hooks", extensions),
-            ...getFiles("./src/utils", extensions),
         ],
         output: [
             {
@@ -40,6 +38,7 @@ export default [
             external(),
             typescript({
                 tsconfig: "./tsconfig.build.json",
+                exclude: ["**/__deprecated__/"]
             }),
             postcss({
                 config: {

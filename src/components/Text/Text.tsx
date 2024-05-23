@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { isJSON, isObject } from "@text/utils"
+import { _isJSON, _isObject } from "@common/utils"
 import { TextRenderer } from "./types"
 import { Link, LinkList } from "@text/Link"
 
@@ -43,7 +43,7 @@ const resolveObjectType = (obj: any) => {
 // expect 2 types 1: text w/tooltip, 2) link
 // assumes "tooltip" = { value: str; tooltip: str}
 export const FormattedJSON: React.FC<TextRenderer> = ({ value }) => {
-    const obj = isObject(value) ? value : JSON.parse(value);
+    const obj = _isObject(value) ? value : JSON.parse(value);
     const objType = resolveObjectType(obj);
     switch (objType) {
         case "tooltip":
@@ -58,7 +58,7 @@ export const FormattedJSON: React.FC<TextRenderer> = ({ value }) => {
 };
 
 export const DefaultText: React.FC<TextRenderer> = ({ value, maxLength = 100 }) => {
-    if (isJSON(value)) {
+    if (_isJSON(value)) {
         return <FormattedJSON value={value} />;
     }
     if (value.toString().length > maxLength) {
@@ -77,7 +77,7 @@ export const Clob: React.FC<TextRenderer> = ({ value, maxLength = 100 }) => {
         setIsExpanded(!isExpanded);
     };
 
-    return isJSON(value) && "tooltip" in value ? (
+    return _isJSON(value) && "tooltip" in value ? (
         <AnnotatedText value={{ value: value.slice(0, maxLength - 3) + "...", tooltip: value.tooltip }} />
     ) : isExpanded ? (
         <div>

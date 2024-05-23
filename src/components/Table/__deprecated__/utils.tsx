@@ -1,27 +1,4 @@
-export const resolveJSONFieldValue = (value: string) => {
-    try {
-        const jsonValue = JSON.parse(value);
-        if (Array.isArray(jsonValue)) {
-            return jsonValue.map((item) => item.value).join(" // ");
-        }
-        // JSON parse yields scientific notation parsed correctly, so this will return
-        // correctly formatted numbers
-        return jsonValue.hasOwnProperty("value") ? jsonValue.value : jsonValue;
-    } catch (e) {
-        // regular string
-        return value;
-    }
-};
-
-export const resolveNullFieldValue = (
-    value: string | null,
-    nullStr: string = ""
-) => {
-    return value === null || value === "N/A"
-        ? nullStr
-        : resolveJSONFieldValue(value);
-};
-
+/*
 const getAccessorType = (value: any) => {
     const accessorType = value.type
         ? value.type.hasOwnProperty("type") // when memoized, get type is react.memo, and nested type is the accessor type
@@ -56,3 +33,4 @@ export const parseFieldValue = (value: any, nullStr: string = ""): any => {
             );
     }
 };
+*/
