@@ -97,7 +97,7 @@ const __isNull = (value: BasicType | null) => {
 }
 
 const __resolveNull = (props: Cell): BasicType => {
-    return __isNull(props.value) ? !props.naString : !props.value
+    return __isNull(props.value) ? props!.naString! : props!.value!
 }
 
 // TODO: - not sure on this one; do we want it to return a boolean or a string?
@@ -132,11 +132,16 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
 }
 
 
-// validate & transform incoming GenericCells into Cells
-//@ts-ignore
+// assigns parent column cell type to each cell (to facilitate rendering)
+// sets cell type to "abstract" if undefined
+// does some error checking:
+// 1. makes sure user specified a cell type to the parent column if cell value is an object/JSON
+
+// FIXME: return-value type; so can remove @ts-ignore flag
+// @ts-ignore
 export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellType | undefined) => {
     if (Array.isArray(cell)) {
-        return cell.map((c: GenericCell) => {return resolveCell(c, cellType)})
+        return cell.map((c: GenericCell) => (resolveCell(c, cellType)))
     }
 
     let resolvedCellType = cellType === undefined ? "abstract" : cellType
@@ -150,19 +155,18 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
     }
     else {
         // we have a raw value, so create the 'value' k-v pair
-        Object.assign({'value': cell}, resolvedCell)
+        resolvedCell = Object.assign({'value': cell}, resolvedCell)
     }
 
     // assign the CellType
-    Object.assign({'type': resolvedCellType}, resolvedCell)
+    resolvedCell = Object.assign({'type': resolvedCellType}, resolvedCell)
 
     return resolvedCell
-   
 }
 
 
-export const renderCell = (cell: Cell, ctype: CellType) => {
-    return <div>{ctype} - {JSON.stringify(cell)}</div>
+export const renderCell = (cell: Cell) => {
+    return <div>{cell.type} - {JSON.stringify(cell)}</div>
 }
 
 export const renderCellHeader = (label: string, helpText: string) => {
