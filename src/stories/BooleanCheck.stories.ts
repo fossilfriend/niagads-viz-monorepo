@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { BooleanCheck } from '@text/index';
+import { BooleanCheck } from '@text/__deprecated__/index';
 
 const meta: Meta<typeof BooleanCheck> = {
   title: 'NIAGADS-VIZ/Text/BooleanCheck',

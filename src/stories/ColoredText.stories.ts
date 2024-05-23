@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ColoredText } from '@text/index';
+import { ColoredText } from '@text/__deprecated__/index';
 
 const meta: Meta<typeof ColoredText> = {
   title: 'NIAGADS-VIZ/Text/ColoredText',

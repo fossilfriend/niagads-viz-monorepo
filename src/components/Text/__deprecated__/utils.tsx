@@ -1,5 +1,5 @@
 import React from "react"
-import { NASpan } from "@text/NASpan"
+import { NASpan } from "@text/__deprecated__/NASpan"
 
 /* altValue defines what should be displayed if not n/a */
 export const resolveNAs = (value: string, altValue: any = null) => {
