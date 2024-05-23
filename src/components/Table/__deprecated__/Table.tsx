@@ -12,10 +12,10 @@ import {
 
 import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
 
-import { Column, TableData } from "./__deprecated__/tables";
+import { Column, TableData } from "./types";
 import { resolveColumnAccessor } from "@table/ColumnAccessors";
 import PaginationControls from "@table/PaginationControls";
-import { CustomSortingFn, CustomSortingFunctions} from "./Column/sorting";
+import { CustomSortingFn, CustomSortingFunctions} from "./TableSortingFunctions";
 
 interface TableProps<T> {
     data: T[];
@@ -26,7 +26,25 @@ interface TableProps<T> {
 const Table: React.FC<TableProps<TableData>> = ({ data, columns }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
 
- 
+    const resolvedColumns = useMemo<ColumnDef<TableData>[]>(() => {
+        const columnHelper = createColumnHelper<TableData>();
+
+        const resolved: ColumnDef<TableData>[] = [];
+
+        columns.forEach((col) => {
+            resolved.push(columnHelper.accessor(
+                resolveColumnAccessor(col.id, col.accessorType),
+                {
+                    id: col.id,
+                    cell: c => c.getValue(),
+                    sortingFn: CustomSortingFunctions[col.sortType as CustomSortingFn],
+                    enableSorting: col.canSort,
+                }
+            ))
+        });
+
+        return resolved;
+    }, [columns]);
 
     const table = useReactTable({
         data,
