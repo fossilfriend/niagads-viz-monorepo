@@ -1397,8 +1397,8 @@ export const EXAMPLE_TABLE_3 = {
     data: [
         { label: "r1", population: "european", state: true, count: 5, percent: 0.5 },
         { label: "r2", population: "african american", state: false, count: 6, percent: 0.0000000001 },
-        { label: "r3", population: "asian", state: null, count: 0 },
-        { label: "r4", state: true, population: { value: "other", tooltip: "non-standard population" }, percent: null },
+        { label: "r3", population: "asian", state: null, count: 0, percent: 0.9 },
+        { label: "r4", state: true, count: null, population: { value: "other", tooltip: "non-standard population" }, percent: null },
     ],
 
     columns: [
