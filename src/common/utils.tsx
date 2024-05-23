@@ -1,6 +1,8 @@
 // checks if object is defined before checking if object has key
 export const _hasOwnProperty = (key:string, object: any) => (object !== undefined && object.hasOwnProperty(key))
 
+// wrapper get; allows bypassing of some typescript issues
+// e.g., strict nulls, generics with expected properties
 export const _get = (key: string, object: any, alt:any=null ) => {
     if (_hasOwnProperty(key, object)) {
         return object[key]

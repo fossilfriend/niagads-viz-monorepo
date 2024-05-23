@@ -7,13 +7,13 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { BasicType, Modify, TypeMapper, Expand } from "@common/types"
-import { _isJSON, _deepCopy } from '@common/utils';
+import { _isJSON, _deepCopy, _hasOwnProperty, _get } from '@common/utils';
 import { Color } from '@common/palettes';
 
 import { Text } from '@text/Text';
 
 const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
-const INTERNAL_NA_STR = 'NA'
+const DEFAULT_NA_STRING = 'NA'
 
 type NAString = 'NA' | 'N/A' | 'NULL' | '.' | ''
 
@@ -97,21 +97,26 @@ const __isNull = (value: BasicType | null) => {
     return value === null || value === undefined
 }
 
-const __resolveNull = (props: Cell): BasicType => {
-    return __isNull(props.value) ? props!.naString! : props!.value!
+// catch nulls are replace with props.naString
+const __resolveValue = (props: Cell): BasicType => {
+    const naString = _hasOwnProperty('naString', props) ? props.naString : DEFAULT_NA_STRING
+    return __isNull(props.value) ? naString : _get('value', props)
 }
 
 // TODO: - not sure on this one; do we want it to return a boolean or a string?
-const __resolveBooleanNull = (props: BooleanCell): BasicType => {
+const __resolveBooleanValue = (props: BooleanCell): BasicType => {
     if (__isNull(props.value)) {
         if (props.nullAsFalse) {
             return props.falseStr !== undefined ? props.falseStr : 'FALSE'
         }
         else {
-            return __resolveNull(props)
+            return __resolveValue(props)
         }
     }
-    return props.trueStr !== undefined ? props.trueStr : 'TRUE'
+
+    return (props.value === true)
+        ? (props.trueStr !== undefined ? props.trueStr : 'TRUE')
+        : (props.falseStr !== undefined ? props.falseStr : 'FALSE')
 }
 
 // cell accessor function; gets the value; resolves nulls
@@ -125,9 +130,9 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
         const cellType: CellType = cellProps.type
         switch (cellType) {
             case "boolean":
-                return __resolveBooleanNull(cellProps as BooleanCell)
+                return __resolveBooleanValue(cellProps as BooleanCell)
             default:
-                return __resolveNull(cellProps)
+                return __resolveValue(cellProps)
         }
     }
 }
