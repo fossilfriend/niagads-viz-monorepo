@@ -1,5 +1,12 @@
 // checks if object is defined before checking if object has key
-export const _hasOwnProperty = (key:string, object: Record<string, any>) => (object !== undefined && object.hasOwnProperty(key))
+export const _hasOwnProperty = (key:string, object: any) => (object !== undefined && object.hasOwnProperty(key))
+
+export const _get = (key: string, object: any, alt:any=null ) => {
+    if (_hasOwnProperty(key, object)) {
+        return object[key]
+    }
+    return alt
+}
 
 // trick for deep copy
 // see https://developer.mozilla.org/en-US/docs/Glossary/Deep_copy
