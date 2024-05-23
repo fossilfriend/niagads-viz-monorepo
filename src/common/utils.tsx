@@ -3,8 +3,9 @@ export const _hasOwnProperty = (key:string, object: any) => (object !== undefine
 
 // wrapper get; allows bypassing of some typescript issues
 // e.g., strict nulls, generics with expected properties
+// also, allows an alternative (default) value if object does not have the property
 export const _get = (key: string, object: any, alt:any=null ) => {
-    if (_hasOwnProperty(key, object)) {
+    if (object.hasOwnProperty(key)) { // not using _hasOwnProperty here by/c want an error raised if trying to access an undefined object
         return object[key]
     }
     return alt

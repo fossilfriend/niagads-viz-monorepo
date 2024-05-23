@@ -120,7 +120,8 @@ const __resolveBooleanValue = (props: BooleanCell): BasicType => {
 }
 
 // cell accessor function; gets the value; resolves nulls
-export const getCellValue = (cellProps: Cell | Cell[]): any => {
+// will always return a string or number, possibly boolean if we refactor `__resolveBooleanCell`
+export const getCellValue = (cellProps: Cell | Cell[]): BasicType | BasicType[]  => {
     if (Array.isArray(cellProps)) {
         // recursively get the values from the list items
         // and concatenate w/ '//' delimiter
