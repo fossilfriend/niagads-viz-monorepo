@@ -9,7 +9,7 @@ import {
 import { Color } from "@common/palettes"
 import { BasicType } from '@common/types'
 import { Modify, TypeMapper, Expand } from "@common/types"
-import { isJSON } from '@text/utils';
+import { _isJSON, _deepCopy } from '@common/utils';
 
 const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
 const INTERNAL_NA_STR = 'NA'
@@ -26,7 +26,7 @@ const BadgeIcons = {
 
 export type BadgeIconType = keyof typeof BadgeIcons;
 
-export type UserDefinedCell = BasicType | Record<string, BasicType | BasicType[]> | null
+export type GenericCell = BasicType | Record<string, BasicType | BasicType[]> | null
 
 export type AbstractCell = {
     type: "abstract"
@@ -131,34 +131,46 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
     }
 }
 
-// TODO: do we want to review the whole column to infer data type or just assume strings if no cellType is specified?
-// issue: what if first value is null?
-const __resolveCell = (userCell: UserDefinedCell, cellType: string | undefined) => {
+
+const __resolveCell = (cell: GenericCell, cellType: CellType | undefined) => {
     //const cType: CellType === cellType ? "string"
-    return userCell
+
+
+    return resolvedCell
 }
 
 
-// validate & transform incoming UserDefinedCells into Cells
+// validate & transform incoming GenericCells into Cells
 //@ts-ignore
-export const resolveCell = (userCell: UserDefinedCell | UserDefinedCell[], cellType: string | undefined) => {
-    if (Array.isArray(userCell)) {
-        return userCell.map((cell: UserDefinedCell) => {return resolveCell(cell, cellType)})
+export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellType | undefined) => {
+    if (Array.isArray(cell)) {
+        return cell.map((c: GenericCell) => {return resolveCell(c, cellType)})
     }
 
-    if (isJSON(userCell)) {
-        if (cellType === undefined || cellType === "abstract") {
-            throw Error("`type` must be specified in the column defintion to interpret structured values: " + JSON.stringify(userCell))
+    let resolvedCellType = cellType === undefined ? "abstract" : cellType
+    let resolvedCell:GenericCell = {}
+
+    if (_isJSON(cell)) {
+        if (resolvedCellType === "abstract") {
+            throw Error("`type` must be specified in the column defintion to interpret structured values: " + JSON.stringify(cell))
         }
+        resolvedCell = _deepCopy(cell)
     }
+    else {
+        // we have a raw value, so create the 'value' k-v pair
+        Object.assign({'value': cell}, resolvedCell)
+    }
+    
+    // assign the CellType
+    Object.assign({'type': resolvedCellType}, resolvedCell)
 
-    return __resolveCell(userCell, cellType);
+    return resolvedCell
    
 }
 
 
-export const renderCell = (cell: Cell) => {
-    return <div>JSON.stringify(cell)</div>
+export const renderCell = (cell: Cell, ctype: CellType) => {
+    return <div>{ctype} - {JSON.stringify(cell)}</div>
 }
 
 export const renderCellHeader = (label: string, helpText: string) => {
