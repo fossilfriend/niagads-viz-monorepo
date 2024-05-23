@@ -132,14 +132,6 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
 }
 
 
-const __resolveCell = (cell: GenericCell, cellType: CellType | undefined) => {
-    //const cType: CellType === cellType ? "string"
-
-
-    return resolvedCell
-}
-
-
 // validate & transform incoming GenericCells into Cells
 //@ts-ignore
 export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellType | undefined) => {
@@ -160,7 +152,7 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
         // we have a raw value, so create the 'value' k-v pair
         Object.assign({'value': cell}, resolvedCell)
     }
-    
+
     // assign the CellType
     Object.assign({'type': resolvedCellType}, resolvedCell)
 
