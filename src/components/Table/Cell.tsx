@@ -6,10 +6,11 @@ import {
     UserCircleIcon
 } from "@heroicons/react/24/solid";
 
-import { Color } from "@common/palettes"
-import { BasicType } from '@common/types'
-import { Modify, TypeMapper, Expand } from "@common/types"
+import { BasicType, Modify, TypeMapper, Expand } from "@common/types"
 import { _isJSON, _deepCopy } from '@common/utils';
+import { Color } from '@common/palettes';
+
+import { Text } from '@text/Text';
 
 const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
 const INTERNAL_NA_STR = 'NA'
@@ -34,7 +35,7 @@ export type AbstractCell = {
     naString?: NAString
 }
 
-export type StringCell = Expand<Modify<AbstractCell, {type: "string", value: string}>>
+export type StringCell = Expand<Modify<AbstractCell, { type: "string", value: string }>>
 
 export type FloatCell = Expand<Modify<AbstractCell,
     { type: "float", value: number | null, precision?: number, useScientificNotation?: boolean }>>
@@ -58,17 +59,17 @@ export type BooleanCell = Expand<Modify<BadgeCell,
     }>>
 
 export type LinkCell = Expand<Modify<AnnotatedTextCell,
-    { type: "link", url: string}>>
+    { type: "link", url: string }>>
 
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type Cell =  PercentageBarCell | FloatCell | AbstractCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
+export type Cell = PercentageBarCell | FloatCell | AbstractCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
 
 // create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
 export type CellType = keyof CellTypeMapper
-const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "text", "annotated_text", "badge",  "link", "percentage_bar"]
+const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "text", "annotated_text", "badge", "link", "percentage_bar"]
 
 
 // validates cell type specified at runtime or by user is valid
@@ -143,7 +144,7 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
     }
 
     let resolvedCellType = cellType === undefined ? "abstract" : cellType
-    let resolvedCell:GenericCell = {}
+    let resolvedCell: GenericCell = {}
 
     if (_isJSON(cell)) {
         if (resolvedCellType === "abstract") {
@@ -153,18 +154,29 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
     }
     else {
         // we have a raw value, so create the 'value' k-v pair
-        resolvedCell = Object.assign({'value': cell}, resolvedCell)
+        resolvedCell = Object.assign({ 'value': cell }, resolvedCell)
     }
 
     // assign the CellType
-    resolvedCell = Object.assign({'type': resolvedCellType}, resolvedCell)
+    resolvedCell = Object.assign({ 'type': resolvedCellType }, resolvedCell)
 
     return resolvedCell
 }
 
 
 export const renderCell = (cell: Cell) => {
-    return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
+
+    switch (cell.type) {
+        case "abstract":
+        case "text":
+            return <Text props={cell}></Text>
+        default:
+            return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
+        //throw Error("Unknown cell type for rendering")
+
+
+    }
+
 }
 
 export const renderCellHeader = (label: string, helpText: string) => {
