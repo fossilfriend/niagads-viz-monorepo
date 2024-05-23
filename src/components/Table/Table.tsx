@@ -1,17 +1,23 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo, useState, useEffect } from "react"
 import { withErrorBoundary } from "react-error-boundary";
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
 
 import { _hasOwnProperty } from "@common/utils"
 
-import { SortConfig, UserDefinedColumn, getColumn } from "./Column"
-import { Cell, CellType, UserDefinedCell, getCellValue, renderCell, resolveCell, validateCellType } from "./Cell"
-import { UserDefinedTable, UserDefinedRow, UserTableProps } from "./UserDefinedTable"
+import { SortConfig, GenericColumn, getColumn } from "./Column"
+import { Cell, GenericCell, getCellValue, renderCell, resolveCell, validateCellType } from "./Cell"
+import { TableOptions} from "./TableProperties"
 import { errorFallback } from "@common/errors"
 
 
-type TableRow = Record<string, Cell | Cell[]>;
-type TableData = TableRow[]
+export type TableRow = Record<string, GenericCell | GenericCell[]>
+export type TableData = TableRow[]
+export interface Table {
+    options?: TableOptions
+    columns: GenericColumn[]
+    data: TableData
+}
+
 
 
 // FIXME: type of return should be custom sorting function
@@ -20,7 +26,7 @@ const __resolveSortingFn = (options: SortConfig) => {
     return _hasOwnProperty('sortingFn', options) ? options.sortingFn : 'alphanumeric'
 }
 
-const __resolveCell = (userCell: UserDefinedCell | UserDefinedCell[], column: UserDefinedColumn, index:number) => {
+const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericColumn, index:number) => {
     try {
         const cell = resolveCell(userCell, column?.type)
         return cell
@@ -30,7 +36,7 @@ const __resolveCell = (userCell: UserDefinedCell | UserDefinedCell[], column: Us
     }
 }
 
-const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
+const Table: React.FC<Table> = ({ columns, data, options }) => {
 
     const [error, setError] = useState(null);
 
@@ -42,14 +48,14 @@ const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
     }, [])
 
 
-    // translate UserDefinedColumns to ColumnDefs 
+    // translate GenericColumns to ColumnDefs 
     const resolvedColumns = useMemo(() => {
         const columnHelper = createColumnHelper<TableRow>();
         const columnDefs: ColumnDef<TableRow>[] = [];
         // TODO: add display column w/checkboxes if need row selection 
         // if _hasOwnProperty('rowSelection', props.options) { resolvedColumns.push(columHelper.display(...)) } // add display column w/checkboxes
 
-        columns.forEach((col: UserDefinedColumn) => {
+        columns.forEach((col: GenericColumn) => {
             try {
                 col.type = validateCellType(col.type)
             }
@@ -58,11 +64,11 @@ const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
             }
             columnDefs.push(
                 //columnHelper.accessor()
-                columnHelper.accessor(row => getCellValue(row[col.id]),
+                columnHelper.accessor(row => getCellValue(row[col.id] as Cell),
                     {
                         id: col.id,
                         // header: renderCellHeader(col.header, col.info),
-                        cell: props => renderCell(props.getValue() as Cell),
+                        cell: props => renderCell(props.getValue() as Cell, col.type!),
                         // sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }
                 )
@@ -73,9 +79,19 @@ const Table: React.FC<UserDefinedTable> = ({ columns, data, options }) => {
 
     const resolvedData = useMemo(() => {
         const tableData: TableData = []
+        const enFields = columns.length // expected number of fields
+        try {  
+            data.forEach((row: TableRow, index:number) => {
+                // validate expected number of fields per row observed
+                const onFields = Object.keys(row).length // observed number of fields
+                if (onFields > enFields) {
+                    throw new Error(`Too many values detected in row ${index}: expected ${enFields}; found ${onFields}`)
+                }
+                if (onFields < enFields) {
+                    throw new Error(`Missing columns in row ${index}: each row must provide a value for every column`)
+                }
 
-        try {
-            data.forEach((row: UserDefinedRow, index:number) => {
+                // 
                 const tableRow: TableRow = {}
                 for (const [columnId, value] of Object.entries(row)) {
                     let currentColumn = getColumn(columnId, columns)

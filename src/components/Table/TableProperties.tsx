@@ -1,6 +1,6 @@
 import { Column } from "react-table"
-import { Cell, UserDefinedCell } from "./Cell"
-import { UserDefinedColumn } from "./Column"
+import { Cell, GenericCell } from "./Cell"
+import { GenericColumn } from "./Column"
 import { FileFormat, BasicType } from "@common/types"
 
 export interface FilterGroup {
@@ -16,7 +16,7 @@ export interface RowSelectOptions {
     multiSelect?: boolean // optional: allow selection of multiple rows, false if missing
 }
 
-export interface UserTableProps {
+export interface TableOptions {
     title?: string
     id?:string // optional: internal id for the table; if not provided will be generated from name
     info?: string // optional: descriptive text describing the table for info popup
@@ -26,16 +26,6 @@ export interface UserTableProps {
     rowSelect?: RowSelectOptions // optional: enables row selection and related state change options
 }
 
-
-export type UserDefinedRow = Record<string, UserDefinedCell | UserDefinedCell[]>
-type UserDefinedTableData = UserDefinedRow[]
-
-// to satisfy type script --> what we expect from the user at a bare minimum
-export interface UserDefinedTable {
-    options?: UserTableProps
-    columns: UserDefinedColumn[]
-    data: UserDefinedTableData
-}
 
 
 
