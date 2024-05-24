@@ -32,7 +32,9 @@ export type GenericCell = BasicType | Record<string, BasicType | BasicType[]> | 
 export type AbstractCell = {
     type: "abstract"
     value: BasicType | null
-    naString?: NAString
+    naString?: NAString,
+    rowId: number,
+    columnId: number
 }
 
 export type StringCell = Expand<Modify<AbstractCell, { type: "string", value: string }>>
@@ -87,9 +89,8 @@ export const validateCellType = (ctype: string | undefined): CellType => {
 }
 
 
-
-// extract / resolve cell values for sort, filter, and download
-
+// check if cell value is null 
+// TODO:--> maybe move to utils or comon?
 const __isNull = (value: BasicType | null) => {
     if (value && typeof value === 'string' && NA_STRINGS.includes(value.toUpperCase())) {
         return true
@@ -121,7 +122,8 @@ const __resolveBooleanValue = (props: BooleanCell): BasicType => {
 
 // cell accessor function; gets the value; resolves nulls
 // will always return a string or number, possibly boolean if we refactor `__resolveBooleanCell`
-export const getCellValue = (cellProps: Cell | Cell[]): BasicType | BasicType[]  => {
+// has to return "any" to satisfy react table accessorFn
+export const getCellValue = (cellProps: Cell | Cell[]): any  => {
     if (Array.isArray(cellProps)) {
         // recursively get the values from the list items
         // and concatenate w/ '//' delimiter
