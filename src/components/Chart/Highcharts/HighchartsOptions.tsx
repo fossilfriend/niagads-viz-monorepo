@@ -1,6 +1,6 @@
 import { Options, OptionsStackingValue } from 'highcharts';
 import merge from 'lodash.merge';
-import { _color_blind_friendly_palettes as PALETTES} from "@common/palettes"
+import { COLOR_BLIND_FRIENDLY_PALETTES as PALETTES} from "@common/palettes"
 
 /* const HIGHCHARTS_EXPORTING_MENU_ITEMS = [
     "printChart",
