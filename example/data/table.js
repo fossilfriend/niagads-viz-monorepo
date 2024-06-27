@@ -1396,7 +1396,7 @@ export const EXAMPLE_TABLE_2 = {
 export const EXAMPLE_TABLE_3 = {
     data: [
         { label: {color: "blue", value: "r1"}, population: "european", state: true, count: 5, percent: 0.5 },
-        { label: "r2", population: "african american", state: false, count: 6, percent: 0.0000000001 },
+        { label: {value: "r2", tooltip:"my favorite group"}, population: "african american", state: false, count: 6, percent: 0.0000000001 },
         { label: "r3", population: "asian", state: null, count: 0, percent: 0.9 },
         { label: "r4", state: true, count: null, population: { color: "red", value: "other", tooltip: "non-standard population" }, percent: null },
     ],
