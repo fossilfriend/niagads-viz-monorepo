@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react"
 
-// adapted from: 
+// tailwind classes adapted from: https://tailgrids.com/components/tooltips
 
 const __TAILWIND_TOOLTIP = {
     root: "hidden absolute",
@@ -15,9 +15,6 @@ const __TAILWIND_TOOLTIP = {
     triangle_right: "absolute left-[-3px] top-1/2 -z-10 h-2 w-2 -translate-y-1/2 rotate-45 rounded-sm bg-black",
 }
 
-
-///const TAILWIND_TOOLTIP = "py-1.5 px-3 font-sans text-sm font-normal text-white focus:outline-none mt-2 text-center"
-//bg-blue-200 p-3 -mt-0 -ml-6 rounded hidden group-hover:block absolute text-center py-2 px-6 z-50&quot;
 interface Tooltip {
     message: string | ReactNode,
     children: string | ReactNode
@@ -38,22 +35,7 @@ export const Tooltip = ({ children, message, position = 'bottom' }: Tooltip) => 
     )
 }
 
+// function that renders default (bottom) tooltip
 export const renderTooltip = (children: any, message: any) => {
     return <Tooltip children={children} message={message} />
 }
-
-/*
-const ToolTip1 = () => {
-  return (
-    <section class="bg-gray-2 pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]">
-      <div className="container mx-auto py-12">
-        <div className="-mx-4 flex flex-wrap justify-center">
-   
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default ToolTip1; */
-

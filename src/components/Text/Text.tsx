@@ -16,17 +16,17 @@ export const Text = <T,>({ props }: TextRenderer<T>) => {
     let style = {}
     const hasTooltip = _hasOwnProperty('tooltip', props)
 
-
     if (_hasOwnProperty('color', props)) {
         style = Object.assign({ 'color': _get('color', props) }, style)
     }
 
-    const textElement = renderTextElement(_get('value', props), 
+    let textElement = renderTextElement(_get('value', props), 
         style,  
-        hasTooltip ?TAILWINDCSS_CLASSES['infolink'] : "")
+        hasTooltip ? TAILWINDCSS_CLASSES['infolink'] : "")
 
-    const tooltip = hasTooltip ? renderTooltip(textElement, _get('tooltip', props)) : undefined
+    if (hasTooltip) {
+        textElement = renderTooltip(textElement, _get('tooltip', props))
+    }
 
-    return (<>{tooltip ? tooltip : textElement}</>)
-
-};
+    return (<>{textElement}</>)
+}
