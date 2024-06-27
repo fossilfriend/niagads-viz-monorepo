@@ -6,5 +6,5 @@ export const TAILWIND_THEME = TAILWIND_CONFIG.theme
 const TAILWIND_COLORS = Object.keys(TAILWIND_THEME.colors)
 
 export const TAILWINDCSS_CLASSES = {
-    infolink: "underline decoration-dashed decoration-blue-500 underline-offset-4"
+    info_link: "underline decoration-dashed decoration-blue-500 underline-offset-4" 
 }

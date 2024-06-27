@@ -7,7 +7,7 @@ import { renderTooltip } from "@components/UI/Tooltip";
 import { TextRenderer } from "./TextRendererProperties";
 
 
-const renderTextElement = (value: any, style: any, className: string) => {
+const _renderTextElement = (value: any, style: any, className: string) => {
     return <span className={className} style={style}>{value}</span>
 }
 
@@ -20,9 +20,9 @@ export const Text = <T,>({ props }: TextRenderer<T>) => {
         style = Object.assign({ 'color': _get('color', props) }, style)
     }
 
-    let textElement = renderTextElement(_get('value', props), 
+    let textElement = _renderTextElement(_get('value', props), 
         style,  
-        hasTooltip ? TAILWINDCSS_CLASSES['infolink'] : "")
+        hasTooltip ? TAILWINDCSS_CLASSES['info_link'] : "")
 
     if (hasTooltip) {
         textElement = renderTooltip(textElement, _get('tooltip', props))
