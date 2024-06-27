@@ -156,7 +156,8 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
 
     if (_isJSON(cell)) {
         if (resolvedCellType === "abstract") {
-            throw Error("`type` must be specified in the column defintion to interpret structured values: " + JSON.stringify(cell))
+            resolvedCellType = "text"
+            console.warn("`type` must be specified in the column defintion to correctly interpret structured values; assuming `text` cell: " + JSON.stringify(cell))
         }
         resolvedCell = _deepCopy(cell)
     }
