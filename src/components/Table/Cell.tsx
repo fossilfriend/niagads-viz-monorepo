@@ -189,6 +189,6 @@ export const renderCell = (cell: Cell) => {
 }
 
 export const renderCellHeader = (label: string, helpText: string) => {
-    return <div>label</div>
+    return <div>{label}</div>
 }
 
