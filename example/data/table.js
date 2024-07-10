@@ -1465,7 +1465,7 @@ export const EXAMPLE_TABLE_3 = {
         {
             header: "Website",
             id: "website",
-            
+            type: "link"
         }
 
     ],
