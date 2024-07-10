@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { AnnotatedText } from '@text/__deprecated__/index';
+import { AnnotatedText } from '@components/TextRenderers/__deprecated__/index';
 
 const meta: Meta<typeof AnnotatedText> = {
   title: 'NIAGADS-VIZ/Text/AnnotatedText',
