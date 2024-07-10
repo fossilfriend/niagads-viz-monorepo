@@ -22,7 +22,7 @@ export interface FilterConfig {
 export interface GenericColumn {
     header: string
     id: string
-    info?: string
+    description?: string
     type?: CellType 
     sort?: SortConfig
     filter?: FilterConfig 
