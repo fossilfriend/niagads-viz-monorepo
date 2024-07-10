@@ -4,13 +4,14 @@ import {
     CheckIcon, CheckCircleIcon,
     ExclamationCircleIcon, ExclamationTriangleIcon,
     UserCircleIcon
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/solid"
 
 import { BasicType, Modify, TypeMapper, Expand, NAString } from "@common/types"
-import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull } from '@common/utils';
-import { Color } from '@common/palettes';
+import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull } from '@common/utils'
+import { Color } from '@common/palettes'
 
-import { Text } from '@text/BasicText';
+import { Text } from '@text/BasicText'
+import { Link } from '@text/Link'
 
 const DEFAULT_NA_STRING = 'NA'
 
@@ -55,7 +56,7 @@ export type BooleanCell = Expand<Modify<BadgeCell,
     }>>
 
 export type LinkCell = Expand<Modify<AbstractCell,
-    { type: "link", url: string, target: string, tooltip?: string }>>
+    { type: "link", url: string, tooltip?: string }>>
 
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
@@ -171,7 +172,7 @@ export const renderCell = (cell: Cell) => {
         case "text":
             return <Text props={cell}></Text>
         case "link":
-            //return <Link props={cell}></Link>
+            return <Link props={cell}></Link>
         default:
             return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
         //throw Error("Unknown cell type for rendering")

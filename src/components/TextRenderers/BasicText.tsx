@@ -23,7 +23,7 @@ export const Text = <T,>({ props }: TextRenderer<T>) => {
         return renderNullValue(_get('naString', props))
     }
 
-    let textElement = renderStyledText(value, style,
+    const textElement = renderStyledText(value, style,
         hasTooltip && useInfoLink ? TAILWINDCSS_CLASSES.info_link : "")
 
     if (hasTooltip) {

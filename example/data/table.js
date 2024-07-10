@@ -1418,7 +1418,7 @@ export const EXAMPLE_TABLE_3 = {
             state: null,
             count: 0,
             percent: 0.9,
-            website: { url: "https://google.com", value: "Google" }
+            website: { url: "https://google.com", value: "Google", tooltip:"google!" }
         },
         {
             label: "r4",
@@ -1465,7 +1465,7 @@ export const EXAMPLE_TABLE_3 = {
         {
             header: "Website",
             id: "website",
-            type: "link"
+            
         }
 
     ],
