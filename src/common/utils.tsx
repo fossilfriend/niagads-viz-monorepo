@@ -1,3 +1,5 @@
+import { BasicType } from "./types";
+
 // checks if object is defined before checking if object has key
 export const _hasOwnProperty = (key:string, object: any) => (object !== undefined && object.hasOwnProperty(key))
 
@@ -29,3 +31,12 @@ export const _isJSON = (value: any) => {
     return _isObject(value) && value != null;
     
 };
+
+export const _isNull = (value: BasicType | null) => {
+    const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
+    
+    if (value && typeof value === 'string' && NA_STRINGS.includes(value.toUpperCase())) {
+        return true
+    }
+    return value === null || value === undefined
+}
