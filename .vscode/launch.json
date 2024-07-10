@@ -10,13 +10,22 @@
             "name": "Storybook Debug",
             "url": "http://localhost:6006",
             "sourceMaps": true,
-            "webRoot": "${workspaceFolder}",
-            /*"sourceMapPathOverrides": {
-                "webpack:///": "${webRoot}/*",
-                "webpack:///./": "${webRoot}/*",
-                "webpack:///src/": "${webRoot}/*",
-                "webpack:///./~/": "${webRoot}/node_modules/*"
-            }*/
+            "webRoot": "${workspaceFolder}"
         },
+        {
+            "type": "firefox",
+            "request": "launch",
+            "name": "Firefox - Storybook Debug",
+            "url": "http://localhost:6006",
+            "tmpDir": "${workspaceFolder}/.vscode/firefox-tmp/",
+            "reAttach": true,
+            "webRoot": "${workspaceFolder}",
+            "pathMappings": [
+                {
+                    "url": "webpack://niagads-viz-js/src/components",
+                    "path": "${workspaceFolder}/src/components"
+                }
+            ]
+        }
     ]
 }
