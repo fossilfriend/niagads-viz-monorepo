@@ -6,16 +6,13 @@ import {
     UserCircleIcon
 } from "@heroicons/react/24/solid";
 
-import { BasicType, Modify, TypeMapper, Expand } from "@common/types"
-import { _isJSON, _deepCopy, _hasOwnProperty, _get } from '@common/utils';
+import { BasicType, Modify, TypeMapper, Expand, NAString } from "@common/types"
+import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull } from '@common/utils';
 import { Color } from '@common/palettes';
 
-import { Text } from '@text/Text';
+import { Text } from '@text/BasicText';
 
-const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
 const DEFAULT_NA_STRING = 'NA'
-
-type NAString = 'NA' | 'N/A' | 'NULL' | '.' | ''
 
 const BadgeIcons = {
     check: CheckIcon,
@@ -43,12 +40,9 @@ export type FloatCell = Expand<Modify<AbstractCell,
     { type: "float", value: number | null, precision?: number, useScientificNotation?: boolean }>>
 
 export type TextCell = Expand<Modify<AbstractCell,
-    { type: "text", truncateTo?: number }>>
+    { type: "text", truncateTo?: number, color?: Color, tooltip?: string }>>
 
-export type AnnotatedTextCell = Expand<Modify<TextCell,
-    { type: "annotated_text", color?: Color, tooltip?: ReactNode | string }>>
-
-export type BadgeCell = Expand<Modify<AnnotatedTextCell,
+export type BadgeCell = Expand<Modify<TextCell,
     { type: "badge", backgroundColor?: Color, borderColor?: Color, icon?: BadgeIconType }>>
 
 export type BooleanCell = Expand<Modify<BadgeCell,
@@ -60,13 +54,13 @@ export type BooleanCell = Expand<Modify<BadgeCell,
         falseStr?: string // if missing FALSE is displayed as empty string
     }>>
 
-export type LinkCell = Expand<Modify<AnnotatedTextCell,
-    { type: "link", url: string }>>
+export type LinkCell = Expand<Modify<AbstractCell,
+    { type: "link", url: string, target: string, tooltip?: string }>>
 
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type Cell = PercentageBarCell | FloatCell | AbstractCell | AnnotatedTextCell | TextCell | BadgeCell | BooleanCell | LinkCell
+export type Cell = PercentageBarCell | FloatCell | AbstractCell |  TextCell | BadgeCell | BooleanCell | LinkCell
 
 // create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
@@ -89,24 +83,15 @@ export const validateCellType = (ctype: string | undefined): CellType => {
 }
 
 
-// check if cell value is null 
-// TODO:--> maybe move to utils or comon?
-const __isNull = (value: BasicType | null) => {
-    if (value && typeof value === 'string' && NA_STRINGS.includes(value.toUpperCase())) {
-        return true
-    }
-    return value === null || value === undefined
-}
-
 // catch nulls are replace with props.naString
 const __resolveValue = (props: Cell): BasicType => {
     const naString = _hasOwnProperty('naString', props) ? props.naString : DEFAULT_NA_STRING
-    return __isNull(props.value) ? naString : _get('value', props)
+    return _isNull(props.value) ? naString : _get('value', props)
 }
 
 // TODO: - not sure on this one; do we want it to return a boolean or a string?
 const __resolveBooleanValue = (props: BooleanCell): BasicType => {
-    if (__isNull(props.value)) {
+    if (_isNull(props.value)) {
         if (props.nullAsFalse) {
             return props.falseStr !== undefined ? props.falseStr : 'FALSE'
         }
@@ -156,9 +141,16 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
 
     if (_isJSON(cell)) {
         if (resolvedCellType === "abstract") {
-            resolvedCellType = "text"
-            console.warn("`type` must be specified in the column defintion to correctly interpret structured values; assuming `text` cell: " + JSON.stringify(cell))
+            if (_hasOwnProperty('url', cell)) {
+                resolvedCellType = "link"
+            }
+            else {
+                resolvedCellType = "text"
+            }
+            console.warn("`type` must be specified in the column defintion to correctly interpret structured values; assuming `" 
+                + resolvedCellType + "` cell: " + JSON.stringify(cell))
         }
+
         resolvedCell = _deepCopy(cell)
     }
     else {
@@ -174,16 +166,15 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
 
 
 export const renderCell = (cell: Cell) => {
-
     switch (cell.type) {
         case "abstract":
         case "text":
             return <Text props={cell}></Text>
+        case "link":
+            //return <Link props={cell}></Link>
         default:
             return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
         //throw Error("Unknown cell type for rendering")
-
-
     }
 
 }
@@ -191,4 +182,3 @@ export const renderCell = (cell: Cell) => {
 export const renderCellHeader = (label: string, helpText: string) => {
     return <div>{label}</div>
 }
-
