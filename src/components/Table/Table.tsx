@@ -101,7 +101,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     {
                         id: col.id,
                         // TODO: custom renderer for cell headers that has information bubbles
-                        // header: renderCellHeader(col.header, col.info),
+                        // header: renderCellHeader(col.header, col.description),
                         cell: props => renderCell(__resolveRenderableCell(props.cell.row.original[col.id] as Cell, props.row.id, props.column.id)),
                         // TODO: sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }

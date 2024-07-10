@@ -1,4 +1,4 @@
-import { TextRendererType , TextRenderer } from "../Text/__deprecated__";
+import { TextRendererType , TextRenderer } from "../TextRenderers/__deprecated__";
 
 export type ColumnAccessorType = TextRendererType;
 
