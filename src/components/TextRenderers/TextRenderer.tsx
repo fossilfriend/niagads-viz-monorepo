@@ -55,8 +55,8 @@ export const renderWithInfo = (textElement: ReactNode | string, infoMessage: str
     // otherwise draw info icon and attach the tooltip to the icon
     return renderWithIcon(
         textElement,
-        <InformationCircleIcon className={`${TAILWINDCSS_CLASSES.info_icon} size-3`} title={infoMessage} />,
-        false)
+        <InformationCircleIcon className={`${TAILWINDCSS_CLASSES.info_icon} size-3 ml-1`} title={infoMessage} />,
+        false, false)
 }
 
 
@@ -68,17 +68,17 @@ export const getIconElement = (key: string) => {
     return icon
 }
 
-export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode | string, prefix: boolean = true) => {
-    const IconComponent = (typeof(icon) === 'string') ? getIconElement(icon) : undefined
-
+export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode | string, iconOnly: boolean, prefix: boolean = true) => {
+    const IconComponent = (typeof (icon) === 'string') ? getIconElement(icon) : undefined
+    const margin = iconOnly ? "m-auto" : (prefix ? "mr-3" : "ml-3")
     return prefix
         ? <div className="flex">
-            {IconComponent ? <IconComponent className={`${TAILWINDCSS_CLASSES.badge_icon} mr-3`}/> : icon}
-            {textElement}
+            {IconComponent ? <IconComponent className={`${TAILWINDCSS_CLASSES.badge_icon} ${margin}`} /> : icon}
+            {!iconOnly && textElement}
         </div>
         : <div className="flex">
-            {textElement}
-            {IconComponent ? <IconComponent /> : icon}
+            {!iconOnly && textElement}
+            {IconComponent ? <IconComponent className={`${TAILWINDCSS_CLASSES.badge_icon} ${margin}`}/> : icon}
         </div>
 }
 

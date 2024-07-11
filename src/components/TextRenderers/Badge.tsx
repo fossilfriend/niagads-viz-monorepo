@@ -1,10 +1,10 @@
 import React from "react"
-import { TextRenderer, buildElementStyle, renderNullValue, renderStyledText, renderWithIcon, renderWithInfo} from "./TextRenderer"
+import { TextRenderer, buildElementStyle, renderNullValue, renderStyledText, renderWithIcon, renderWithInfo } from "./TextRenderer"
 import { _get, _hasOwnProperty, _isNA, _isNull } from "@common/utils";
 import { TAILWINDCSS_CLASSES } from "@common/tailwind";
 
 
-export const Badge  = <T,>({ props }: TextRenderer<T>) => {
+export const Badge = <T,>({ props }: TextRenderer<T>) => {
     const value = _get('value', props)
 
     if (_isNull(value)) {
@@ -18,8 +18,8 @@ export const Badge  = <T,>({ props }: TextRenderer<T>) => {
     const style = buildElementStyle(props)
     const hasTooltip = _hasOwnProperty('tooltip', props)
     let textElement = renderStyledText(value, style, "")
-    if (_hasOwnProperty('icon', props )) {
-        textElement = renderWithIcon(textElement, _get('icon', props))
+    if (_hasOwnProperty('icon', props)) {
+        textElement = renderWithIcon(textElement, _get('icon', props), _get('iconOnly', props))
     }
 
     return hasTooltip
@@ -34,6 +34,10 @@ export const BooleanBadge = <T,>({ props }: TextRenderer<T>) => {
         value = _get('nullValue', props, 'NA')
     }
 
-    return <Badge props={Object.assign(props as any, {'value': value.toString()})}/>
-    
+    return <Badge props={Object.assign(props as any,
+        {
+            'value': value.toString(),
+            'iconOnly': _hasOwnProperty('icon', props) ? true : false
+        })} />
+
 }
