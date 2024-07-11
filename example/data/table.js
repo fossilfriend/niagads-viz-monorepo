@@ -1444,6 +1444,7 @@ export const EXAMPLE_TABLE_3 = {
             header: "Population",
             id: "population",
             description: "sample population",
+            nullValue: "NA"
         },
         {
             header: "State",

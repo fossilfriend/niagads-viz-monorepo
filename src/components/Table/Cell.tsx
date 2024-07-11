@@ -7,13 +7,14 @@ import {
 } from "@heroicons/react/24/solid"
 
 import { BasicType, Modify, TypeMapper, Expand, NAString } from "@common/types"
-import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull } from '@common/utils'
+import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull, _isNA } from '@common/utils'
 import { Color } from '@common/palettes'
 
 import { Text } from '@text/BasicText'
 import { Link } from '@text/Link'
+import { GenericColumn } from './Column'
 
-const DEFAULT_NA_STRING = 'NA'
+export const DEFAULT_NA_VALUE = 'NA'
 
 const BadgeIcons = {
     check: CheckIcon,
@@ -27,12 +28,14 @@ export type BadgeIconType = keyof typeof BadgeIcons;
 
 export type GenericCell = BasicType | Record<string, BasicType | BasicType[]> | null
 
+
 export type AbstractCell = {
     type: "abstract"
     value: BasicType | null
-    naString?: NAString,
     rowId: number,
     columnId: number
+    nullValue?: BasicType | null // if not set, treats null as NA
+    naValue?: NAString  // (internal) value to assign to NAs for consistency, defaults to `NA`
 }
 
 export type StringCell = Expand<Modify<AbstractCell, { type: "string", value: string }>>
@@ -50,9 +53,7 @@ export type BooleanCell = Expand<Modify<BadgeCell,
     {
         type: "boolean",
         value: boolean | null
-        trueStr?: string // what value to display for TRUE (e.g., TRUE, Yes, Y, Coding); FALSE inferred
-        nullAsFalse: boolean // assume null === FALSE
-        falseStr?: string // if missing FALSE is displayed as empty string
+        displayText?: string // what value to display (e.g., TRUE, Yes, Y, Coding, FALSE, N, No, etc)
     }>>
 
 export type LinkCell = Expand<Modify<AbstractCell,
@@ -61,7 +62,7 @@ export type LinkCell = Expand<Modify<AbstractCell,
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type Cell = PercentageBarCell | FloatCell | AbstractCell |  TextCell | BadgeCell | BooleanCell | LinkCell
+export type Cell = PercentageBarCell | FloatCell | AbstractCell | TextCell | BadgeCell | BooleanCell | LinkCell
 
 // create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
@@ -84,32 +85,23 @@ export const validateCellType = (ctype: string | undefined): CellType => {
 }
 
 
-// catch nulls are replace with props.naString
+// catch NULLs and NAs
 const __resolveValue = (props: Cell): BasicType => {
-    const naString = _hasOwnProperty('naString', props) ? props.naString : DEFAULT_NA_STRING
-    return _isNull(props.value) ? naString : _get('value', props)
+    const naValue = _get('naValue', props, DEFAULT_NA_VALUE)
+    const nullValue = _get('nullValue', props, naValue)
+    return _isNull(props.value) ? nullValue 
+        : (_isNA(props.value) ? naValue : _get('value', props))
 }
 
-// TODO: - not sure on this one; do we want it to return a boolean or a string?
 const __resolveBooleanValue = (props: BooleanCell): BasicType => {
-    if (_isNull(props.value)) {
-        if (props.nullAsFalse) {
-            return props.falseStr !== undefined ? props.falseStr : 'FALSE'
-        }
-        else {
-            return __resolveValue(props)
-        }
-    }
-
-    return (props.value === true)
-        ? (props.trueStr !== undefined ? props.trueStr : 'TRUE')
-        : (props.falseStr !== undefined ? props.falseStr : 'FALSE')
+    const displayText = _get('displayText', props)
+    return (displayText) ? displayText : __resolveValue(props)
 }
 
 // cell accessor function; gets the value; resolves nulls
 // will always return a string or number, possibly boolean if we refactor `__resolveBooleanCell`
 // has to return "any" to satisfy react table accessorFn
-export const getCellValue = (cellProps: Cell | Cell[]): any  => {
+export const getCellValue = (cellProps: Cell | Cell[]): any => {
     if (Array.isArray(cellProps)) {
         // recursively get the values from the list items
         // and concatenate w/ '//' delimiter
@@ -127,10 +119,10 @@ export const getCellValue = (cellProps: Cell | Cell[]): any  => {
 }
 
 
-const __resolveLinkCell = (cell: GenericCell) : GenericCell => {
+const __resolveLinkCell = (cell: GenericCell): GenericCell => {
     const displayText = _get('displayText', cell)
     const url = _get('url', cell)
-    cell = Object.assign({'value': displayText ? displayText : url, 'type': 'link'}, cell)
+    cell = Object.assign({ 'value': displayText ? displayText : url, 'type': 'link' }, cell)
     return cell
 }
 
@@ -139,12 +131,12 @@ const __resolveLinkCell = (cell: GenericCell) : GenericCell => {
 // does some error checking:
 // 1. makes sure user specified a cell type to the parent column if cell value is an object/JSON
 
-export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellType | undefined): GenericCell | GenericCell[] => {
+export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericColumn): GenericCell | GenericCell[] => {
     if (Array.isArray(cell)) {
-        return cell.map((c: GenericCell) => (resolveCell(c, cellType) as GenericCell))
+        return cell.map((c: GenericCell) => (resolveCell(c, column) as GenericCell))
     }
 
-    let resolvedCellType = cellType === undefined ? "abstract" : cellType
+    let resolvedCellType = _get('type', column, "abstract")
     let resolvedCell: GenericCell = {}
 
     if (_isJSON(cell)) {
@@ -162,14 +154,15 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
             else {
                 resolvedCellType = "text"
             }
-            console.warn("`type` must be specified in the column defintion to correctly interpret structured values; assuming `" 
+            console.warn("`type` must be specified in the column defintion to correctly interpret structured values; assuming `"
                 + resolvedCellType + "` cell: " + JSON.stringify(cell))
         }
 
         // already caught this if a link
-        if (resolvedCellType != "link" && _get('value', cell) == null) {
+        const RESOLVED_DISPLAYS = ["link", "boolean"]
+        if (!RESOLVED_DISPLAYS.includes(resolvedCellType) && _get('value', cell) == null) {
             if (_get('displayText', cell) != null) {
-                resolvedCell = Object.assign({'value': _get('displayText', cell)}, resolvedCell)
+                resolvedCell = Object.assign({ 'value': _get('displayText', cell) }, resolvedCell)
                 console.warn("Missing `value` field.  Setting `displayText` to value for cell: " + JSON.stringify(cell))
             }
             else {
@@ -183,8 +176,12 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
         resolvedCell = Object.assign({ 'value': cell }, resolvedCell)
     }
 
-    // assign the CellType
-    resolvedCell = Object.assign({ 'type': resolvedCellType }, resolvedCell)
+    // assign relevant column properties & cell type
+    resolvedCell = Object.assign({
+        'type': resolvedCellType,
+        'nullValue': _get('nullValue', column),
+        'naValue': _get('naValue', column, DEFAULT_NA_VALUE)
+    }, resolvedCell)
 
     return resolvedCell
 }

@@ -16,7 +16,7 @@ import {
 
 import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
 
-import { _hasOwnProperty } from "@common/utils"
+import { _get, _hasOwnProperty } from "@common/utils"
 import { errorFallback } from "@common/errors"
 
 import { SortConfig, GenericColumn, getColumn } from "./Column"
@@ -51,7 +51,7 @@ const __resolveSortingFn = (options: SortConfig) => {
 
 const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericColumn, index: number) => {
     try {
-        const cell = resolveCell(userCell, column?.type)
+        const cell = resolveCell(userCell, column)
         return cell
     }
     catch (e: any) {
@@ -64,8 +64,15 @@ const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericCol
 // add row and column indexes to the object so that unique ui keys can be generated 
 // if required; e.g., tooltips
 // TODO: array of values?!
-const __resolveRenderableCell = (value: Cell, rowId: string, columnId: string): Cell =>  
-    (Object.assign({rowId: rowId, columnId: columnId}, value))
+const __resolveRenderableCell = (value: Cell, rowId: string, columnId: string): Cell => (
+    Object.assign(
+        {
+            rowId: rowId,
+            columnId: columnId,
+        },
+        value)
+)
+
 
 
 const Table: React.FC<Table> = ({ columns, data, options }) => {
@@ -135,7 +142,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     tableRow[columnId] = __resolveCell(value, currentColumn, index)
                 }
 
-                tableData.push(tableRow)   
+                tableData.push(tableRow)
             });
         }
         catch (e: any) {
@@ -147,7 +154,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
 
 
     const table = useReactTable({
-        data: resolvedData, 
+        data: resolvedData,
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
@@ -163,7 +170,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     });
 
 
-    return ( 
+    return (
         table ? (<>
             <table className={TAILWIND_TABLE.table}>
                 <thead className={TAILWIND_TABLE.thead}>
@@ -210,8 +217,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             </table >
             <PaginationControls table={table} />
         </>
-    ) : 
-    <div>No data</div>
+        ) :
+            <div>No data</div>
     )
 }
 

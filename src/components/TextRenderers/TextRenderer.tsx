@@ -17,8 +17,8 @@ export const renderStyledText = (value: any, style: any, className: string) => {
 }
 
 const DEFAULT_NA_STRING = "n/a"
-export const renderNullValue = (naString: string = DEFAULT_NA_STRING) => {
-    return <span className="text-gray-200">{naString ? naString : DEFAULT_NA_STRING}</span>
+export const renderNullValue = (value: string = DEFAULT_NA_STRING) => {
+    return <span className="text-gray-200">{value ? value : DEFAULT_NA_STRING}</span>
 }
 
 

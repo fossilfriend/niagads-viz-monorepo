@@ -16,13 +16,13 @@ const _renderLink = (displayText: string, url: string, newWindow: boolean=false)
 // TODO: handle target?
 export const Link = <T,>({ props }: TextRenderer<T>) => {
     const url = _get('url', props)
-    const displayText = _get('displayText', props)
+    const value = _get('value', props)
     
     if (_isNull(url)) { // render as text
         return <Text props={props} />
     }
 
-    const linkElement = _renderLink(displayText ? displayText : url, url)
+    const linkElement = _renderLink(value ? value : url, url)
     const hasTooltip = _hasOwnProperty('tooltip', props)
     if (hasTooltip) {
         return renderWithInfo(linkElement, _get('tooltip', props), false)

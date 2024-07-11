@@ -32,11 +32,20 @@ export const _isJSON = (value: any) => {
     
 };
 
-export const _isNull = (value: BasicType | null) => {
+export const _isNA = (value: BasicType | null, nullsAsNA: boolean=false) => {
     const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
     
     if (value && typeof value === 'string' && NA_STRINGS.includes(value.toUpperCase())) {
         return true
     }
+
+    if (nullsAsNA) {
+        return _isNull(value)
+    }
+
+    return false
+}
+
+export const _isNull = (value: BasicType | null ) => {
     return value === null || value === undefined
 }

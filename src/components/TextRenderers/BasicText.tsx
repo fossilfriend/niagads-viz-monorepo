@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNull } from "@common/utils";
+import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull } from "@common/utils";
 import { TAILWINDCSS_CLASSES } from "@common/tailwind"
 
 import { TextRenderer, renderWithInfo, renderStyledText, renderNullValue } from "./TextRenderer";
@@ -18,7 +18,14 @@ export const Text = <T,>({ props }: TextRenderer<T>) => {
 
 
     if (_isNull(value)) {
-        return renderNullValue(_get('naString', props))
+        const nullValue = _get('nullValue', props)
+        return (_isNA(nullValue))
+            ? renderNullValue()
+            : renderNullValue(nullValue)
+    }
+
+    if (_isNA(value)) {
+        return renderNullValue()
     }
 
     if (value.length > maxLength) {
@@ -32,6 +39,7 @@ export const Text = <T,>({ props }: TextRenderer<T>) => {
         ? renderWithInfo(textElement, _get('tooltip', props), useInfoLink)
         : textElement
 }
+
 
 export const LargeText = <T,>({ props }: TextRenderer<T>) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
