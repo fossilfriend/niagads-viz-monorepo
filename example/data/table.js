@@ -1450,7 +1450,8 @@ export const EXAMPLE_TABLE_3 = {
             header: "State",
             id: "state",
             info: "boolean test",
-            type: "boolean"
+            type: "boolean",
+            nullValue: false
         },
         {
             header: "Count",

@@ -5,7 +5,6 @@ import { Text } from "./BasicText"
 
 import { _get, _hasOwnProperty, _isNull } from "@common/utils";
 
-
 const _renderLink = (displayText: string, url: string, newWindow: boolean=false) => {
     if (newWindow) {
         return <a href={url}  target="_blank" rel="noopener noreferrer">{displayText}</a>
@@ -13,7 +12,6 @@ const _renderLink = (displayText: string, url: string, newWindow: boolean=false)
     return <a href={url}>{displayText}</a>
 }
 
-// TODO: handle target?
 export const Link = <T,>({ props }: TextRenderer<T>) => {
     const url = _get('url', props)
     const value = _get('value', props)
@@ -28,5 +26,5 @@ export const Link = <T,>({ props }: TextRenderer<T>) => {
         return renderWithInfo(linkElement, _get('tooltip', props), false)
     }
     
-    return <>{linkElement}</>
+    return linkElement
 }

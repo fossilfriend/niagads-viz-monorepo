@@ -4,7 +4,7 @@ import {
     InformationCircleIcon
 } from "@heroicons/react/24/outline";
 
-import { _get, _hasOwnProperty } from "@common/utils";
+import { _get, _hasOwnProperty, _isNA, _isNull } from "@common/utils";
 import { TAILWINDCSS_CLASSES } from "@common/tailwind"
 import { renderTooltip } from "@components/UI/Tooltip";
 
@@ -16,10 +16,13 @@ export const renderStyledText = (value: any, style: any, className: string) => {
     return <span className={className} style={style}>{value}</span>
 }
 
+
+
 const DEFAULT_NA_STRING = "n/a"
-export const renderNullValue = (value: string = DEFAULT_NA_STRING) => {
-    return <span className="text-gray-200">{value ? value : DEFAULT_NA_STRING}</span>
+export const renderNullValue = (value: string = DEFAULT_NA_STRING ) => {
+    return <span className="text-gray-200">{_isNA(value) || !value ? DEFAULT_NA_STRING : value}</span>
 }
+
 
 
 /**
@@ -40,4 +43,16 @@ export const renderWithInfo = (textElement: ReactNode | string, infoMessage: str
             <InformationCircleIcon className={`${TAILWINDCSS_CLASSES.info_icon} size-3`} title={infoMessage} />
         </div>
     )
+}
+
+export const buildElementStyle = (props: any) => {
+    const VALID_STYLES = ['color', 'backgroundColor', 'borderColor']
+    let style = {}
+    for (const vStyle of VALID_STYLES) {
+        if (_hasOwnProperty(vStyle, props )) {
+            style = Object.assign({[vStyle]: _get(vStyle, props)}, style)
+        }
+    }
+    
+    return style
 }
