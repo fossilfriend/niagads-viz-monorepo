@@ -56,7 +56,7 @@ export type BooleanCell = Expand<Modify<BadgeCell,
     }>>
 
 export type LinkCell = Expand<Modify<AbstractCell,
-    { type: "link", url: string, tooltip?: string }>>
+    { type: "link", url: string, displayText: string, tooltip?: string }>>
 
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
@@ -127,6 +127,13 @@ export const getCellValue = (cellProps: Cell | Cell[]): any  => {
 }
 
 
+const __resolveLinkCell = (cell: GenericCell) : GenericCell => {
+    const displayText = _get('displayText', cell)
+    const url = _get('url', cell)
+    cell = Object.assign({'value': displayText ? displayText : url, 'type': 'link'}, cell)
+    return cell
+}
+
 // assigns parent column cell type to each cell (to facilitate rendering)
 // sets cell type to "abstract" if undefined
 // does some error checking:
@@ -141,9 +148,16 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
     let resolvedCell: GenericCell = {}
 
     if (_isJSON(cell)) {
+        resolvedCell = _deepCopy(cell)
+
+        if (resolvedCellType == "link") {
+            resolvedCell = __resolveLinkCell(resolvedCell)
+        }
+
         if (resolvedCellType === "abstract") {
             if (_hasOwnProperty('url', cell)) {
                 resolvedCellType = "link"
+                resolvedCell = __resolveLinkCell(resolvedCell)
             }
             else {
                 resolvedCellType = "text"
@@ -152,7 +166,17 @@ export const resolveCell = (cell: GenericCell | GenericCell[], cellType: CellTyp
                 + resolvedCellType + "` cell: " + JSON.stringify(cell))
         }
 
-        resolvedCell = _deepCopy(cell)
+        // already caught this if a link
+        if (resolvedCellType != "link" && _get('value', cell) == null) {
+            if (_get('displayText', cell) != null) {
+                resolvedCell = Object.assign({'value': _get('displayText', cell)}, resolvedCell)
+                console.warn("Missing `value` field.  Setting `displayText` to value for cell: " + JSON.stringify(cell))
+            }
+            else {
+                console.error("unable to infer `value` for cell: " + JSON.stringify(cell))
+            }
+        }
+
     }
     else {
         // we have a raw value, so create the 'value' k-v pair

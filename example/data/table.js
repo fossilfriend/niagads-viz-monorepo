@@ -1401,7 +1401,7 @@ export const EXAMPLE_TABLE_3 = {
             state: true,
             count: 5,
             percent: 0.5,
-            website: { url: "https://amazon.com", value: "Amazon" }
+            website: { url: "https://amazon.com", displayText: "Amazon" }
         },
         {
             label: { value: "r2", tooltip: "my favorite group" },
@@ -1420,7 +1420,7 @@ export const EXAMPLE_TABLE_3 = {
             state: null,
             count: 0,
             percent: 0.9,
-            website: { url: "https://google.com", value: "Google", tooltip:"google!" }
+            website: { url: "https://google.com",  tooltip:"google!" }
         },
         {
             label: "r4",
@@ -1431,7 +1431,7 @@ export const EXAMPLE_TABLE_3 = {
                 tooltip: "non-standard population"
             },
             percent: null,
-            website: { value: "FedEx" }
+            website: { displayText: "FedEx" }
         },
     ],
 
@@ -1467,7 +1467,7 @@ export const EXAMPLE_TABLE_3 = {
         {
             header: "Website",
             id: "website",
-            type: "link"
+           // type: "link"
         }
 
     ],
