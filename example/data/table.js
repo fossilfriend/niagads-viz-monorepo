@@ -1405,7 +1405,9 @@ export const EXAMPLE_TABLE_3 = {
         },
         {
             label: { value: "r2", tooltip: "my favorite group" },
-            population: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis massa sed elementum tempus. Aenean sed adipiscing diam donec adipiscing tristique. Maecenas sed enim ut sem viverra aliquet.",
+            population: {value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis massa sed elementum tempus. Aenean sed adipiscing diam donec adipiscing tristique. Maecenas sed enim ut sem viverra aliquet.",
+                color: 'purple'
+            } ,
             state: false,
             count: 6,
             percent:

@@ -6,6 +6,6 @@ export const TAILWIND_THEME = TAILWIND_CONFIG.theme
 const TAILWIND_COLORS = Object.keys(TAILWIND_THEME.colors)
 
 export const TAILWINDCSS_CLASSES = {
-    info_link: "underline decoration-dashed decoration-blue-500 underline-offset-4", 
+    info_link: "cursor-pointer underline decoration-dashed decoration-blue-600 underline-offset-4", 
     info_icon: "ml-1 text-blue-600",
 }

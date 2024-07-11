@@ -1,63 +1,66 @@
 import React, { useState } from "react"
 
-import { _get, _hasOwnProperty, _isNull } from "@common/utils";
+import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNull } from "@common/utils";
 import { TAILWINDCSS_CLASSES } from "@common/tailwind"
 
 import { TextRenderer, renderWithInfo, renderStyledText, renderNullValue } from "./TextRenderer";
 
 const DEFAULT_MAX_LENGTH = 100
 
-// TODO: truncateTo --> long text
-
-
 export const Text = <T,>({ props }: TextRenderer<T>) => {
-    let style = {}
     const hasTooltip = _hasOwnProperty('tooltip', props)
     const useInfoLink = _get('inlineTooltip', props, false) // tooltip rendered as info link instead of info icon
     const value = _get('value', props)
     const maxLength = _get('truncateTo', props, DEFAULT_MAX_LENGTH)
+    const style = _hasOwnProperty('color', props)
+        ? { 'color': _get('color', props) }
+        : {}
 
-    if (_hasOwnProperty('color', props)) {
-        style = Object.assign({ 'color': _get('color', props) }, style)
-    }
 
     if (_isNull(value)) {
         return renderNullValue(_get('naString', props))
     }
 
-    if (value.length > maxLength ) {
-        return <LargeText props={props}/>
+    if (value.length > maxLength) {
+        return <LargeText props={props} />
     }
 
     const textElement = renderStyledText(value, style,
         hasTooltip && useInfoLink ? TAILWINDCSS_CLASSES.info_link : "")
 
-    if (hasTooltip) {
-        return renderWithInfo(textElement, _get('tooltip', props), useInfoLink)
-    }
-
-    return (<>{textElement}</>)
+    return hasTooltip
+        ? renderWithInfo(textElement, _get('tooltip', props), useInfoLink)
+        : textElement
 }
 
-export const LargeText = <T,>({props}: TextRenderer<T>) => {
+export const LargeText = <T,>({ props }: TextRenderer<T>) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
-    const hasTooltip = _hasOwnProperty('tooltip', props)
-    const value = _get('value', props)
-    const maxLength = _get('truncateTo', props, DEFAULT_MAX_LENGTH)
+
     const toggleIsExpanded = () => {
         setIsExpanded(!isExpanded);
     };
 
-    return <div>large text</div>    
-   /* return _isJSON(value) && "tooltip" in value ? (
-        <AnnotatedText value={{ value: value.slice(0, maxLength - 3) + "...", tooltip: value.tooltip }} />
-    ) : isExpanded ? (
+    const value = _get('value', props)
+    const hasTooltip = _hasOwnProperty('tooltip', props)
+    const maxLength = _get('truncateTo', props, DEFAULT_MAX_LENGTH)
+    const truncatedValue = `${value.slice(0, maxLength - 3)}...`
+
+    if (hasTooltip) {
+        let newProps = _deepCopy(props)
+        newProps.value = truncatedValue
+        return <Text props={newProps} />
+    }
+
+    const style = _hasOwnProperty('color', props)
+        ? { 'color': _get('color', props) }
+        : {}
+
+    const textElement = renderStyledText(isExpanded ? value : truncatedValue, style, "")
+    const action = isExpanded ? 'Show Less' : 'Show More'
+    return (
         <div>
-            {value} <a className="cursor-pointer decoration-dashed" onClick={toggleIsExpanded}>Show less</a>
+            {textElement}{"   "}
+            <a className={`text-xs ${TAILWINDCSS_CLASSES.info_link}`} onClick={toggleIsExpanded}>{action}</a>
         </div>
-    ) : (
-        <div>
-            {`${value.slice(0, maxLength - 3)}...`} <a className="cursor-pointer decoration-dashed" onClick={toggleIsExpanded}>Show more</a>
-        </div>
-    ); */
+    )
 };
