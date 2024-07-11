@@ -1,10 +1,5 @@
 import React, { ReactNode } from 'react'
 
-import {
-    CheckIcon, CheckCircleIcon,
-    ExclamationCircleIcon, ExclamationTriangleIcon,
-    UserCircleIcon
-} from "@heroicons/react/24/solid"
 
 import { BasicType, Modify, TypeMapper, Expand, NAString } from "@common/types"
 import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull, _isNA } from '@common/utils'
@@ -13,21 +8,14 @@ import { Color } from '@common/palettes'
 import { Text } from '@text/BasicText'
 import { Link } from '@text/Link'
 import { GenericColumn } from './Column'
+import { BooleanBadge } from '@text/Badge'
+import { Icons } from "@text/TextRenderer"
 
 export const DEFAULT_NA_VALUE = 'NA'
 
-const BadgeIcons = {
-    check: CheckIcon,
-    solidCheck: CheckCircleIcon,
-    info: ExclamationCircleIcon,
-    warning: ExclamationTriangleIcon,
-    user: UserCircleIcon
-}
-
-export type BadgeIconType = keyof typeof BadgeIcons;
+export type BadgeIconType = keyof typeof Icons;
 
 export type GenericCell = BasicType | Record<string, BasicType | BasicType[]> | null
-
 
 export type AbstractCell = {
     type: "abstract"
@@ -122,7 +110,7 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
 const __resolveLinkCell = (cell: GenericCell): GenericCell => {
     const displayText = _get('displayText', cell)
     const url = _get('url', cell)
-    cell = Object.assign({ 'value': displayText ? displayText : url, 'type': 'link' }, cell)
+    Object.assign(cell as any, { 'value': displayText ? displayText : url, 'type': 'link' })
     return cell
 }
 
@@ -162,7 +150,7 @@ export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericCo
         const RESOLVED_DISPLAYS = ["link", "boolean"]
         if (!RESOLVED_DISPLAYS.includes(resolvedCellType) && _get('value', cell) == null) {
             if (_get('displayText', cell) != null) {
-                resolvedCell = Object.assign({ 'value': _get('displayText', cell) }, resolvedCell)
+                Object.assign(resolvedCell as any, { 'value': _get('displayText', cell) })
                 console.warn("Missing `value` field.  Setting `displayText` to value for cell: " + JSON.stringify(cell))
             }
             else {
@@ -173,15 +161,15 @@ export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericCo
     }
     else {
         // we have a raw value, so create the 'value' k-v pair
-        resolvedCell = Object.assign({ 'value': cell }, resolvedCell)
+        Object.assign(resolvedCell as any, { 'value': cell })
     }
 
     // assign relevant column properties & cell type
-    resolvedCell = Object.assign({
+    Object.assign(resolvedCell as any, {
         'type': resolvedCellType,
         'nullValue': _get('nullValue', column),
         'naValue': _get('naValue', column, DEFAULT_NA_VALUE)
-    }, resolvedCell)
+    })
 
     return resolvedCell
 }
@@ -194,6 +182,8 @@ export const renderCell = (cell: Cell) => {
             return <Text props={cell}></Text>
         case "link":
             return <Link props={cell}></Link>
+        case "boolean":
+            return <BooleanBadge props={cell}></BooleanBadge>
         default:
             return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
         //throw Error("Unknown cell type for rendering")
