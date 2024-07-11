@@ -9,11 +9,11 @@ import { Text } from '@text/BasicText'
 import { Link } from '@text/Link'
 import { GenericColumn } from './Column'
 import { BooleanBadge } from '@text/Badge'
-import { Icons } from "@text/TextRenderer"
+import { ICONS } from "@text/TextRenderer"
 
 export const DEFAULT_NA_VALUE = 'NA'
 
-export type BadgeIconType = keyof typeof Icons;
+export type BadgeIconType = keyof typeof ICONS;
 
 export type GenericCell = BasicType | Record<string, BasicType | BasicType[]> | null
 
@@ -154,7 +154,7 @@ export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericCo
                 console.warn("Missing `value` field.  Setting `displayText` to value for cell: " + JSON.stringify(cell))
             }
             else {
-                console.error("unable to infer `value` for cell: " + JSON.stringify(cell))
+                throw Error("unable to infer `value` for cell: " + JSON.stringify(cell))
             }
         }
 

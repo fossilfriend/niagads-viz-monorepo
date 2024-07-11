@@ -21,7 +21,7 @@ export interface TextRenderer<T> {
     props: T;
 }
 
-export const Icons = {
+export const ICONS = {
     check: CheckIcon,
     solidCheck: CheckCircleIcon,
     info: ExclamationCircleIcon,
@@ -35,7 +35,7 @@ export const renderStyledText = (value: any, style: any, className: string) => {
 }
 
 const DEFAULT_NA_STRING = "n/a"
-export const renderNullValue = (value: string = DEFAULT_NA_STRING ) => {
+export const renderNullValue = (value: string = DEFAULT_NA_STRING) => {
     return <span className="text-gray-200">{_isNA(value) || !value ? DEFAULT_NA_STRING : value}</span>
 }
 
@@ -53,24 +53,43 @@ export const renderWithInfo = (textElement: ReactNode | string, infoMessage: str
         return renderTooltip(textElement, infoMessage)
     }
     // otherwise draw info icon and attach the tooltip to the icon
-    return renderWithIcon(textElement, <InformationCircleIcon className={`${TAILWINDCSS_CLASSES.info_icon} size-3`} title={infoMessage} />)
+    return renderWithIcon(
+        textElement,
+        <InformationCircleIcon className={`${TAILWINDCSS_CLASSES.info_icon} size-3`} title={infoMessage} />,
+        false)
 }
 
-export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode ) => {
-    return <div className="flex">
-        {textElement}
-        {icon}
-    </div>
+
+export const getIconElement = (key: string) => {
+    const icon = _get(key, ICONS)
+    if (icon === null) {
+        throw Error("Error rendering field: invalid icon `" + key + "`")
+    }
+    return icon
+}
+
+export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode | string, prefix: boolean = true) => {
+    const IconComponent = (typeof(icon) === 'string') ? getIconElement(icon) : undefined
+
+    return prefix
+        ? <div className="flex">
+            {IconComponent ? <IconComponent className={`${TAILWINDCSS_CLASSES.badge_icon} mr-3`}/> : icon}
+            {textElement}
+        </div>
+        : <div className="flex">
+            {textElement}
+            {IconComponent ? <IconComponent /> : icon}
+        </div>
 }
 
 export const buildElementStyle = (props: any) => {
     const VALID_STYLES = ['color', 'backgroundColor', 'borderColor']
     let style = {}
     for (const vStyle of VALID_STYLES) {
-        if (_hasOwnProperty(vStyle, props )) {
-            Object.assign(style, {[vStyle]: _get(vStyle, props)})
+        if (_hasOwnProperty(vStyle, props)) {
+            Object.assign(style, { [vStyle]: _get(vStyle, props) })
         }
     }
-    
+
     return style
 }

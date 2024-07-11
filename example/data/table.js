@@ -1424,7 +1424,7 @@ export const EXAMPLE_TABLE_3 = {
         },
         {
             label: "r4",
-            state: true,
+            state: {value: true, icon: "solidCheck"},
             count: null,
             population: {
                 color: "red", value: "other",
