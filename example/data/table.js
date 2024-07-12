@@ -1408,7 +1408,7 @@ export const EXAMPLE_TABLE_3 = {
             population: {value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis massa sed elementum tempus. Aenean sed adipiscing diam donec adipiscing tristique. Maecenas sed enim ut sem viverra aliquet.",
                 color: 'purple'
             } ,
-            state: false,
+            state: {value: false, color: 'green'},
             count: 6,
             percent:
                 0.0000000001,
@@ -1424,7 +1424,7 @@ export const EXAMPLE_TABLE_3 = {
         },
         {
             label: "r4",
-            state: {value: true, icon: "solidCheck"},
+            state: {value: true, icon: "solidCheck", color:"orange"},
             count: null,
             population: {
                 color: "red", value: "other",

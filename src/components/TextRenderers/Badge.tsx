@@ -1,5 +1,5 @@
 import React from "react"
-import { TextRenderer, buildElementStyle, renderNullValue, renderStyledText, renderWithIcon, renderWithInfo } from "./TextRenderer"
+import { TextRenderer, buildElementStyle, getIconElement, renderNullValue, renderStyledText, renderWithIcon, renderWithInfo } from "./TextRenderer"
 import { _get, _hasOwnProperty, _isNA, _isNull } from "@common/utils";
 import { TAILWINDCSS_CLASSES } from "@common/tailwind";
 
@@ -34,10 +34,23 @@ export const BooleanBadge = <T,>({ props }: TextRenderer<T>) => {
         value = _get('nullValue', props, 'NA')
     }
 
-    return <Badge props={Object.assign(props as any,
-        {
-            'value': value.toString(),
-            'iconOnly': _hasOwnProperty('icon', props) ? true : false
-        })} />
+    let displayProps =  {
+        'value': value.toString(),
+    }
+
+    if (value === false && !_hasOwnProperty('color', props)) {
+        Object.assign(displayProps, {
+            'color': 'rgb(229, 231, 235)' // same as the n/a color
+        })
+    }
+
+
+    if (_hasOwnProperty('icon', props)) {
+        const iconStyle = buildElementStyle(props, 'color')
+        const IconComponent = getIconElement(_get('icon', props))
+        Object.assign(displayProps, {'iconOnly': true, 'icon': <IconComponent style={iconStyle} className={`${TAILWINDCSS_CLASSES.badge_icon} m-auto`}/>})
+    }
+
+    return <Badge props={Object.assign(props as any, displayProps)} />
 
 }

@@ -30,16 +30,15 @@ export const ICONS = {
     infoOutline: InformationCircleIcon
 }
 
+const DEFAULT_NA_STRING = "n/a"
+
 export const renderStyledText = (value: any, style: any, className: string) => {
     return <span className={className} style={style}>{value}</span>
 }
 
-const DEFAULT_NA_STRING = "n/a"
 export const renderNullValue = (value: string = DEFAULT_NA_STRING) => {
     return <span className="text-gray-200">{_isNA(value) || !value ? DEFAULT_NA_STRING : value}</span>
 }
-
-
 
 /**
  * Add tooltip to textElement
@@ -60,6 +59,11 @@ export const renderWithInfo = (textElement: ReactNode | string, infoMessage: str
 }
 
 
+/**
+ * maps string key to icon components
+ * @param key 
+ * @returns 
+ */
 export const getIconElement = (key: string) => {
     const icon = _get(key, ICONS)
     if (icon === null) {
@@ -67,6 +71,16 @@ export const getIconElement = (key: string) => {
     }
     return icon
 }
+
+
+/**
+ * render text element with inline icon
+ * @param textElement 
+ * @param icon react node or key of ICON to render
+ * @param iconOnly render the icon only
+ * @param prefix true if icon should be rendered to the left of the text element
+ * @returns div containing (textElement) and inline icon
+ */
 
 export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode | string, iconOnly: boolean, prefix: boolean = true) => {
     const IconComponent = (typeof (icon) === 'string') ? getIconElement(icon) : undefined
@@ -82,8 +96,15 @@ export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode 
         </div>
 }
 
-export const buildElementStyle = (props: any) => {
-    const VALID_STYLES = ['color', 'backgroundColor', 'borderColor']
+
+/**
+ * extract style properties and build object to pass to component style
+ * @param props text renderer property object
+ * @param property specific style property to extract; if null will look for all allowable style properties
+ * @returns style object
+ */
+export const buildElementStyle = (props: any, property: string | null = null) => {
+    const VALID_STYLES = property ? [property] : ['color', 'backgroundColor', 'borderColor']
     let style = {}
     for (const vStyle of VALID_STYLES) {
         if (_hasOwnProperty(vStyle, props)) {
