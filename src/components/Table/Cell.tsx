@@ -11,6 +11,7 @@ import { Float } from '@text/Number'
 import { GenericColumn } from './Column'
 import { Badge, BooleanBadge } from '@text/Badge'
 import { ICONS } from "@text/TextRenderer"
+import { PercentageBar } from '@text/InlineChart'
 
 export const DEFAULT_NA_VALUE = 'NA'
 
@@ -30,7 +31,7 @@ export type AbstractCell = {
 export type StringCell = Expand<Modify<AbstractCell, { type: "string", value: string }>>
 
 export type FloatCell = Expand<Modify<AbstractCell,
-    { type: "float", value: number | null, precision?: number, useScientificNotation?: boolean }>>
+    { type: "float", value: number | null, precision?: number }>>
 
 export type TextCell = Expand<Modify<AbstractCell,
     { type: "text", truncateTo?: number, color?: Color, tooltip?: string }>>
@@ -189,6 +190,8 @@ export const renderCell = (cell: Cell) => {
             return <Badge props={cell}></Badge>
         case "float":
             return <Float props={cell}></Float>
+        case "percentage_bar":
+            return <PercentageBar props={cell}></PercentageBar>
         default:
             return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
         //throw Error("Unknown cell type for rendering")

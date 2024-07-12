@@ -3,7 +3,16 @@ import React from "react"
 import { TextRenderer, renderNullValue, renderWithInfo} from "./TextRenderer"
 import { Text } from "./BasicText"
 
-import { _get, _hasOwnProperty, _isNA, _isNull } from "@common/utils";
+import { _get, _hasOwnProperty, _isNA, _isNull, toExponential, toFixedWithoutZeros } from "@common/utils";
+
+
+export const formatFloat = (value: number, precision: number = 2) => {
+    const formattedValue: any = toExponential(value, precision)
+    if (precision && !formattedValue.toString().includes('e')) {
+        return toFixedWithoutZeros(formattedValue, precision)
+    }
+    return formattedValue
+}
 
 export const Float = <T,>({ props }: TextRenderer<T>) => {
     let value = _get('value', props)
@@ -16,19 +25,7 @@ export const Float = <T,>({ props }: TextRenderer<T>) => {
         return renderNullValue()
     }
 
-    const precision = _get('precision', props, false)
-    const useScientificNotation = _get('useScientificNotation', props, 0)
-    if (useScientificNotation) {
-        const snValue = Number.parseFloat(value).toExponential(precision ? precision : 2) 
-        const [mantissa, exponent] = (snValue + '').split('e')
-        if (parseInt(exponent) > 3 || parseInt(exponent) < -4) {
-            value = snValue
-        }
-    }
-
-    if (precision && !(value + '').includes('e')) {
-        value = Number.parseFloat(value).toPrecision(precision)
-    }
+    value = formatFloat(value, _get('precision', props, null) )
 
     return <Text props={Object.assign(props as any, {value: value})}/>
 }

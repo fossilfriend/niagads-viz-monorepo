@@ -1401,6 +1401,7 @@ export const EXAMPLE_TABLE_3 = {
             valid: true,
             count: 5,
             percent: 0.5,
+            p_value: {value: 0.000001, color: 'red'},
             website: { url: "https://amazon.com", displayText: "Amazon" },
             state: { value: 'PASS', color: 'white', backgroundColor: 'green', icon: "solidCheck" }
         },
@@ -1412,7 +1413,8 @@ export const EXAMPLE_TABLE_3 = {
             },
             valid: { value: false, color: 'green' },
             count: 6,
-            percent: { value: 0.0000510001, useScientificNotation: true },
+            p_value: { value: 0.0000510001, precision: 3 },
+            percent: 0.0000002,
             website: null,
             state: { value: 'PASS', backgroundColor: 'green' }
         },
@@ -1421,7 +1423,8 @@ export const EXAMPLE_TABLE_3 = {
             population: null,
             valid: null,
             count: 0,
-            percent: {value: 0.9121335, precision: 2},
+            percent: {value: 0.9121335},
+            p_value: 0.0000999,
             website: { url: "https://google.com", tooltip: "google!" },
             state: null,
         },
@@ -1434,6 +1437,7 @@ export const EXAMPLE_TABLE_3 = {
                 tooltip: "non-standard population"
             },
             percent: null,
+            p_value: {value:.222, precision: 2},
             website: { displayText: "FedEx" },
             state: { value: 'FAIL', icon: 'xMark', color: 'red', borderColor: 'red', tooltip: "This one did't pass :(" }
         },
@@ -1471,6 +1475,12 @@ export const EXAMPLE_TABLE_3 = {
         {
             header: "Percent",
             id: "percent",
+            info: "% bar test",
+            type: "percentage_bar",
+        },
+        {
+            header: "p-Value",
+            id: "p_value",
             info: "numeric test",
             type: "float",
             precision: 2,

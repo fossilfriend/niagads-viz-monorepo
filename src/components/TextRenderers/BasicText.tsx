@@ -3,7 +3,13 @@ import React, { useState } from "react"
 import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull } from "@common/utils";
 import { TAILWINDCSS_CLASSES } from "@common/tailwind"
 
-import { TextRenderer, renderWithInfo, renderStyledText, renderNullValue, buildElementStyle } from "./TextRenderer";
+import {
+    TextRenderer,
+    renderWithInfo,
+    renderStyledText,
+    renderNullValue,
+    buildElementStyle
+} from "./TextRenderer";
 
 const DEFAULT_MAX_LENGTH = 100
 

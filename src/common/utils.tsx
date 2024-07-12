@@ -49,3 +49,18 @@ export const _isNA = (value: BasicType | null, nullsAsNA: boolean=false) => {
 export const _isNull = (value: BasicType | null ) => {
     return value === null || value === undefined
 }
+
+
+export const toFixedWithoutZeros = (value: number, precision: number = 2) =>
+    Number.parseFloat(value.toFixed(precision)).toString()
+
+export const toExponential = (value: string | number, precision: number = 2) => {
+    const snValue = Number.parseFloat(value.toString()).toExponential(precision ? precision : 2) 
+
+    let [mantissa, exponent] = (snValue + '').split('e')
+    if (parseInt(exponent) > 3 || parseInt(exponent) < -4) {
+        mantissa = (mantissa.endsWith('0')) ? toFixedWithoutZeros(Number.parseFloat(mantissa), precision) : mantissa
+        return `${mantissa}e${exponent}`
+    }
+    return value
+}
