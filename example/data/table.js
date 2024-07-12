@@ -1406,13 +1406,13 @@ export const EXAMPLE_TABLE_3 = {
         },
         {
             label: { value: "r2", tooltip: "my favorite group" },
-            population: {value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis massa sed elementum tempus. Aenean sed adipiscing diam donec adipiscing tristique. Maecenas sed enim ut sem viverra aliquet.",
+            population: {
+                value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis massa sed elementum tempus. Aenean sed adipiscing diam donec adipiscing tristique. Maecenas sed enim ut sem viverra aliquet.",
                 color: 'purple'
-            } ,
-            valid: {value: false, color: 'green'},
+            },
+            valid: { value: false, color: 'green' },
             count: 6,
-            percent:
-                0.0000000001,
+            percent: { value: 0.0000510001, useScientificNotation: true },
             website: null,
             state: { value: 'PASS', backgroundColor: 'green' }
         },
@@ -1421,13 +1421,13 @@ export const EXAMPLE_TABLE_3 = {
             population: null,
             valid: null,
             count: 0,
-            percent: 0.9,
-            website: { url: "https://google.com",  tooltip:"google!" },
+            percent: {value: 0.9121335, precision: 2},
+            website: { url: "https://google.com", tooltip: "google!" },
             state: null,
         },
         {
             label: "r4",
-            valid: {value: true, icon: "solidCheck", color:"orange"},
+            valid: { value: true, icon: "solidCheck", color: "orange" },
             count: null,
             population: {
                 color: "teal", value: "other",
@@ -1479,7 +1479,7 @@ export const EXAMPLE_TABLE_3 = {
         {
             header: "Website",
             id: "website",
-           // type: "link"
+            // type: "link"
         }
 
     ],

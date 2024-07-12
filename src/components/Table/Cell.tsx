@@ -7,6 +7,7 @@ import { Color } from '@common/palettes'
 
 import { Text } from '@text/BasicText'
 import { Link } from '@text/Link'
+import { Float } from '@text/Number'
 import { GenericColumn } from './Column'
 import { Badge, BooleanBadge } from '@text/Badge'
 import { ICONS } from "@text/TextRenderer"
@@ -186,6 +187,8 @@ export const renderCell = (cell: Cell) => {
             return <BooleanBadge props={cell}></BooleanBadge>
         case "badge":
             return <Badge props={cell}></Badge>
+        case "float":
+            return <Float props={cell}></Float>
         default:
             return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
         //throw Error("Unknown cell type for rendering")
