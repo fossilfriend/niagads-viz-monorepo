@@ -1398,40 +1398,44 @@ export const EXAMPLE_TABLE_3 = {
         {
             label: { color: "blue", value: "r1" },
             population: "european",
-            state: true,
+            valid: true,
             count: 5,
             percent: 0.5,
-            website: { url: "https://amazon.com", displayText: "Amazon" }
+            website: { url: "https://amazon.com", displayText: "Amazon" },
+            state: { value: 'PASS', color: 'white', backgroundColor: 'green', icon: "solidCheck" }
         },
         {
             label: { value: "r2", tooltip: "my favorite group" },
             population: {value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis massa sed elementum tempus. Aenean sed adipiscing diam donec adipiscing tristique. Maecenas sed enim ut sem viverra aliquet.",
                 color: 'purple'
             } ,
-            state: {value: false, color: 'green'},
+            valid: {value: false, color: 'green'},
             count: 6,
             percent:
                 0.0000000001,
-            website: null
+            website: null,
+            state: { value: 'PASS', backgroundColor: 'green' }
         },
         {
             label: "r3",
             population: null,
-            state: null,
+            valid: null,
             count: 0,
             percent: 0.9,
-            website: { url: "https://google.com",  tooltip:"google!" }
+            website: { url: "https://google.com",  tooltip:"google!" },
+            state: null,
         },
         {
             label: "r4",
-            state: {value: true, icon: "solidCheck", color:"orange"},
+            valid: {value: true, icon: "solidCheck", color:"orange"},
             count: null,
             population: {
-                color: "red", value: "other",
+                color: "teal", value: "other",
                 tooltip: "non-standard population"
             },
             percent: null,
-            website: { displayText: "FedEx" }
+            website: { displayText: "FedEx" },
+            state: { value: 'FAIL', icon: 'xMark', color: 'red', borderColor: 'red', tooltip: "This one did't pass :(" }
         },
     ],
 
@@ -1441,14 +1445,20 @@ export const EXAMPLE_TABLE_3 = {
             id: "label"
         },
         {
+            header: "State",
+            id: "state",
+            description: "badge test",
+            type: "badge"
+        },
+        {
             header: "Population",
             id: "population",
             description: "sample population",
             nullValue: "NA"
         },
         {
-            header: "State",
-            id: "state",
+            header: "Is Valid?",
+            id: "valid",
             info: "boolean test",
             type: "boolean",
             nullValue: false

@@ -9,7 +9,7 @@ import { renderTooltip } from "@components/UI/Tooltip";
 import {
     CheckIcon, CheckCircleIcon,
     ExclamationCircleIcon, ExclamationTriangleIcon,
-    UserCircleIcon
+    UserCircleIcon, XCircleIcon
 } from "@heroicons/react/24/solid"
 
 import {
@@ -27,7 +27,8 @@ export const ICONS = {
     info: ExclamationCircleIcon,
     warning: ExclamationTriangleIcon,
     user: UserCircleIcon,
-    infoOutline: InformationCircleIcon
+    infoOutline: InformationCircleIcon,
+    xMark: XCircleIcon
 }
 
 const DEFAULT_NA_STRING = "n/a"
@@ -55,7 +56,7 @@ export const renderWithInfo = (textElement: ReactNode | string, infoMessage: str
     return renderWithIcon(
         textElement,
         <InformationCircleIcon className={`${TAILWINDCSS_CLASSES.info_icon} size-3 ml-1`} title={infoMessage} />,
-        false, false)
+            {prefix: false, iconOnly: false})
 }
 
 
@@ -82,19 +83,33 @@ export const getIconElement = (key: string) => {
  * @returns div containing (textElement) and inline icon
  */
 
-export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode | string, iconOnly: boolean, prefix: boolean = true) => {
+interface RenderIconOptions {
+    iconOnly?: boolean,
+    prefix?: boolean,
+    className?: string,
+    iconClassName?: string,
+    style?: any
+}
+
+export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode | string, options: RenderIconOptions) => {
     const IconComponent = (typeof (icon) === 'string') ? getIconElement(icon) : undefined
-    const margin = iconOnly ? "m-auto" : (prefix ? "mr-3" : "ml-3")
+    const prefix = _get('prefix', options, true) 
+    const iconOnly = _get('iconOnly', options, false)
+    const className = _get('className', options, '')
+    const iconClassName = _get('iconClassName', options, "")
+    const style = _get('style', options, {})
+
     return prefix
-        ? <div className="flex">
-            {IconComponent ? <IconComponent className={`${TAILWINDCSS_CLASSES.badge_icon} ${margin}`} /> : icon}
+        ? <div className={`flex ${className}`} style={style}>
+            {IconComponent ? <IconComponent className={iconClassName} /> : icon}
             {!iconOnly && textElement}
         </div>
-        : <div className="flex">
+        : <div className={`flex ${className}`} style={style}>
             {!iconOnly && textElement}
-            {IconComponent ? <IconComponent className={`${TAILWINDCSS_CLASSES.badge_icon} ${margin}`}/> : icon}
+            {IconComponent ? <IconComponent className={iconClassName}/> : icon}
         </div>
 }
+
 
 
 /**
@@ -110,6 +125,10 @@ export const buildElementStyle = (props: any, property: string | null = null) =>
         if (_hasOwnProperty(vStyle, props)) {
             Object.assign(style, { [vStyle]: _get(vStyle, props) })
         }
+    }
+
+    if (_hasOwnProperty('borderColor', style)) {
+        Object.assign(style, {border: '1px solid'})
     }
 
     return style
