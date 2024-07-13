@@ -34,7 +34,7 @@ export const Text = <T,>({ props }: TextRenderer<T>) => {
     const style = buildElementStyle(props)
 
     const textElement = renderStyledText(value, style,
-        hasTooltip && useInfoLink ? TAILWINDCSS_CLASSES.info_link : "")
+        hasTooltip && useInfoLink ? TAILWINDCSS_CLASSES.info.link : "")
 
     return hasTooltip
         ? renderWithInfo(textElement, _get('tooltip', props), useInfoLink)
@@ -75,7 +75,7 @@ export const LargeText = <T,>({ props }: TextRenderer<T>) => {
     return (
         <div>
             {textElement}{"   "}
-            <a className={`text-xs ${TAILWINDCSS_CLASSES.info_link}`} onClick={toggleIsExpanded}>{action}</a>
+            <a className={`text-xs ${TAILWINDCSS_CLASSES.info.link}`} onClick={toggleIsExpanded}>{action}</a>
         </div>
     )
 };

@@ -6,9 +6,19 @@ export const TAILWIND_THEME = TAILWIND_CONFIG.theme
 const TAILWIND_COLORS = Object.keys(TAILWIND_THEME.colors)
 
 export const TAILWINDCSS_CLASSES = {
-    info_link: "cursor-pointer underline decoration-dashed decoration-blue-600 underline-offset-4", 
-    info_icon: "text-blue-600",
-    badge_icon: "size-5 py-1",
-    badge: "px-2 rounded-xl py-1",
-    icon_only_badge_icon: "size-5"
+    info: {
+        link: "cursor-pointer underline decoration-dashed decoration-blue-600 underline-offset-4",
+        icon: "text-blue-600"
+    },
+    badge: {
+        icon: "size-5 py-1",
+        container: "px-2 rounded-xl py-1",
+        icon_only: "size-5"
+    },
+    table: {
+
+    },
+    spark_bar: {
+
+    }
 }

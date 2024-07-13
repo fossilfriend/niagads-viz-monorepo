@@ -26,13 +26,13 @@ export const Badge = <T,>({ props }: TextRenderer<T>) => {
     const badgeStyle = buildElementStyle(props)
     const textStyle = buildElementStyle(props, 'color')
     const backgroundIsStyled = _hasOwnProperty('backgroundColor', badgeStyle) || _hasOwnProperty('borderColor', badgeStyle)
-    const className = backgroundIsStyled ? TAILWINDCSS_CLASSES.badge : ""
+    const className = backgroundIsStyled ? TAILWINDCSS_CLASSES.badge.container : ""
 
     let textElement = renderStyledText(value, textStyle, className)
 
     if (_hasOwnProperty('icon', props)) {
         const iconOnly = _get('iconOnly', props, false)
-        const iconClassName = iconOnly ? TAILWINDCSS_CLASSES.icon_only_badge_icon : TAILWINDCSS_CLASSES.badge_icon
+        const iconClassName = iconOnly ? TAILWINDCSS_CLASSES.badge.icon_only : TAILWINDCSS_CLASSES.badge.icon
         textElement = renderWithIcon(textElement, _get('icon', props),
             {
                 iconOnly: iconOnly,
@@ -65,11 +65,11 @@ export const BooleanBadge = <T,>({ props }: TextRenderer<T>) => {
         })
     }
 
-
     if (_hasOwnProperty('icon', props)) {
         const iconStyle = buildElementStyle(props, 'color')
         const IconComponent = getIconElement(_get('icon', props))
-        Object.assign(displayProps, { 'iconOnly': true, 'icon': <IconComponent style={iconStyle} className={`${TAILWINDCSS_CLASSES.badge_icon} m-auto`} /> })
+        Object.assign(displayProps, { 'iconOnly': true, 
+            'icon': <IconComponent style={iconStyle} className={`${TAILWINDCSS_CLASSES.badge.icon} m-auto`} /> })
     }
 
     return <Badge props={Object.assign(props as any, displayProps)} />
