@@ -13,7 +13,7 @@ import {
 import { formatFloat } from "./Number";
 
 const __TAILWIND_INLINE_CHART = {
-    spark: {
+    percentage: {
         observed: "red",
         remainder: "black",
         bar: "h-full"
