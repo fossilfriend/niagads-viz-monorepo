@@ -11,7 +11,7 @@ import { Float } from '@text/Number'
 import { GenericColumn } from './Column'
 import { Badge, BooleanBadge } from '@text/Badge'
 import { ICONS } from "@text/TextRenderer"
-import { PercentageBar } from '@text/InlineChart'
+import { PercentageBar } from '@text/SparkChart'
 
 export const DEFAULT_NA_VALUE = 'NA'
 
@@ -193,7 +193,9 @@ export const renderCell = (cell: Cell) => {
         case "percentage_bar":
             return <PercentageBar props={cell}></PercentageBar>
         default:
-            return <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
+            // FIXME: typescript thinks cell is of type 'never'
+            // <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
+            return <div><p><em>Cell Type</em>: {cell['type']}</p><p>{JSON.stringify(cell as Cell)}</p></div>
         //throw Error("Unknown cell type for rendering")
     }
 
