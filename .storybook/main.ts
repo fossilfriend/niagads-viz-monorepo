@@ -2,6 +2,9 @@ import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
     stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+    core: {
+        disableTelemetry: true, // Disables telemetry (tracking / usage stats)
+    },
     addons: [
         "@storybook/addon-links",
         "@storybook/addon-essentials",

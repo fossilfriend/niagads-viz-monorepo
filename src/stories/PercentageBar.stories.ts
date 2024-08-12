@@ -1,12 +1,10 @@
-//@ts-nocheck
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Table  from '@table/Table';
-import { EXAMPLE_TABLE_3 as table } from '../../example/data/table.js';
+import { PercentageBar } from '@components/TextRenderers/SparkChart'
 
-const meta: Meta<typeof Table> = {
-  title: 'NIAGADS-VIZ/Table',
-  component: Table,
+const meta: Meta<typeof PercentageBar> = {
+  title: 'NIAGADS-VIZ/Text/PercentageBar',
+  component: PercentageBar,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -16,12 +14,11 @@ const meta: Meta<typeof Table> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Table>;
+type Story = StoryObj<typeof PercentageBar>;
 
 export const Default: Story = {
-    args: {
-       columns: table.columns,
-       options: table.options,
-       data: table.data
-    }
+  args: {
+    //@ts-ignore
+    value: '.92'
+  },
 };
