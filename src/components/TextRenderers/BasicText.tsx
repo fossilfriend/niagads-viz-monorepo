@@ -73,7 +73,7 @@ export const LargeText = <T,>({ props }: TextRenderer<T>) => {
     const textElement = renderStyledText(isExpanded ? value : truncatedValue, style, "")
     const action = isExpanded ? 'Show Less' : 'Show More'
     return (
-        <div>
+        <div className="max-w-[300px]">
             {textElement}{"   "}
             <a className={`text-xs ${TAILWINDCSS_CLASSES.info.link}`} onClick={toggleIsExpanded}>{action}</a>
         </div>
