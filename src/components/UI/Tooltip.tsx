@@ -2,7 +2,7 @@ import React, { ReactNode } from "react"
 
 // tailwind classes adapted from: https://tailgrids.com/components/tooltips
 
-const __TAILWIND_TOOLTIP = {
+const __TAILWIND_CSS = {
     root: "hidden absolute",
     format: "z-50 whitespace-nowrap rounded bg-black px-4 py-[6px] text-sm font-semibold text-white group-hover:block",
     top: "bottom-full left-1/2 mb-3 -translate-x-1/2",
@@ -22,8 +22,8 @@ interface Tooltip {
 }
 
 export const Tooltip = ({ children, message, position = 'bottom' }: Tooltip) => {
-    const tooltipStyle = __TAILWIND_TOOLTIP['root'] + " " + __TAILWIND_TOOLTIP['format'] + " " + __TAILWIND_TOOLTIP[position]
-    const triangleStyle = __TAILWIND_TOOLTIP[`triangle_${position}`]
+    const tooltipStyle = __TAILWIND_CSS['root'] + " " + __TAILWIND_CSS['format'] + " " + __TAILWIND_CSS[position]
+    const triangleStyle = __TAILWIND_CSS[`triangle_${position}`]
     return (
         <div className="group relative inline-block">
             {children}
