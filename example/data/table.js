@@ -1414,7 +1414,7 @@ export const EXAMPLE_TABLE_3 = {
             valid: { value: false, color: 'green' },
             count: 6,
             p_value: { value: 0.0000510001, precision: 3 },
-            percent: 0.0000002,
+            percent: 0.2,
             website: null,
             state: { value: 'PASS', backgroundColor: 'green' }
         },
