@@ -16,7 +16,7 @@ import {
 
 import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
 
-import { _hasOwnProperty } from "@common/utils"
+import { _get, _hasOwnProperty } from "@common/utils"
 import { errorFallback } from "@common/errors"
 
 import { SortConfig, GenericColumn, getColumn } from "./Column"
@@ -25,14 +25,16 @@ import { TableConfig } from "./TableProperties"
 import PaginationControls from "./PaginationControls";
 
 
-const TAILWIND_TABLE = {
-    table: "table-auto", //"table-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-collapse",
-    thead: "", //"uppercase text-xs text-left text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400",
-    th: "", //"px-2",
+const __TAILWIND_CSS = {
+    container: "relative overflow-x-auto shadow-md sm:rounded-lg",
+    table: "w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400",
+    thead: "text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400",
+    th: "px-6 py-3", //"px-2",
     htr: "",
     td: "",
     dtr: "hover:bg-gray-50 bg-white border-b dark:bg-gray-800 odd:border-gray-700"
 }
+
 
 export type TableRow = Record<string, GenericCell | GenericCell[]>
 export type TableData = TableRow[]
@@ -51,13 +53,29 @@ const __resolveSortingFn = (options: SortConfig) => {
 
 const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericColumn, index: number) => {
     try {
-        const cell = resolveCell(userCell, column?.type)
+        const cell = resolveCell(userCell, column)
         return cell
     }
     catch (e: any) {
         throw Error("Validation Error parsing field value for row " + index + " column `" + column.id + "`.\n" + e.message)
     }
 }
+
+
+
+// add row and column indexes to the object so that unique ui keys can be generated 
+// if required; e.g., tooltips
+// TODO: array of values?!
+const __resolveRenderableCell = (value: Cell, rowId: string, columnId: string): Cell => (
+    Object.assign(
+        {
+            rowId: rowId,
+            columnId: columnId,
+        },
+        value)
+)
+
+
 
 const Table: React.FC<Table> = ({ columns, data, options }) => {
 
@@ -92,8 +110,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     {
                         id: col.id,
                         // TODO: custom renderer for cell headers that has information bubbles
-                        // header: renderCellHeader(col.header, col.info),
-                        cell: props => renderCell(props.cell.row.original[col.id] as Cell),
+                        // header: renderCellHeader(col.header, col.description),
+                        cell: props => renderCell(__resolveRenderableCell(props.cell.row.original[col.id] as Cell, props.row.id, props.column.id)),
                         // TODO: sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }
                 )
@@ -126,7 +144,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     tableRow[columnId] = __resolveCell(value, currentColumn, index)
                 }
 
-                tableData.push(tableRow)   
+                tableData.push(tableRow)
             });
         }
         catch (e: any) {
@@ -138,71 +156,74 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
 
 
     const table = useReactTable({
-        data: resolvedData, 
+        data: resolvedData,
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        /*state: { sorting },
-        onSortingChange: setSorting,
-        getSortedRowModel: getSortedRowModel(),      
         defaultColumn: {
             size: 150,
             minSize: 20,
             maxSize: 300,
-        },*/
+        },
+        /*state: { sorting },
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),      
+        */
         // sortingFns: CustomSortingFunctions,
     });
 
 
-    return ( 
+    return (
         table ? (<>
-            <table className={TAILWIND_TABLE.table}>
-                <thead className={TAILWIND_TABLE.thead}>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id} className={TAILWIND_TABLE.htr}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <th key={header.id} colSpan={header.colSpan} scope="col" className={TAILWIND_TABLE.th}>
-                                        {header.isPlaceholder ? null : (
-                                            <div
-                                                style={
-                                                    header.column.getCanSort() ? { "cursor": "pointer" } : {}
-                                                }
-                                                onClick={header.column.getToggleSortingHandler()}
-                                            >
-                                                {flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                                {{
-                                                    sort: <ArrowsUpDownIcon className="h4 text-blue-600 pl-px" />,
-                                                    asc: <ArrowUpIcon className="h-4 text-blue-600 pl-px" />,
-                                                    desc: <ArrowDownIcon className="h-4 text-blue-600 pl-px" />,
-                                                }[header.column.getIsSorted() as string] ?? null}
-                                            </div>
-                                        )}
-                                    </th>
-                                );
-                            })}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                        <tr key={row.id} className={TAILWIND_TABLE.dtr}>
-                            {row.getVisibleCells().map((cell) => (
-                                <td key={cell.id}>
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                </tbody>
-            </table >
-            <PaginationControls table={table} />
+            <div className={__TAILWIND_CSS.container}>
+                <table className={__TAILWIND_CSS.table}>
+                    <thead className={__TAILWIND_CSS.thead}>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <tr key={headerGroup.id} className={__TAILWIND_CSS.htr}>
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <th key={header.id} colSpan={header.colSpan} scope="col" className={__TAILWIND_CSS.th}>
+                                            {header.isPlaceholder ? null : (
+                                                <div
+                                                    style={
+                                                        header.column.getCanSort() ? { "cursor": "pointer" } : {}
+                                                    }
+                                                    onClick={header.column.getToggleSortingHandler()}
+                                                >
+                                                    {flexRender(
+                                                        header.column.columnDef.header,
+                                                        header.getContext()
+                                                    )}
+                                                    {{
+                                                        sort: <ArrowsUpDownIcon className="h4 text-blue-600 pl-px" />,
+                                                        asc: <ArrowUpIcon className="h-4 text-blue-600 pl-px" />,
+                                                        desc: <ArrowDownIcon className="h-4 text-blue-600 pl-px" />,
+                                                    }[header.column.getIsSorted() as string] ?? null}
+                                                </div>
+                                            )}
+                                        </th>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                    </thead>
+                    <tbody>
+                        {table.getRowModel().rows.map((row) => (
+                            <tr key={row.id} className={__TAILWIND_CSS.dtr}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <td key={cell.id}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table >
+                <PaginationControls table={table} />
+            </div>
         </>
-    ) : 
-    <div>No data</div>
+        ) :
+            <div>No data</div>
     )
 }
 

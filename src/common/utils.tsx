@@ -1,5 +1,17 @@
+import { BasicType } from "./types";
+
 // checks if object is defined before checking if object has key
-export const _hasOwnProperty = (key:string, object: Record<string, any>) => (object !== undefined && object.hasOwnProperty(key))
+export const _hasOwnProperty = (key:string, object: any) => (object !== undefined && object.hasOwnProperty(key))
+
+// wrapper get; allows bypassing of some typescript issues
+// e.g., strict nulls, generics with expected properties
+// also, allows an alternative (default) value if object does not have the property
+export const _get = (key: string, object: any, alt:any=null ) => {
+    if (object.hasOwnProperty(key)) { // not using _hasOwnProperty here by/c want an error raised if trying to access an undefined object
+        return object[key]
+    }
+    return alt
+}
 
 // trick for deep copy
 // see https://developer.mozilla.org/en-US/docs/Glossary/Deep_copy
@@ -19,3 +31,36 @@ export const _isJSON = (value: any) => {
     return _isObject(value) && value != null;
     
 };
+
+export const _isNA = (value: BasicType | null, nullsAsNA: boolean=false) => {
+    const NA_STRINGS = ['NA', 'N/A', 'NULL', '.', '']
+    
+    if (value && typeof value === 'string' && NA_STRINGS.includes(value.toUpperCase())) {
+        return true
+    }
+
+    if (nullsAsNA) {
+        return _isNull(value)
+    }
+
+    return false
+}
+
+export const _isNull = (value: BasicType | null ) => {
+    return value === null || value === undefined
+}
+
+
+export const toFixedWithoutZeros = (value: number, precision: number = 2) =>
+    Number.parseFloat(value.toFixed(precision)).toString()
+
+export const toExponential = (value: string | number, precision: number = 2) => {
+    const snValue = Number.parseFloat(value.toString()).toExponential(precision ? precision : 2) 
+
+    let [mantissa, exponent] = (snValue + '').split('e')
+    if (parseInt(exponent) > 3 || parseInt(exponent) < -4) {
+        mantissa = (mantissa.endsWith('0')) ? toFixedWithoutZeros(Number.parseFloat(mantissa), precision) : mantissa
+        return `${mantissa}e${exponent}`
+    }
+    return value
+}

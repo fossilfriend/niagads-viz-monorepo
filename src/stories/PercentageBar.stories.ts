@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ColoredText } from '@components/TextRenderers/__deprecated__/index';
+import { PercentageBar } from '@components/TextRenderers/SparkChart'
 
-const meta: Meta<typeof ColoredText> = {
-  title: 'NIAGADS-VIZ/Text/ColoredText',
-  component: ColoredText,
+const meta: Meta<typeof PercentageBar> = {
+  title: 'NIAGADS-VIZ/Text/PercentageBar',
+  component: PercentageBar,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -14,11 +14,11 @@ const meta: Meta<typeof ColoredText> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof ColoredText>;
+type Story = StoryObj<typeof PercentageBar>;
 
 export const Default: Story = {
   args: {
-    value: 'colored text',
-    color: 'red'
+    //@ts-ignore
+    value: '.92'
   },
 };

@@ -3,6 +3,8 @@ import { error } from "console";
 export type FileFormat = 'csv' | 'json' | 'xlsx' | 'xml' 
 export type BasicType = string | number | boolean
 
+export type NAString = 'NA' | 'N/A' | 'NULL' | '.' | '' | 'na' | 'n/a' | 'null'
+
 //  TYPE MAPPING
 
 

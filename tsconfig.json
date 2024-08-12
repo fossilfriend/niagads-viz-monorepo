@@ -38,7 +38,7 @@
 
         "paths": {
             "@charts/*": ["components/Chart/Highcharts/*"],
-            "@text/*": ["components/Text/*"],
+            "@text/*": ["components/TextRenderers/*"],
             "@table/*": ["components/Table/*"],
             "@components/*": ["components/*"],
             "@mui-wrappers/*": ["components/mui-wrappers/*"],

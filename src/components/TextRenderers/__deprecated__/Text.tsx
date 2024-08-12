@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import { _isJSON, _isObject } from "@common/utils"
 import { TextRenderer } from "./types"
-import { Link, LinkList } from "@text/Link"
+import { Link, LinkList } from "@components/TextRenderers/__deprecated__/Link"
 
 
 const resolveObjectType = (obj: any) => {

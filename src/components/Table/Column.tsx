@@ -1,7 +1,7 @@
 
-import { BasicType } from "@common/types"
+import { BasicType, NAString } from "@common/types"
 import { CellType } from "./Cell";
-import { CustomSortingFunctions } from "@table/__deprecated__/sorting"
+
 
 export interface SortConfig {
     enable: boolean // enable sorting on this columnt
@@ -22,12 +22,14 @@ export interface FilterConfig {
 export interface GenericColumn {
     header: string
     id: string
-    info?: string
+    description?: string
     type?: CellType 
     sort?: SortConfig
     filter?: FilterConfig 
     hide?: boolean
     required?: boolean // if required = true then hide = false 
+    nullValue?: BasicType | null // value to assign for nulls; e.g., for booleans, set nullValue = false to treat NULL as FALSE; if not set treats as NA
+    naValue?: NAString // value to assign for NAs; default `NA`
 }
 
 export const getColumn = (columnId:string, columns:GenericColumn[]) => {
