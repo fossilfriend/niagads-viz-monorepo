@@ -176,6 +176,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
+                <PaginationControls table={table} />
                 <table className={__TAILWIND_CSS.table}>
                     <thead className={__TAILWIND_CSS.thead}>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -219,7 +220,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                         ))}
                     </tbody>
                 </table >
-                <PaginationControls table={table} />
             </div>
         </>
         ) :

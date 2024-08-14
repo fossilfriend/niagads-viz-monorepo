@@ -1,10 +1,23 @@
 import React from "react"
 import { Table } from "@tanstack/react-table"
 
+import { Select } from "@components/UI/Select"
+
 interface PaginationControlsProps {
     table: Table<any>
 }
 
+// Results per page <select> start-end row count of total rows <previous> <next>
+
+export const PaginationControls = ({ table }: PaginationControlsProps) => {
+    return <>
+        <div className="flex float-right items-center gap-2">
+            <Select fields={[0,10,20,50,100,500]} label="Results per page" id="pages" inline/>
+        </div>
+    </>
+}
+
+/*
 const PaginationControls: React.FC<PaginationControlsProps> = ({
     table
 }) => {
@@ -60,21 +73,10 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
                         className="border p-1 rounded w-16"
                     />
                 </span>
-                <select
-                    value={table.getState().pagination.pageSize}
-                    onChange={e => {
-                        table.setPageSize(Number(e.target.value))
-                    }}
-                >
-                    {[10, 20, 30, 40, 50].map(pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select>
+             
             </div>
         </>
     )
 }
-
+*/
 export default PaginationControls;
