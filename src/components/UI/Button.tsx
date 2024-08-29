@@ -11,61 +11,45 @@ import React, { useMemo, ReactNode } from "react"
 
 
 //<a className="text-white"/>
+//<button type="button" class="font-medium rounded-lg text-sm px-5 dark:bg-blue-600 ">Default</button>
+//<button type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Default</button>
+
+//<button type="button" class=" dark:hover:bg-gray-700">Alternative</button>
 
 const __TAILWIND_CSS = {
-    root: "py-2 px-4 rounded border-0 hover:bg-opacity-60",
-    primary: {
-        filled: 'bg-primary text-white',
-        outline: 'text-primary border-1 border-primary bg-white',
-    },
-    secondary: {
-        filled: 'bg-secondary text-primary',
-        outline:'text-primary border-1 border-secondary bg-white',
-    },
-    disabled: {
+    root: "font-inter me-2 mb-2 font-medium text-sm rounded-lg border-solid border-1 focus:ring-2 focus:z-10",
+    primary: "text-white border-primary/50 bg-primary hover:bg-primary/85 focus:ring-secondary",
+    secondary:"border-secondary bg-secondary hover:bg-secondary/85 focus:ring-secondary/30",
+    blue: "text-white border-blue-700 bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 focus:outline-none",
+    white: "border-white text-primary focus:outline-none bg-white hover:bg-gray-100 hover:border-gray-100 hover:text-blue-700 focus:ring-text-blue-700",
+    default: "",
 
-    },
+    //states
+    disabled: "disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200",
+
     // Sizes
-    sm: 'px-3 py-2',
+    sm: 'px-3 py-1',
     md: 'px-4 py-2',
-    lg: 'px-5 py-2',
+    lg: 'px-5 py-2.5',
 }
 
-interface ButtonOptions {
-    mode: 'outline' | 'filled' | 'link',
-    color?: string
-    size?: string
-}
 
+type ButtonModes = 'default' | 'primary' | 'secondary' | 'white' | 'blue'
+type ButtonSizes = 'sm' | 'md' | 'lg'
 interface Button {
-    options: ButtonOptions
+    mode?: ButtonModes
+    size?: ButtonSizes
     children: ReactNode | string
     disabled?:boolean
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | null;
 }
 
-const _buildButtonStyling = (opts: ButtonOptions) => {
-    let classes = __TAILWIND_CSS.root
-    const color = _get('color', opts, 'primary') 
-    const mode = _get('mode', opts, 'filled')
-    const size = _get('size', opts, 'md')
 
-    // @ts-ignore
-    classes = `${classes} ${__TAILWIND_CSS[color][mode]}`
+export const Button = ({ mode='default', size='md', children, onClick, disabled=false }: Button) => {
+    const classes = `${__TAILWIND_CSS.root} ${__TAILWIND_CSS[mode]} ${__TAILWIND_CSS[size]} ${__TAILWIND_CSS.disabled}`
 
-    return classes
-}
-
-export const Button = ({ options, children, onClick, disabled=false }: Button) => {
-
-    const buttonClasses =  useMemo(() => _buildButtonStyling(options), [options]);
-    
-    if (options.mode === "link") {
-        return "LINK BUTTON"
-    }
-    
-    return <button 
-        className={buttonClasses}
+    return <button disabled={disabled}
+        className={classes}
         onClick={onClick}> 
         {children} 
     </button>
