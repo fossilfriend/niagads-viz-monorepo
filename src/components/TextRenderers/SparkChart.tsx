@@ -18,7 +18,6 @@ const __TAILWIND_CSS = {
         observed: "bg-green-600",
         remainder: "bg-gray-300",      
     }
-
 }
 
 export const PercentageBar = <T,>({ props }: TextRenderer<T>) => {
