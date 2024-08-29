@@ -1,7 +1,7 @@
 import React from "react"
 import { Table } from "@tanstack/react-table"
 
-import { Select } from "@components/UI/Select"
+import { Select, Button } from "@components/UI"
 
 interface PaginationControlsProps {
     table: Table<any>
@@ -14,6 +14,9 @@ export const PaginationControls = ({ table }: PaginationControlsProps) => {
         <div className="flex float-right items-center gap-2">
             <Select fields={[0,10,20,50,100,500]} label="Results per page" id="pages" inline/>
         </div>
+        <Button options={{mode:"outline"}} onClick={(event) => alert("clicked!")}>Test</Button>
+        <Button options={{mode: "filled", color:"secondary"}}>Test two</Button>
+       
     </>
 }
 
@@ -26,13 +29,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
         <>
             <div className="h-2" />
             <div className="flex items-center gap-2">
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.setPageIndex(0)}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    {'<<'}
-                </button>
+              
                 <button
                     className="border rounded p-1"
                     onClick={() => table.previousPage()}

@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react"
-import { _isObject } from "@common/utils"
 
 const __TAILWIND_CSS = {
     form: "max-w-sm mx-auto w-full",
@@ -21,17 +20,13 @@ interface Select {
 export const Select = ({ fields, id, label, selected, inline = false }: Select) => {
     const _optionsFromArray = (values: string[] | number[], selectedValue: string | undefined) => (
         values.map(v => (
-            //@ts-ignore
-            // FIXME: typescript issue w/the boolean expression
-            <option key={v.toString()} value={v} selected={selectedValue && v.toString() === selectedValue}>{v}</option>
+            <option key={v.toString()} value={v} selected={!!selectedValue && v.toString() === selectedValue}>{v}</option>
         ))
     )
 
     const _optionsFromObj = (fieldMap: any, selectedValue: string | undefined) => (
         Object.entries(fieldMap).map(([k, v]) => (
-            //@ts-ignore
-            // FIXME: typescript issue w/the boolean expression
-            <option key={k} value={v as string} selected={selectedValue && k === selectedValue}>{k}</option>
+            <option key={k} value={v as string} selected={!!selectedValue && k === selectedValue}>{k}</option>
         ))
     )
 

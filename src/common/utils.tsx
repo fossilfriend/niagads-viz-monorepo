@@ -7,7 +7,7 @@ export const _hasOwnProperty = (key:string, object: any) => (object !== undefine
 // e.g., strict nulls, generics with expected properties
 // also, allows an alternative (default) value if object does not have the property
 export const _get = (key: string, object: any, alt:any=null ) => {
-    if (object.hasOwnProperty(key)) { // not using _hasOwnProperty here by/c want an error raised if trying to access an undefined object
+    if (_hasOwnProperty(key, object)) { // not using _hasOwnProperty here by/c want an error raised if trying to access an undefined object
         return object[key]
     }
     return alt
