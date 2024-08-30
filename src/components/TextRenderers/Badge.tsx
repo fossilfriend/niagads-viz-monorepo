@@ -1,6 +1,5 @@
 import React from "react"
 import { _get, _hasOwnProperty, _isNA, _isNull } from "@common/utils";
-import { TAILWINDCSS_CLASSES } from "@common/tailwind";
 import {
     TextRenderer,
     buildElementStyle,
@@ -8,9 +7,18 @@ import {
     renderNullValue,
     renderStyledText,
     renderWithIcon,
-    renderWithInfo
+    renderWithInfo,
+    ICONS
 } from "./TextRenderer"
 
+
+export type BadgeIconType = keyof typeof ICONS;
+
+const __TAILWIND_CSS = {
+    root: "px-2 rounded-xl py-1",
+    icon: "size-5 py-1",
+    icon_only_badge: "size-5" 
+}
 
 export const Badge = <T,>({ props }: TextRenderer<T>) => {
     const value = _get('value', props)
@@ -26,13 +34,13 @@ export const Badge = <T,>({ props }: TextRenderer<T>) => {
     const badgeStyle = buildElementStyle(props)
     const textStyle = buildElementStyle(props, 'color')
     const backgroundIsStyled = _hasOwnProperty('backgroundColor', badgeStyle) || _hasOwnProperty('borderColor', badgeStyle)
-    const className = backgroundIsStyled ? TAILWINDCSS_CLASSES.badge.container : ""
+    const className = backgroundIsStyled ? __TAILWIND_CSS.root : ""
 
     let textElement = renderStyledText(value, textStyle, className)
 
     if (_hasOwnProperty('icon', props)) {
         const iconOnly = _get('iconOnly', props, false)
-        const iconClassName = iconOnly ? TAILWINDCSS_CLASSES.badge.icon_only : TAILWINDCSS_CLASSES.badge.icon
+        const iconClassName = iconOnly ? __TAILWIND_CSS.icon_only_badge : __TAILWIND_CSS.icon
         textElement = renderWithIcon(textElement, _get('icon', props),
             {
                 iconOnly: iconOnly,
@@ -69,7 +77,7 @@ export const BooleanBadge = <T,>({ props }: TextRenderer<T>) => {
         const iconStyle = buildElementStyle(props, 'color')
         const IconComponent = getIconElement(_get('icon', props))
         Object.assign(displayProps, { 'iconOnly': true, 
-            'icon': <IconComponent style={iconStyle} className={`${TAILWINDCSS_CLASSES.badge.icon} m-auto`} /> })
+            'icon': <IconComponent style={iconStyle} className={`${__TAILWIND_CSS.icon} m-auto`} /> })
     }
 
     return <Badge props={Object.assign(props as any, displayProps)} />

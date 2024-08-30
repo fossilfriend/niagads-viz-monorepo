@@ -10,11 +10,7 @@ export const TAILWINDCSS_CLASSES = {
         link: "cursor-pointer underline decoration-dashed decoration-blue-600 underline-offset-4",
         icon: "text-blue-600"
     },
-    badge: {
-        icon: "size-5 py-1",
-        container: "px-2 rounded-xl py-1",
-        icon_only: "size-5"
-    },
+  
     table: {
 
     },

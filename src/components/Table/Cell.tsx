@@ -9,13 +9,11 @@ import { Text } from '@text/BasicText'
 import { Link } from '@text/Link'
 import { Float } from '@text/Number'
 import { GenericColumn } from './Column'
-import { Badge, BooleanBadge } from '@text/Badge'
+import { Badge, BooleanBadge, BadgeIconType } from '@text/Badge'
 import { ICONS } from "@text/TextRenderer"
 import { PercentageBar } from '@text/SparkChart'
 
 export const DEFAULT_NA_VALUE = 'NA'
-
-export type BadgeIconType = keyof typeof ICONS;
 
 export type GenericCell = BasicType | Record<string, BasicType | BasicType[]> | null
 
