@@ -65,15 +65,3 @@ export default [
         external: [/\.css$/u] // HACK: Fix for this problem https://github.com/Swatinem/rollup-plugin-dts/issues/165]
     },
 ];
-
-/*
-
-// external: ['react', 'react-dom']
-tailwind({
-    input: './src/index.css',
-    purge: false,
-}),
-
-
-
-        */

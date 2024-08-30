@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 
 import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull } from "@common/utils";
-import { TAILWINDCSS_CLASSES } from "@common/tailwind"
 
 import {
     TextRenderer,
@@ -34,7 +33,7 @@ export const Text = <T,>({ props }: TextRenderer<T>) => {
     const style = buildElementStyle(props)
 
     const textElement = renderStyledText(value, style,
-        hasTooltip && useInfoLink ? TAILWINDCSS_CLASSES.info.link : "")
+        hasTooltip && useInfoLink ? "info-link" : "")
 
     return hasTooltip
         ? renderWithInfo(textElement, _get('tooltip', props), useInfoLink)
@@ -75,7 +74,7 @@ export const LargeText = <T,>({ props }: TextRenderer<T>) => {
     return (
         <div className="max-w-[300px]">
             {textElement}{"   "}
-            <a className={`text-xs ${TAILWINDCSS_CLASSES.info.link}`} onClick={toggleIsExpanded}>{action}</a>
+            <a className="text-xs info-link" onClick={toggleIsExpanded}>{action}</a>
         </div>
     )
 };

@@ -15,7 +15,7 @@ import {
 export type BadgeIconType = keyof typeof ICONS;
 
 const __TAILWIND_CSS = {
-    root: "px-2 rounded-xl py-1",
+    root: "px-2 rounded-full py-1",
     icon: "size-5 py-1",
     icon_only_badge: "size-5" 
 }

@@ -1,10 +1,7 @@
 import React, { ReactNode } from "react"
 
-
 import { _get, _hasOwnProperty, _isNA, _isNull } from "@common/utils";
-import { TAILWINDCSS_CLASSES } from "@common/tailwind"
 import { renderTooltip } from "@components/UI/Tooltip";
-
 
 import {
     CheckIcon, CheckCircleIcon,
@@ -55,7 +52,7 @@ export const renderWithInfo = (textElement: ReactNode | string, infoMessage: str
     // otherwise draw info icon and attach the tooltip to the icon
     return renderWithIcon(
         textElement,
-        renderTooltip(<InformationCircleIcon className={`${TAILWINDCSS_CLASSES.info.icon} size-3 ml-1`} />, infoMessage),
+        renderTooltip(<InformationCircleIcon className="info-icon size-3 ml-1" />, infoMessage),
             {prefix: false, iconOnly: false})
 }
 

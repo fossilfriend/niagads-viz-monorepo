@@ -1,14 +1,10 @@
 import React from "react"
 
 import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull, toExponential, toFixedWithoutZeros } from "@common/utils";
-import { TAILWINDCSS_CLASSES } from "@common/tailwind"
 
 import {
     TextRenderer,
-    renderWithInfo,
-    renderStyledText,
     renderNullValue,
-    buildElementStyle
 } from "./TextRenderer";
 import { formatFloat } from "./Number";
 

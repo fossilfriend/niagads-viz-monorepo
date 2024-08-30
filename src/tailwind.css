@@ -13,3 +13,13 @@
   }
 }
 
+@layer components {
+    .button-icon { @apply w-4 h-4 } /* icon in a button */
+    .info-icon { @apply text-blue-600} /* info bubble icon */
+    .info-link { 
+        @apply cursor-pointer underline decoration-dashed decoration-blue-600 underline-offset-4
+    }
+}
+
+
+

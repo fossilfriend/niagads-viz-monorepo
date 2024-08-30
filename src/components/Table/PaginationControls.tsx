@@ -1,8 +1,12 @@
 import React from "react"
 import { Table } from "@tanstack/react-table"
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { Select, Button } from "@components/UI"
 
+const __TAILWIND_CSS = {
+    stroke: 'stroke-black stroke-2'
+}
 interface PaginationControlsProps {
     table: Table<any>
 }
@@ -11,12 +15,12 @@ interface PaginationControlsProps {
 
 export const PaginationControls = ({ table }: PaginationControlsProps) => {
     return <>
-        <div className="flex float-right items-center gap-2">
-            <Select fields={[0,10,20,50,100,500]} label="Results per page" id="pages" inline/>
+        <div className="m-2">
+            <div className="flex float-right items-center gap-2">
+                <Select fields={[0, 10, 20, 50, 100, 500]} label="Results per page" id="pages" inline />
+            </div>
+            <Button mode="white"><ChevronRightIcon className={`button-icon ${__TAILWIND_CSS.stroke}`}></ChevronRightIcon></Button>
         </div>
-        <Button options={{mode:"outline"}} onClick={(event) => alert("clicked!")}>Test</Button>
-        <Button options={{mode: "filled", color:"secondary"}}>Test two</Button>
-       
     </>
 }
 
