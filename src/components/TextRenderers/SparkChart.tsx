@@ -36,7 +36,7 @@ export const PercentageBar = <T,>({ props }: TextRenderer<T>) => {
     const remainder = 100.0 - observed
 
     return <>
-        <div className="">
+        <div className="inline-flex">
             <div className={`${__TAILWIND_CSS.bar} w-[35px]`}>{`${formattedValue} `}</div>
             <div className="inline-block w-[100px] mr-2">
                 <div className={`${__TAILWIND_CSS.bar} ${__TAILWIND_CSS.percentage.observed}`} 
