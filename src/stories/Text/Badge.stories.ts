@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { PercentageBar } from '@components/TextRenderers/SparkChart'
+import { Badge } from '@components/TextRenderers/Badge';
 
-const meta: Meta<typeof PercentageBar> = {
-  title: 'NIAGADS-VIZ/Text/PercentageBar',
-  component: PercentageBar,
+const meta: Meta<typeof Badge> = {
+  title: 'NIAGADS-VIZ/Text/Badge',
+  component: Badge,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -14,11 +14,16 @@ const meta: Meta<typeof PercentageBar> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof PercentageBar>;
+type Story = StoryObj<typeof Badge>;
 
+// FIXME:
+
+const props = {
+    value: 'Story not implemented; see notes in Boolean Badge story code'
+}
 
 export const Default: Story = {
   args: {
-    props: {value: .62}
+    props: props
   },
 };

@@ -21,9 +21,8 @@ type Story = StoryObj<typeof Text>;
 
 const props = {
     value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie, elit at molestie accumsan, arcu orci interdum diam, vitae mattis libero est vel enim. Suspendisse quis metus erat. Nullam convallis sed turpis nec elementum. Mauris mattis elit eros, in commodo tellus laoreet at. Nunc ultrices vel massa sit amet tincidunt.', 
-    color: 'red', 
+    color: 'grey', 
     truncateTo: 100,
-    inlineTooltip: true,
 }
 
 export const Default: Story = {
