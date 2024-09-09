@@ -1,23 +1,28 @@
 import React, { ReactNode } from "react"
 
 const __TAILWIND_CSS = {
-    form: "max-w-sm mx-auto w-full",
-    inline_container: "md:flex md:items-center",
-    inline_label_container: "md:w-1/3",
-    inline_select_container: "md:w-2/3",
-    label: "block p-2 text-sm font-medium text-gray-900 dark:text-white",
-    select: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    root: "bg-gray-50 text-gray-900 text-sm block w-full p-2.5",
+
+    // modes
+    outline: "border border-solid border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500",
+    plain: "bg-white border-0",
+    underline: "border-t-0 border-l-0 border-r-0 border-b-[1px] border-solid border-black focus:border-blue-500",
+
+    // label
+    label: "block p-2 text-sm font-medium text-gray-900",
+    inline: "md:flex md:items-center",
 }
 
 interface Select {
     fields: string[] | { [key: string]: string } | number[]
     id: string
     label?: string
-    selected?: string
+    selected?: string | undefined
     inline?: boolean
+    mode?: 'outline' | 'underline' | 'plain'
 }
 
-export const Select = ({ fields, id, label, selected, inline = false }: Select) => {
+export const Select = ({ fields, id, label, selected, inline=false, mode='outline' }: Select) => {
     const _optionsFromArray = (values: string[] | number[], selectedValue: string | undefined) => (
         values.map(v => (
             <option key={v.toString()} value={v} selected={!!selectedValue && v.toString() === selectedValue}>{v}</option>
@@ -31,20 +36,19 @@ export const Select = ({ fields, id, label, selected, inline = false }: Select) 
     )
 
     return <>
-        <form className={__TAILWIND_CSS.form}>
-            <div className={inline ? __TAILWIND_CSS.inline_container : ""}>
-                <div className={inline ? __TAILWIND_CSS.inline_label_container : ""}>
+            <div className={inline ? __TAILWIND_CSS.inline : ""}>
+                <div>
                     <label htmlFor={id} className={__TAILWIND_CSS.label}>{label}</label>
                 </div>
-                <div className={inline ? __TAILWIND_CSS.inline_select_container : ""}>
-                    <select id={id} className={__TAILWIND_CSS.select}>
+                <div>
+                    <select id={id} className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS[mode]}`}>
                         {Array.isArray(fields)
                             ? _optionsFromArray(fields, selected)
                             : _optionsFromObj(fields, selected)}
                     </select>
                 </div>
             </div>
-        </form>
+
     </>
 
 }
