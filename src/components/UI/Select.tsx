@@ -6,7 +6,7 @@ const __TAILWIND_CSS = {
     // modes
     outline: "border border-solid border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500",
     plain: "bg-white border-0",
-    underline: "border-t-0 border-l-0 border-r-0 border-b-[1px] border-solid border-black focus:border-blue-500",
+    underline: "bg-white border-t-0 border-l-0 border-r-0 border-b-[1px] border-solid border-black focus:border-blue-500",
 
     // label
     label: "block p-2 text-sm font-medium text-gray-900",
@@ -19,10 +19,11 @@ interface Select {
     label?: string
     selected?: string | undefined
     inline?: boolean
+    onChange?: React.ChangeEventHandler<HTMLSelectElement>
     mode?: 'outline' | 'underline' | 'plain'
 }
 
-export const Select = ({ fields, id, label, selected, inline=false, mode='outline' }: Select) => {
+export const Select = ({ fields, id, label, selected, inline=false, onChange, mode='outline' }: Select) => {
     const _optionsFromArray = (values: string[] | number[], selectedValue: string | undefined) => (
         values.map(v => (
             <option key={v.toString()} value={v} selected={!!selectedValue && v.toString() === selectedValue}>{v}</option>
@@ -41,7 +42,7 @@ export const Select = ({ fields, id, label, selected, inline=false, mode='outlin
                     <label htmlFor={id} className={__TAILWIND_CSS.label}>{label}</label>
                 </div>
                 <div>
-                    <select id={id} className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS[mode]}`}>
+                    <select id={id} onChange={onChange} className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS[mode]}`}>
                         {Array.isArray(fields)
                             ? _optionsFromArray(fields, selected)
                             : _optionsFromObj(fields, selected)}
