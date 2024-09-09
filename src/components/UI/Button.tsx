@@ -17,7 +17,7 @@ import React, { useMemo, ReactNode } from "react"
 //<button type="button" class=" dark:hover:bg-gray-700">Alternative</button>
 
 const __TAILWIND_CSS = {
-    root: "font-inter me-2 mb-2 font-medium text-sm rounded-lg border-solid border-1 focus:ring-2 focus:z-10 inline-flex items-center",
+    root: "font-inter font-medium text-sm rounded-lg border-solid border-1 focus:ring-2 focus:z-10 inline-flex items-center", //me-2 mb-2 
     primary: "text-white border-primary/50 bg-primary hover:bg-primary/85 focus:ring-primary/30",
     secondary:"border-secondary bg-secondary hover:bg-secondary/85 focus:ring-secondary/30",
     blue: "text-white border-blue-700 bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 focus:outline-none",
@@ -25,8 +25,8 @@ const __TAILWIND_CSS = {
     default: "",
 
     //states
-    disabled: "disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200",
-
+    disabled: "disabled:bg-slate-50 disabled:text-slate-500 disabled:border",
+    
     // Sizes
     sm: 'px-3 py-1',
     md: 'px-4 py-2',

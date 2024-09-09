@@ -52,7 +52,7 @@ export const renderWithInfo = (textElement: ReactNode | string, infoMessage: str
     // otherwise draw info icon and attach the tooltip to the icon
     return renderWithIcon(
         textElement,
-        renderTooltip(<InformationCircleIcon className="info-icon size-3 ml-1" />, infoMessage),
+        renderTooltip(<InformationCircleIcon className="info-bubble size-3 ml-1" />, infoMessage),
             {prefix: false, iconOnly: false})
 }
 
