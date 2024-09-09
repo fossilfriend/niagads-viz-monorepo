@@ -22,11 +22,14 @@ const __generatePageSizeOptions = (nRows: number) => {
     else if (nearestTenth >= 100)
         return [10, 20, 30, 40, 50, 100]
     else if (nearestTenth >= 50)
-        return range(10, 60, 10) // range is up to but not including end
-    else if (nearestTenth > 10)
-        return range(10, nearestTenth + 10, 10)
+        return [10, 20, 30, 40, 50, nRows] // range is up to but not including end
+    else if (nearestTenth >= 10 && nRows >= 10) {
+        let options =  range(10, nearestTenth + 10, 10)
+        options.push(nRows)
+        return options
+    }
 
-    return [10]
+    return [nRows]
 }
 
 export const PaginationControls = ({ table }: PaginationControlsProps) => {
