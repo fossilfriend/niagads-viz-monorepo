@@ -5,7 +5,7 @@ const __TAILWIND_CSS = {
 
     // modes
     outline: "border border-solid border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500",
-    plain: "bg-white border-0",
+    plain: "bg-white border-0 focus:bg-gray-100",
     underline: "bg-white border-t-0 border-l-0 border-r-0 border-b-[1px] border-solid border-black focus:border-blue-500",
 
     // label
@@ -17,22 +17,22 @@ interface Select {
     fields: string[] | { [key: string]: string } | number[]
     id: string
     label?: string
-    selected?: string | undefined
+    defaultValue?: string
     inline?: boolean
     onChange?: React.ChangeEventHandler<HTMLSelectElement>
-    mode?: 'outline' | 'underline' | 'plain'
+    mode?: 'outline' | 'underline' | 'plain' // select design: one of `outline`, `underline`, or `plain`
 }
 
-export const Select = ({ fields, id, label, selected, inline=false, onChange, mode='outline' }: Select) => {
-    const _optionsFromArray = (values: string[] | number[], selectedValue: string | undefined) => (
+export const Select = ({ fields, id, label, defaultValue, inline=false, onChange, mode='outline' }: Select) => {
+    const _optionsFromArray = (values: string[] | number[]) => (
         values.map(v => (
-            <option key={v.toString()} value={v} selected={!!selectedValue && v.toString() === selectedValue}>{v}</option>
+            <option key={v.toString()} value={v}>{v}</option>
         ))
     )
 
-    const _optionsFromObj = (fieldMap: any, selectedValue: string | undefined) => (
+    const _optionsFromObj = (fieldMap: any) => (
         Object.entries(fieldMap).map(([k, v]) => (
-            <option key={k} value={v as string} selected={!!selectedValue && k === selectedValue}>{k}</option>
+            <option key={k} value={v as string}>{k}</option>
         ))
     )
 
@@ -42,10 +42,10 @@ export const Select = ({ fields, id, label, selected, inline=false, onChange, mo
                     <label htmlFor={id} className={__TAILWIND_CSS.label}>{label}</label>
                 </div>
                 <div>
-                    <select id={id} onChange={onChange} className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS[mode]}`}>
+                    <select defaultValue={defaultValue} id={id} onChange={onChange} className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS[mode]}`}>
                         {Array.isArray(fields)
-                            ? _optionsFromArray(fields, selected)
-                            : _optionsFromObj(fields, selected)}
+                            ? _optionsFromArray(fields)
+                            : _optionsFromObj(fields)}
                     </select>
                 </div>
             </div>

@@ -25,6 +25,6 @@ export const Default: Story = {
     id: "pages",
     inline: true,
     mode: 'outline',
-    selected: undefined
+    defaultValue: undefined
   },
 };
