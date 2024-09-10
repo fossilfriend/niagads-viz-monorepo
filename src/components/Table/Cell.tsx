@@ -5,8 +5,8 @@ import { BasicType, Modify, TypeMapper, Expand, NAString } from "@common/types"
 import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull, _isNA } from '@common/utils'
 import { Color } from '@common/palettes'
 
-import { Text } from '@text/BasicText'
-import { Link } from '@text/Link'
+import { Text, TextList } from '@text/BasicText'
+import { Link, LinkList } from '@text/Link'
 import { Float } from '@text/Number'
 import { GenericColumn } from './Column'
 import { Badge, BooleanBadge, BadgeIconType } from '@text/Badge'
@@ -15,7 +15,7 @@ import { PercentageBar } from '@text/SparkChart'
 
 export const DEFAULT_NA_VALUE = 'NA'
 
-export type GenericCell = BasicType | Record<string, BasicType | BasicType[]> | null
+export type GenericCell = BasicType | Record<string, any> | null
 
 
 export type AbstractCell = {
@@ -35,6 +35,9 @@ export type FloatCell = Expand<Modify<AbstractCell,
 export type TextCell = Expand<Modify<AbstractCell,
     { type: "text", truncateTo?: number, color?: Color, tooltip?: string }>>
 
+export type TextListCell = Expand<Modify<AbstractCell, 
+    { type: "text_list", value: string, items: TextCell[]}>>
+
 export type BadgeCell = Expand<Modify<TextCell,
     { type: "badge", backgroundColor?: Color, borderColor?: Color, icon?: BadgeIconType }>>
 
@@ -48,14 +51,19 @@ export type BooleanCell = Expand<Modify<BadgeCell,
 export type LinkCell = Expand<Modify<AbstractCell,
     { type: "link", url: string, tooltip?: string }>>
 
+export type LinkListCell = Expand<Modify<AbstractCell,
+    { type: "link_list", value: string, items: LinkCell[]}>>
+
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type Cell = PercentageBarCell | FloatCell | AbstractCell | TextCell | BadgeCell | BooleanCell | LinkCell
+export type Cell = PercentageBarCell | FloatCell | AbstractCell | TextCell | TextListCell | BadgeCell | BooleanCell | LinkCell | LinkListCell
 
 // create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
 export type CellType = keyof CellTypeMapper
+
+// this does not include LinkList & TextList b/c those are internal cell types
 const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "text", "annotated_text", "badge", "link", "percentage_bar"]
 
 
@@ -114,20 +122,49 @@ const __resolveLinkCell = (cell: GenericCell): GenericCell => {
     return cell
 }
 
+
+const __resolveListCell = (cells: GenericCell[]) => {
+    const values = cells.map((c: GenericCell) => (_get('value',c)))
+    const value = values.join(' // ')
+
+    return {type: "abstract", value: value, items: cells}
+}
+
+
+
 // assigns parent column cell type to each cell (to facilitate rendering)
 // sets cell type to "abstract" if undefined
 // does some error checking:
 // 1. makes sure user specified a cell type to the parent column if cell value is an object/JSON
 
 export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericColumn): GenericCell | GenericCell[] => {
-    if (Array.isArray(cell)) {
-        return cell.map((c: GenericCell) => (resolveCell(c, column) as GenericCell))
-    }
-
     let resolvedCellType = _get('type', column, "abstract")
     let resolvedCell: GenericCell = {}
 
-    if (_isJSON(cell)) {
+    if (Array.isArray(cell)) {
+        if (resolvedCellType == 'abstract') {
+            throw Error("Cell contains an array; must specify either " 
+                + "`text` or `link` as the cell `type` in the column defintion: " 
+                + JSON.stringify(cell))
+        }
+
+        const cellList = cell.map((c: GenericCell) => (resolveCell(c, column) as GenericCell))
+        if (resolvedCellType == 'text') {
+            resolvedCell = __resolveListCell(cellList)
+            resolvedCellType = 'text_list'
+        }
+        else if (resolvedCellType == 'link') {
+            resolvedCell = __resolveListCell(cellList)
+            resolvedCellType = 'link_list'
+        }
+        else {
+            throw Error("Arrays of values are only supported for " 
+                + "`text` or `link` table cell types: " 
+                + JSON.stringify(cell))
+        }   
+    }
+
+    else if (_isJSON(cell)) {
         resolvedCell = _deepCopy(cell)
 
         if (resolvedCellType == "link") {
@@ -154,6 +191,10 @@ export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericCo
     else {
         // we have a raw value, so create the 'value' k-v pair
         Object.assign(resolvedCell as any, { 'value': cell })
+    }
+
+    if (resolvedCellType === "abstract") {
+        resolvedCellType = "text"
     }
 
     Object.assign(resolvedCell as any, {'type': resolvedCellType})
@@ -202,13 +243,13 @@ export const renderCell = (cell: Cell) => {
             return <Float props={cell}></Float>
         case "percentage_bar":
             return <PercentageBar props={cell}></PercentageBar>
+        case "text_list":
+            return <TextList props={cell}></TextList>
+        case "link_list": 
+            return <LinkList props={cell}></LinkList>
         default:
-            // FIXME: typescript thinks cell is of type 'never'
-            // <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
-            return <div><p><em>Cell Type</em>: {cell['type']}</p><p>{JSON.stringify(cell as Cell)}</p></div>
-        //throw Error("Unknown cell type for rendering")
+            throw Error(`Unknown cell type for rendering: ${JSON.stringify(cell as Cell)}`)
     }
-
 }
 
 export const renderCellHeader = (label: string, helpText: string) => {

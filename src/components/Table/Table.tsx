@@ -62,21 +62,6 @@ const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericCol
 }
 
 
-
-// add row and column indexes to the object so that unique ui keys can be generated 
-// if required; e.g., tooltips
-// TODO: array of values?!
-const __resolveRenderableCell = (value: Cell, rowId: string, columnId: string): Cell => (
-    Object.assign(
-        {
-            rowId: rowId,
-            columnId: columnId,
-        },
-        value)
-)
-
-
-
 const Table: React.FC<Table> = ({ columns, data, options }) => {
 
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -105,13 +90,14 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             catch (e: any) {
                 throw Error("Error processing column definition for `" + col.id + "`.\n" + e.message)
             }
+
             columnDefs.push(
                 columnHelper.accessor(row => getCellValue(row[col.id as keyof typeof row] as Cell),
                     {
                         id: col.id,
                         // TODO: custom renderer for cell headers that has information bubbles
                         // header: renderCellHeader(col.header, col.description),
-                        cell: props => renderCell(__resolveRenderableCell(props.cell.row.original[col.id] as Cell, props.row.id, props.column.id)),
+                        cell: props => renderCell(props.cell.row.original[col.id] as Cell),
                         // TODO: sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }
                 )
@@ -150,7 +136,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         catch (e: any) {
             throw Error(e.message)
         }
-
+        
         return tableData;
     }, [columns])
 

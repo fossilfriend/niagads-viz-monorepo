@@ -12,6 +12,22 @@ import {
 
 const DEFAULT_MAX_LENGTH = 100
 
+
+export const TextList = <T,>({ props }: TextRenderer<T>) => {
+    const items = _get('items', props)
+    if (items) {
+        const numItems = items.length - 1
+        return items.map((iProps: any, index: number) => (
+            <div key={index}>
+                <Text props={iProps}></Text>
+                {index < numItems ? ` // ` : ''}
+            </div>
+        ))
+    }
+    return renderNullValue()
+}
+
+
 export const Text = <T,>({ props }: TextRenderer<T>) => {
     const value = _get('value', props)
 

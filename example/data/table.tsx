@@ -133,6 +133,7 @@ export const FULL_TEST_TABLE = {
         },
         {
             id: 'population',
+            type: "text"
         },
         {
             id: 'dataset_record_link',
@@ -159,7 +160,8 @@ export const FULL_TEST_TABLE = {
         },
         {
             id: 'neuropathology',
-            header: 'Disease Phenotype(s)'
+            header: 'Disease Phenotype(s)',
+            type: 'text'
         }
     ],
 

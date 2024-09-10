@@ -12,6 +12,20 @@ const _renderLink = (displayText: string, url: string, newWindow: boolean=false)
     return <a href={url}>{displayText}</a>
 }
 
+export const LinkList = <T,>({ props }: TextRenderer<T>) => {
+    const items = _get('items', props)
+    if (items) {
+        const numItems = items.length - 1
+        return items.map((iProps: any, index: number) => (
+            <div key={index}>
+                <Link props={iProps}></Link>
+                {index < numItems ? ` // ` : ''}
+            </div>
+        ))
+    }
+    return <Text props={{value:null}}/>
+}
+
 export const Link = <T,>({ props }: TextRenderer<T>) => {
     const url = _get('url', props)
     const value = _get('value', props)
