@@ -19,7 +19,7 @@ import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/2
 import { _get, _hasOwnProperty } from "@common/utils"
 import { errorFallback } from "@common/errors"
 
-import { SortConfig, GenericColumn, getColumn } from "./Column"
+import { ColumnSortConfig, GenericColumn, getColumn } from "./Column"
 import { Cell, GenericCell, getCellValue, renderCell, resolveCell, validateCellType } from "./Cell"
 import { TableConfig } from "./TableProperties"
 import PaginationControls from "./PaginationControls";
@@ -46,7 +46,7 @@ export interface Table {
 
 
 // FIXME: type of return should be custom sorting function
-const __resolveSortingFn = (options: SortConfig) => {
+const __resolveSortingFn = (options: ColumnSortConfig) => {
     // ! point here says that as this point, we know options will not be undefined
     return _hasOwnProperty('sortingFn', options) ? options.sortingFn : 'alphanumeric'
 }
