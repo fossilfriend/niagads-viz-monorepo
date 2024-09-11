@@ -20,17 +20,16 @@ export interface ColumnValueFormat {
 }
 
 // allowable fields provided by users
+// TODO: custom sorting /filtering functions?!
 export interface GenericColumn {
     header: string
     id: string
     description?: string
     type?: CellType 
-    sort?: ColumnSortConfig
     canFilter?: boolean // defaults to TRUE
     disableGlobalFilter?: boolean // defaults to FALSE
     canSort?: boolean // defaults to TRUE 
-    hide?: boolean
-    required?: boolean // if required = true then hide = false 
+    required?: boolean // if required = true then cannot be hidden
     format?: ColumnValueFormat
 }
 

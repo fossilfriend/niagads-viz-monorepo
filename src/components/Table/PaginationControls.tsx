@@ -24,7 +24,7 @@ const __generatePageSizeOptions = (nRows: number) => {
     else if (nearestTenth >= 50)
         return [10, 20, 30, 40, 50, nRows] // range is up to but not including end
     else if (nearestTenth >= 10 && nRows >= 10) {
-        let options =  range(10, nearestTenth + 10, 10)
+        let options = range(10, nearestTenth + 10, 10)
         options.push(nRows)
         return options
     }
@@ -41,7 +41,7 @@ export const PaginationControls = ({ table }: PaginationControlsProps) => {
     let maxDisplayedRow = minDisplayedRow + pageSize - 1
     if (maxDisplayedRow > nRows) maxDisplayedRow = nRows
 
-    const onChangePageSize = (pSize:number) => {
+    const onChangePageSize = (pSize: number) => {
         table.setPageSize(pSize)
         setPageSize(pSize)
     }
@@ -49,19 +49,17 @@ export const PaginationControls = ({ table }: PaginationControlsProps) => {
     /*{table.setPageSize(Number(e.target.value))} */
 
     return <>
-        <div className="m-2">
-            <div className="inline-flex float-right gap-2">
-                <Select defaultValue={pageSize.toString()} fields={pageSizeOptions} 
-                    onChange={(e:any) => {onChangePageSize(Number(e.target.value))}}
-                    label="Results per page" id="pages" inline variant='plain' />
-                <p className="text-sm text-gray-900 px-2">{minDisplayedRow} - {maxDisplayedRow} of {nRows}</p>
-                <Button variant="white" onClick={()=>table.previousPage()} disabled={!table.getCanPreviousPage()}>
-                    <ChevronLeftIcon className={`icon-button ${!table.getCanPreviousPage() ? 'icon-disabled' : ''}`}></ChevronLeftIcon>
-                </Button>
-                <Button variant="white" onClick={()=>table.nextPage()} disabled={!table.getCanNextPage()}>
-                    <ChevronRightIcon className={`icon-button ${!table.getCanNextPage() ? 'icon-disabled' : ''}`}></ChevronRightIcon>
-                </Button>
-            </div>
+        <div className="inline-flex float-right gap-2 m-2">
+            <Select defaultValue={pageSize.toString()} fields={pageSizeOptions}
+                onChange={(e: any) => { onChangePageSize(Number(e.target.value)) }}
+                label="Results per page" id="pages" inline variant='plain' />
+            <p className="text-sm text-gray-900 px-2">{minDisplayedRow} - {maxDisplayedRow} of {nRows}</p>
+            <Button variant="white" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+                <ChevronLeftIcon className={`icon-button ${!table.getCanPreviousPage() ? 'icon-disabled' : ''}`}></ChevronLeftIcon>
+            </Button>
+            <Button variant="white" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+                <ChevronRightIcon className={`icon-button ${!table.getCanNextPage() ? 'icon-disabled' : ''}`}></ChevronRightIcon>
+            </Button>
         </div>
     </>
 }

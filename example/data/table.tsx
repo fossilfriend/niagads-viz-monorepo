@@ -1,3 +1,4 @@
+import { initialize } from '@components/LocusZoom/plot'
 import { Table } from '../../src/components/Table/Table'
 
 
@@ -111,6 +112,9 @@ export const CELL_RENDERING_TEST_TABLE: Table = {
 
 
 export const FULL_TEST_TABLE = {
+    options: {
+        initialize: { sort: { "publication_date": 'asc' } }
+    },
     columns: [
         {
             id: 'dataset_accession',

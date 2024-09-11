@@ -16,7 +16,6 @@ interface InitialTableState {
     sort?: SortConfig
     filter?: FilterConfig[]
 }
-
 export interface TableConfig {
     title?: string
     id?:string // optional: internal id for the table
@@ -25,7 +24,8 @@ export interface TableConfig {
     canFilter?: boolean // optional: disables all filtering on the table when false; default TRUE
     export?: FileFormat[] // optional: enable exports in the listed file formats; exports disabled if missing
     rowSelect?: RowSelectOptions // optional: enables row selection and related state change options
-    columOrder?: string[] // optional: column ids listed in order in which they should be displayed; if none uses order in the column defs
+    columOrder?: string[] // optional: specify columns by id in display order; else will use order in table definition
+    defaultColumns?: string[] // optional: any column ids not listed will be hidden by default
 }
 
 export type TableRow = Record<string, GenericCell | GenericCell[]>
