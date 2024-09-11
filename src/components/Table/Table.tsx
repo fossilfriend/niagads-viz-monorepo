@@ -1,7 +1,7 @@
 // TODO: put sorting back in
 // TODO: filtering
 
-import React, { useMemo, useState, useEffect } from "react"
+import React, { useMemo, useState } from "react"
 import { withErrorBoundary } from "react-error-boundary";
 import {
     flexRender,
@@ -9,42 +9,34 @@ import {
     getPaginationRowModel,
     useReactTable,
     SortingState,
-    getSortedRowModel,
     createColumnHelper,
     ColumnDef,
-    HeadersInstance,
     HeaderGroup,
 } from "@tanstack/react-table"
 
-import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
-
-import { _get, _hasOwnProperty } from "@common/utils"
+import { _get, _hasOwnProperty, toTitleCase } from "@common/utils"
 import { errorFallback } from "@common/errors"
 
-import { ColumnSortConfig, GenericColumn, getColumn } from "./Column"
-import { Cell, GenericCell, getCellValue, renderCell, resolveCell, validateCellType } from "./Cell"
-import { TableConfig } from "./TableProperties"
-import PaginationControls  from "./PaginationControls";
+import { ColumnSortConfig, GenericColumn, getColumn } from "@table/Column"
+import { Cell, GenericCell, getCellValue, renderCell, resolveCell, validateCellType } from "@table/Cell"
+import { PaginationControls }  from "@table/PaginationControls";
+import { TableConfig, TableData, TableRow } from "@table/TableProperties";
+import { TableColumnHeader } from "./TableColumnHeader";
 
 
 const __TAILWIND_CSS = {
-    container: "p-2 block max-w-full overflow-x-scroll overflow-y-hidden relative shadow-md sm:rounded-lg",
-    table: "max-w-full text-sm text-left rtl:text-right text-gray-500 rounded-lg",
-    thead: "text-sm text-white bg-primary",
-    th: "px-6 py-3", //"px-2",
+    container: "p-2 block max-w-full relative shadow-md sm:rounded-lg",
+    table: "max-w-full text-sm text-left rtl:text-right text-gray-500 rounded-lg overflow-x-scroll",
     htr: "",
     td: "py-1.5 pr-6 pl-4",
     dtr: "hover:bg-gray-50 bg-white border-b odd:border-gray-700"
 }
 
-export type TableRow = Record<string, GenericCell | GenericCell[]>
-export type TableData = TableRow[]
 export interface Table {
     options?: TableConfig
     columns: GenericColumn[]
     data: TableData
 }
-
 
 // FIXME: type of return should be custom sorting function
 const __resolveSortingFn = (options: ColumnSortConfig) => {
@@ -63,31 +55,12 @@ const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericCol
 }
 
 const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
-    <thead className={__TAILWIND_CSS.thead}>
+    <thead>
         {hGroups.map((headerGroup: HeaderGroup<TableRow>) => (
             <tr key={headerGroup.id} className={__TAILWIND_CSS.htr}>
                 {headerGroup.headers.map((header) => {
                     return (
-                        <th key={header.id} colSpan={header.colSpan} scope="col" className={__TAILWIND_CSS.th}>
-                            {header.isPlaceholder ? null : (
-                                <div
-                                    style={
-                                        header.column.getCanSort() ? { "cursor": "pointer" } : {}
-                                    }
-                                    onClick={header.column.getToggleSortingHandler()}
-                                >
-                                    {flexRender(
-                                        header.column.columnDef.header,
-                                        header.getContext()
-                                    )}
-                                    {{
-                                        sort: <ArrowsUpDownIcon className="h4 text-white pl-px" />,
-                                        asc: <ArrowUpIcon className="h-4 text-white pl-px" />,
-                                        desc: <ArrowDownIcon className="h-4 text-white pl-px" />,
-                                    }[header.column.getIsSorted() as string] ?? null}
-                                </div>
-                            )}
-                        </th>
+                     <TableColumnHeader key={header.id} header={header}/>
                     );
                 })}
             </tr>
@@ -128,6 +101,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                 columnHelper.accessor(row => getCellValue(row[col.id as keyof typeof row] as Cell),
                     {
                         id: col.id,
+                        header: _get('header', col, toTitleCase(col.id)),
                         // TODO: custom renderer for cell headers that has information bubbles
                         // header: renderCellHeader(col.header, col.description),
                         cell: props => renderCell(props.cell.row.original[col.id] as Cell),
@@ -197,6 +171,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
+                {/* FIXME: table overflow should scroll, not the container */}
                 <PaginationControls table={table} />
                 <table className={__TAILWIND_CSS.table}>
                     {__renderTableHeader(table.getHeaderGroups())}

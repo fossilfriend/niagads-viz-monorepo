@@ -1,4 +1,6 @@
 import { FileFormat } from "@common/types"
+import { GenericCell } from "@table/Cell"
+import { GenericColumn } from "@table/Column"
 
 export interface RowSelectOptions {
     onSelectFn: any // behavior on select
@@ -16,6 +18,8 @@ export interface TableConfig {
     columOrder?: string[] // optional: column ids listed in order in which they should be displayed; if none uses order in the column defs
 }
 
+export type TableRow = Record<string, GenericCell | GenericCell[]>
+export type TableData = TableRow[]
 
 
 
