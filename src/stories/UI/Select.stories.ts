@@ -16,15 +16,13 @@ const meta: Meta<typeof Select> = {
 export default meta;
 type Story = StoryObj<typeof Select>;
 
-/* <Select fields={[0, 10, 20, 50, 100, 500]} label="Results per page" id="pages" inline />*/
-
 export const Default: Story = {
   args: {
     fields: [0, 10, 20, 50, 100, 500],
     label: 'Results per page',
     id: "pages",
     inline: true,
-    mode: 'outline',
-    defaultValue: undefined
+    variant: 'outline',
+    //defaultValue: undefined
   },
 };

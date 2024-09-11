@@ -18,7 +18,7 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
-    mode:"primary",
+    variant:"primary",
     children: 'Example Button',
     //onClick: (event) => alert("I've been clicked!")
   },

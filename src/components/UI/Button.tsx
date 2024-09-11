@@ -37,7 +37,7 @@ const __TAILWIND_CSS = {
 type ButtonModes = 'default' | 'primary' | 'secondary' | 'white' | 'blue'
 type ButtonSizes = 'sm' | 'md' | 'lg'
 interface Button {
-    mode?: ButtonModes
+    variant?: ButtonModes
     size?: ButtonSizes
     children: ReactNode | string
     disabled?:boolean
@@ -45,8 +45,8 @@ interface Button {
 }
 
 
-export const Button = ({ mode='default', size='md', children, onClick, disabled=false }: Button) => {
-    const classes = `${__TAILWIND_CSS.root} ${__TAILWIND_CSS[mode]} ${__TAILWIND_CSS[size]} ${__TAILWIND_CSS.disabled}`
+export const Button = ({ variant='default', size='md', children, onClick, disabled=false }: Button) => {
+    const classes = `${__TAILWIND_CSS.root} ${__TAILWIND_CSS[variant]} ${__TAILWIND_CSS[size]} ${__TAILWIND_CSS.disabled}`
 
     return <button disabled={disabled}
         className={classes}
