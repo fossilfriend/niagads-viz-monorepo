@@ -115,14 +115,16 @@ export const FULL_TEST_TABLE = {
         {
             id: 'dataset_accession',
             header: 'Accession',
-            description: "NIAGADS or external repository accession number"
+            description: "NIAGADS or external repository accession number",
+            canFilter: false,
         },
         {
             id: 'consortium',
-            description: ''
+            description: '',
         },
         {
             id: 'description',
+            canSort: false,
         },
         {
             id: 'biomarker',
@@ -152,7 +154,8 @@ export const FULL_TEST_TABLE = {
         {
             id: 'publication_date',
             header: 'Year',
-            description: "Publication or release date (if data are unpublished)"
+            description: "Publication or release date (if data are unpublished)",
+            disableGlobalFilter: true
         },
         {
             id: 'track',

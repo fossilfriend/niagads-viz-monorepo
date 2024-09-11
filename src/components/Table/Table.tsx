@@ -112,6 +112,9 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     {
                         id: col.id,
                         header: _get('header', col, toTitleCase(col.id)),
+                        enableColumnFilter: _get('canFilter', col, true),
+                        enableGlobalFilter: _get('disableGlobalFilter', col, false),
+                        enableSorting: col.sort && _get('canSort', col, true),
                         meta: { description: _get('description', col) },
                         // TODO: custom renderer for cell headers that has information bubbles
                         // header: renderCellHeader(col.header, col.description),

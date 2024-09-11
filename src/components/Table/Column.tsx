@@ -4,18 +4,12 @@ import { CellType } from "./Cell";
 
 
 export interface ColumnSortConfig {
-    enable: boolean // enable sorting on this columnt
-    initial?: 'asc' | 'desc' | 'none' // optional: flag if table will be sorted by this column when rendered, missing = none
     sortingFn?: string // TODO: should be keys for CustomSortingFunctions / SortingFns
 }
 
 export interface ColumnFilterConfig {
-    enable: boolean // enable filtering on this column
-    enableGlobalFilter?: boolean // include in global text search filter
-    group?: string // optional: filter group (must match a filter group specified in table properties)
     initial?: BasicType | null // optional: table will be initially filtered by this column / value, missing or null = no initial filter
-    // filterFn?: 
-    // filterInterface?:
+    filterFn?: string // TODO: should by keys for CustomFilteringFunctions / FilterFns
 }
 
 export interface ColumnValueFormat {
@@ -32,7 +26,9 @@ export interface GenericColumn {
     description?: string
     type?: CellType 
     sort?: ColumnSortConfig
-    filter?: ColumnFilterConfig 
+    canFilter?: boolean // defaults to TRUE
+    disableGlobalFilter?: boolean // defaults to FALSE
+    canSort?: boolean // defaults to TRUE 
     hide?: boolean
     required?: boolean // if required = true then hide = false 
     format?: ColumnValueFormat
