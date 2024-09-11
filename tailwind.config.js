@@ -7,12 +7,15 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                'primary': '#27333f',
+                'primary': '#3d5263',
                 'secondary': '#f9c664',
+                'accent': '#618eb5',
+                'accent-dark': '#27333f'
             },
             fontFamily: {
                 'sans': ['"Open Sans"', ...defaultTheme.fontFamily.sans],
-                'inter': ['Inter']
+                'inter': ['Inter'],
+                'roboto': ['Roboto']
             }
         },
     },

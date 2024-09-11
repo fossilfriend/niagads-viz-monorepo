@@ -17,20 +17,30 @@ import {
 import { _get, _hasOwnProperty, toTitleCase } from "@common/utils"
 import { errorFallback } from "@common/errors"
 
-import { ColumnSortConfig, GenericColumn, getColumn } from "@table/Column"
-import { Cell, GenericCell, getCellValue, renderCell, resolveCell, validateCellType } from "@table/Cell"
-import { PaginationControls }  from "@table/PaginationControls";
+import {
+    Cell,
+    GenericCell,
+    getCellValue,
+    renderCell,
+    resolveCell,
+    validateCellType
+} from "@table/Cell"
 import { TableConfig, TableData, TableRow } from "@table/TableProperties";
-import { TableColumnHeader } from "./TableColumnHeader";
-
+import { ColumnSortConfig, GenericColumn, getColumn } from "@table/Column"
+import { PaginationControls } from "@table/PaginationControls";
+import { TableColumnHeader } from "@table/TableColumnHeader";
 
 const __TAILWIND_CSS = {
-    container: "p-2 block max-w-full relative shadow-md sm:rounded-lg",
-    table: "max-w-full text-sm text-left rtl:text-right text-gray-500 rounded-lg overflow-x-scroll",
-    htr: "",
-    td: "py-1.5 pr-6 pl-4",
+    container: "", //"p-2 block max-w-full relative shadow-md sm:rounded-lg",
+    table_border: "border-collapse",
+    table_layout: "w-full overflow-x-scroll",
+    table_text: "text-sm text-left rtl:text-right text-gray-700",
+    td: "py-1.5 pr-6 pl-4 text-xs font-roboto border-solid border-slate-200 border-0 border-b-[1px] border-r-[1px]",
     dtr: "hover:bg-gray-50 bg-white border-b odd:border-gray-700"
 }
+
+
+const TABLE_CLASSES = `${__TAILWIND_CSS.table_border} ${__TAILWIND_CSS.table_layout} ${__TAILWIND_CSS.table_text}`
 
 export interface Table {
     options?: TableConfig
@@ -57,10 +67,10 @@ const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericCol
 const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
     <thead>
         {hGroups.map((headerGroup: HeaderGroup<TableRow>) => (
-            <tr key={headerGroup.id} className={__TAILWIND_CSS.htr}>
+            <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                     return (
-                     <TableColumnHeader key={header.id} header={header}/>
+                        <TableColumnHeader key={header.id} header={header} />
                     );
                 })}
             </tr>
@@ -102,6 +112,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     {
                         id: col.id,
                         header: _get('header', col, toTitleCase(col.id)),
+                        meta: { description: _get('description', col) },
                         // TODO: custom renderer for cell headers that has information bubbles
                         // header: renderCellHeader(col.header, col.description),
                         cell: props => renderCell(props.cell.row.original[col.id] as Cell),
@@ -152,11 +163,11 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        defaultColumn: {
-           /* size: 150,
+        /* defaultColumn: {
+            size: 150,
             minSize: 0,
-            maxSize: 300,*/
-        },
+            maxSize: 300,
+        }, */
         enableColumnResizing: true
         /*state: { sorting },
         onSortingChange: setSorting,
@@ -166,14 +177,12 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     });
 
 
-
-
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
                 {/* FIXME: table overflow should scroll, not the container */}
                 <PaginationControls table={table} />
-                <table className={__TAILWIND_CSS.table}>
+                <table className={TABLE_CLASSES}>
                     {__renderTableHeader(table.getHeaderGroups())}
                     <tbody>
                         {table.getRowModel().rows.map((row) => (
@@ -186,7 +195,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                             </tr>
                         ))}
                     </tbody>
-                </table >
+                </table>
             </div>
         </>
         ) :

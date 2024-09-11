@@ -17,10 +17,10 @@ import React, { useMemo, ReactNode } from "react"
 //<button type="button" class=" dark:hover:bg-gray-700">Alternative</button>
 
 const __TAILWIND_CSS = {
-    root: "font-inter font-medium text-sm rounded-lg border-solid border-1 focus:ring-2 focus:z-10 inline-flex items-center", //me-2 mb-2 
-    primary: "text-white border-primary/50 bg-primary hover:bg-primary/85 focus:ring-primary/30",
-    secondary:"border-secondary bg-secondary hover:bg-secondary/85 focus:ring-secondary/30",
-    blue: "text-white border-blue-700 bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 focus:outline-none",
+    root: "cursor-pointer font-inter font-medium text-sm rounded-lg border-solid border-1 focus:ring-2 focus:z-10 inline-flex items-center", //me-2 mb-2 
+    primary: "text-white border-primary/50 bg-primary hover:bg-primary/85 focus:ring-accent",
+    secondary:"text-primary border-secondary bg-secondary hover:bg-secondary/85 focus:ring-secondary/30",
+    accent: "text-white border-accent bg-accent hover:bg-accent/50 focus:ring-accent/30 focus:outline-none",
     white: "border-white text-primary focus:outline-none bg-white hover:bg-gray-100 hover:border-gray-100 hover:text-blue-700 focus:ring-text-blue-700",
     default: "",
 
@@ -28,13 +28,13 @@ const __TAILWIND_CSS = {
     disabled: "disabled:bg-slate-50 disabled:text-slate-500 disabled:border",
     
     // Sizes
-    sm: 'px-3 py-1',
+    sm: 'px-1 py-1',
     md: 'px-4 py-2',
     lg: 'px-5 py-2.5',
 }
 
 
-type ButtonVariants = 'default' | 'primary' | 'secondary' | 'white' | 'blue'
+type ButtonVariants = 'default' | 'primary' | 'secondary' | 'white' | 'accent' 
 type ButtonSizes = 'sm' | 'md' | 'lg'
 interface Button {
     variant?: ButtonVariants 
