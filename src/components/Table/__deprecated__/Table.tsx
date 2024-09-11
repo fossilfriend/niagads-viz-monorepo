@@ -12,7 +12,7 @@ import {
 
 import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
 
-import { Column, TableData } from "./types";
+import { Column, TableData } from "../types";
 import { resolveColumnAccessor } from "@table/ColumnAccessors";
 import PaginationControls from "@table/PaginationControls";
 import { CustomSortingFn, CustomSortingFunctions} from "./TableSortingFunctions";

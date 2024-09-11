@@ -1,12 +1,11 @@
-
 import { BasicType, NAString } from "@common/types"
 import { CellType } from "./Cell";
-
+import { TableSortingFunctions } from "./TableSortingFunctions";
 
 export interface SortConfig {
-    enable: boolean // enable sorting on this columnt
+    enable: boolean // enable sorting on this column
     initial?: 'asc' | 'desc' | 'none' // optional: flag if table will be sorted by this column when rendered, missing = none
-    sortingFn?: string // TODO: should be keys for CustomSortingFunctions / SortingFns
+    sortingFn?: TableSortingFunctions // TODO: do we need to import TableRow?
 }
 
 export interface FilterConfig {
@@ -35,4 +34,3 @@ export interface GenericColumn {
 export const getColumn = (columnId:string, columns:GenericColumn[]) => {
     return columns.find(col => col.id === columnId)
 }
-

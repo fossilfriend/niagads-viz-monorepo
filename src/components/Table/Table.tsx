@@ -1,6 +1,5 @@
 // TODO: put sorting back in
 // TODO: filtering
-
 import React, { useMemo, useState, useEffect } from "react"
 import { withErrorBoundary } from "react-error-boundary";
 import {
@@ -12,18 +11,16 @@ import {
     getSortedRowModel,
     createColumnHelper,
     ColumnDef,
+    SortingFnOption,
 } from "@tanstack/react-table"
-
 import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
-
 import { _get, _hasOwnProperty } from "@common/utils"
 import { errorFallback } from "@common/errors"
-
-import { SortConfig, GenericColumn, getColumn } from "./Column"
+import { GenericColumn, getColumn } from "./Column"
 import { Cell, GenericCell, getCellValue, renderCell, resolveCell, validateCellType } from "./Cell"
 import { TableConfig } from "./TableProperties"
 import PaginationControls from "./PaginationControls";
-
+import { CustomSortingFunctions } from "./TableSortingFunctions";
 
 const __TAILWIND_CSS = {
     container: "relative overflow-x-auto shadow-md sm:rounded-lg",
@@ -35,20 +32,12 @@ const __TAILWIND_CSS = {
     dtr: "hover:bg-gray-50 bg-white border-b dark:bg-gray-800 odd:border-gray-700"
 }
 
-
 export type TableRow = Record<string, GenericCell | GenericCell[]>
 export type TableData = TableRow[]
 export interface Table {
     options?: TableConfig
     columns: GenericColumn[]
     data: TableData
-}
-
-
-// FIXME: type of return should be custom sorting function
-const __resolveSortingFn = (options: SortConfig) => {
-    // ! point here says that as this point, we know options will not be undefined
-    return _hasOwnProperty('sortingFn', options) ? options.sortingFn : 'alphanumeric'
 }
 
 const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericColumn, index: number) => {
@@ -61,8 +50,6 @@ const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericCol
     }
 }
 
-
-
 // add row and column indexes to the object so that unique ui keys can be generated 
 // if required; e.g., tooltips
 // TODO: array of values?!
@@ -74,8 +61,6 @@ const __resolveRenderableCell = (value: Cell, rowId: string, columnId: string): 
         },
         value)
 )
-
-
 
 const Table: React.FC<Table> = ({ columns, data, options }) => {
 
@@ -112,7 +97,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                         // TODO: custom renderer for cell headers that has information bubbles
                         // header: renderCellHeader(col.header, col.description),
                         cell: props => renderCell(__resolveRenderableCell(props.cell.row.original[col.id] as Cell, props.row.id, props.column.id)),
-                        // TODO: sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
+                        sortingFn: (col.sort?.sortingFn || 'alphanumeric') as SortingFnOption<TableRow>,
+                        enableSorting: !!col.sort?.enable,
                     }
                 )
             )
@@ -165,11 +151,10 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             minSize: 20,
             maxSize: 300,
         },
-        /*state: { sorting },
+        state: { sorting },
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),      
-        */
-        // sortingFns: CustomSortingFunctions,
+        sortingFns: CustomSortingFunctions,
     });
 
 
@@ -226,7 +211,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             <div>No data</div>
     )
 }
-
 
 const TableWithErrorBoundary = withErrorBoundary(Table, {
     FallbackComponent: errorFallback,

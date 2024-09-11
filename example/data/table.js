@@ -1439,7 +1439,7 @@ export const EXAMPLE_TABLE_3 = {
             percent: null,
             p_value: {value:.222, precision: 2},
             website: { displayText: "FedEx" },
-            state: { value: 'FAIL', icon: 'xMark', color: 'red', borderColor: 'red', tooltip: "This one did't pass :(" }
+            state: { value: 'FAIL', icon: 'xMark', color: 'red', borderColor: 'red', tooltip: "This one didn't pass :(" }
         },
     ],
 
@@ -1470,7 +1470,8 @@ export const EXAMPLE_TABLE_3 = {
         {
             header: "Count",
             id: "count",
-            info: "integer test"
+            info: "integer test",
+            sort: 
         },
         {
             header: "Percent",
