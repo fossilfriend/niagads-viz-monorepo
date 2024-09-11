@@ -32,7 +32,7 @@ const __generatePageSizeOptions = (nRows: number) => {
     return [nRows]
 }
 
-const PaginationControls = ({ table }: PaginationControlsProps) => {
+export const PaginationControls = ({ table }: PaginationControlsProps) => {
     const [pageSize, setPageSize] = useState<number>(table.getState().pagination.pageSize)
     const [nRows, setNRows] = useState<number>(table.getRowCount())
     const pageSizeOptions = useMemo(() => (__generatePageSizeOptions(nRows)), [nRows])
@@ -53,12 +53,12 @@ const PaginationControls = ({ table }: PaginationControlsProps) => {
             <div className="inline-flex float-right gap-2">
                 <Select defaultValue={pageSize.toString()} fields={pageSizeOptions} 
                     onChange={(e:any) => {onChangePageSize(Number(e.target.value))}}
-                    label="Results per page" id="pages" inline mode='plain' />
+                    label="Results per page" id="pages" inline variant='plain' />
                 <p className="text-sm text-gray-900 px-2">{minDisplayedRow} - {maxDisplayedRow} of {nRows}</p>
-                <Button mode="white" onClick={()=>table.previousPage()} disabled={!table.getCanPreviousPage()}>
+                <Button variant="white" onClick={()=>table.previousPage()} disabled={!table.getCanPreviousPage()}>
                     <ChevronLeftIcon className={`icon-button ${!table.getCanPreviousPage() ? 'icon-disabled' : ''}`}></ChevronLeftIcon>
                 </Button>
-                <Button mode="white" onClick={()=>table.nextPage()} disabled={!table.getCanNextPage()}>
+                <Button variant="white" onClick={()=>table.nextPage()} disabled={!table.getCanNextPage()}>
                     <ChevronRightIcon className={`icon-button ${!table.getCanNextPage() ? 'icon-disabled' : ''}`}></ChevronRightIcon>
                 </Button>
             </div>
@@ -67,4 +67,3 @@ const PaginationControls = ({ table }: PaginationControlsProps) => {
 }
 
 
-export default PaginationControls;
