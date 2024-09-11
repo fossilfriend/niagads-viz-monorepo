@@ -1,80 +1,67 @@
-import React from "react"
+import React, { useState, useMemo } from "react"
+
 import { Table } from "@tanstack/react-table"
+
+import _range from "lodash.range"
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { Select, Button } from "@components/UI"
+import range from "lodash.range"
+
 
 interface PaginationControlsProps {
     table: Table<any>
 }
 
-const PaginationControls: React.FC<PaginationControlsProps> = ({
-    table
-}) => {
+// Results per page <select> start-end row count of total rows <previous> <next>
 
-    return (
-        <>
-            <div className="h-2" />
-            <div className="flex items-center gap-2">
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.setPageIndex(0)}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    {'<<'}
-                </button>
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    {'<'}
-                </button>
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                >
-                    {'>'}
-                </button>
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                    disabled={!table.getCanNextPage()}
-                >
-                    {'>>'}
-                </button>
-                <span className="flex items-center gap-1">
-                    <div>Page</div>
-                    <strong>
-                        {table.getState().pagination.pageIndex + 1} of{' '}
-                        {table.getPageCount()}
-                    </strong>
-                </span>
-                <span className="flex items-center gap-1">
-                    | Go to page:
-                    <input
-                        type="number"
-                        defaultValue={table.getState().pagination.pageIndex + 1}
-                        onChange={e => {
-                            const page = e.target.value ? Number(e.target.value) - 1 : 0
-                            table.setPageIndex(page)
-                        }}
-                        className="border p-1 rounded w-16"
-                    />
-                </span>
-                <select
-                    value={table.getState().pagination.pageSize}
-                    onChange={e => {
-                        table.setPageSize(Number(e.target.value))
-                    }}
-                >
-                    {[10, 20, 30, 40, 50].map(pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select>
-            </div>
-        </>
-    )
+const __generatePageSizeOptions = (nRows: number) => {
+    let nearestTenth = Math.ceil(nRows / 10) * 10
+
+    if (nearestTenth >= 500)
+        return [10, 20, 30, 40, 50, 100, 500]
+    else if (nearestTenth >= 100)
+        return [10, 20, 30, 40, 50, 100]
+    else if (nearestTenth >= 50)
+        return [10, 20, 30, 40, 50, nRows] // range is up to but not including end
+    else if (nearestTenth >= 10 && nRows >= 10) {
+        let options = range(10, nearestTenth + 10, 10)
+        options.push(nRows)
+        return options
+    }
+
+    return [nRows]
 }
 
-export default PaginationControls;
+export const PaginationControls = ({ table }: PaginationControlsProps) => {
+    const [pageSize, setPageSize] = useState<number>(table.getState().pagination.pageSize)
+    const [nRows, setNRows] = useState<number>(table.getRowCount())
+    const pageSizeOptions = useMemo(() => (__generatePageSizeOptions(nRows)), [nRows])
+
+    const minDisplayedRow = table.getState().pagination.pageIndex * pageSize + 1
+    let maxDisplayedRow = minDisplayedRow + pageSize - 1
+    if (maxDisplayedRow > nRows) maxDisplayedRow = nRows
+
+    const onChangePageSize = (pSize: number) => {
+        table.setPageSize(pSize)
+        setPageSize(pSize)
+    }
+
+    /*{table.setPageSize(Number(e.target.value))} */
+
+    return <>
+        <div className="flex justify-end gap-2 m-2">
+            <Select defaultValue={pageSize.toString()} fields={pageSizeOptions}
+                onChange={(e: any) => { onChangePageSize(Number(e.target.value)) }}
+                label="Results per page" id="pages" inline variant='plain' />
+            <p className="text-sm text-gray-900 px-2">{minDisplayedRow} - {maxDisplayedRow} of {nRows}</p>
+            <Button variant="white" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+                <ChevronLeftIcon className={`icon-button ${!table.getCanPreviousPage() ? 'icon-disabled' : ''}`}></ChevronLeftIcon>
+            </Button>
+            <Button variant="white" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+                <ChevronRightIcon className={`icon-button ${!table.getCanNextPage() ? 'icon-disabled' : ''}`}></ChevronRightIcon>
+            </Button>
+        </div>
+    </>
+}
+
+

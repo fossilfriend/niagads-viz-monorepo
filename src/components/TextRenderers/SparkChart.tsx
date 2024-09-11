@@ -1,14 +1,10 @@
 import React from "react"
 
 import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull, toExponential, toFixedWithoutZeros } from "@common/utils";
-import { TAILWINDCSS_CLASSES } from "@common/tailwind"
 
 import {
     TextRenderer,
-    renderWithInfo,
-    renderStyledText,
     renderNullValue,
-    buildElementStyle
 } from "./TextRenderer";
 import { formatFloat } from "./Number";
 
@@ -18,7 +14,6 @@ const __TAILWIND_CSS = {
         observed: "bg-green-600",
         remainder: "bg-gray-300",      
     }
-
 }
 
 export const PercentageBar = <T,>({ props }: TextRenderer<T>) => {
@@ -37,7 +32,7 @@ export const PercentageBar = <T,>({ props }: TextRenderer<T>) => {
     const remainder = 100.0 - observed
 
     return <>
-        <div className="">
+        <div className="inline-flex">
             <div className={`${__TAILWIND_CSS.bar} w-[35px]`}>{`${formattedValue} `}</div>
             <div className="inline-block w-[100px] mr-2">
                 <div className={`${__TAILWIND_CSS.bar} ${__TAILWIND_CSS.percentage.observed}`} 

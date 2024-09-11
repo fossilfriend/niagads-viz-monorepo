@@ -1,18 +1,19 @@
 import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
-    stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+    stories: ["../src/stories/**/*.mdx", "../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
     core: {
         disableTelemetry: true, // Disables telemetry (tracking / usage stats)
     },
+    typescript: {
+		reactDocgen: 'react-docgen-typescript'
+	},
     addons: [
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@storybook/addon-interactions",
-        //"@storybook/addon-styling-webpack",
         ({
             name: "@storybook/addon-styling-webpack",
-
             options: {
                 rules: [{
                     test: /\.css$/,

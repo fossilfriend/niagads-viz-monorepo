@@ -5,19 +5,18 @@ import { BasicType, Modify, TypeMapper, Expand, NAString } from "@common/types"
 import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull, _isNA } from '@common/utils'
 import { Color } from '@common/palettes'
 
-import { Text } from '@text/BasicText'
-import { Link } from '@text/Link'
+import { Text, TextList } from '@text/BasicText'
+import { Link, LinkList } from '@text/Link'
 import { Float } from '@text/Number'
 import { GenericColumn } from './Column'
-import { Badge, BooleanBadge } from '@text/Badge'
+import { Badge, BooleanBadge, BadgeIconType } from '@text/Badge'
 import { ICONS } from "@text/TextRenderer"
 import { PercentageBar } from '@text/SparkChart'
 
 export const DEFAULT_NA_VALUE = 'NA'
 
-export type BadgeIconType = keyof typeof ICONS;
+export type GenericCell = BasicType | Record<string, any> | null
 
-export type GenericCell = BasicType | Record<string, BasicType | BasicType[]> | null
 
 export type AbstractCell = {
     type: "abstract"
@@ -36,6 +35,9 @@ export type FloatCell = Expand<Modify<AbstractCell,
 export type TextCell = Expand<Modify<AbstractCell,
     { type: "text", truncateTo?: number, color?: Color, tooltip?: string }>>
 
+export type TextListCell = Expand<Modify<AbstractCell, 
+    { type: "text_list", value: string, items: TextCell[]}>>
+
 export type BadgeCell = Expand<Modify<TextCell,
     { type: "badge", backgroundColor?: Color, borderColor?: Color, icon?: BadgeIconType }>>
 
@@ -43,20 +45,25 @@ export type BooleanCell = Expand<Modify<BadgeCell,
     {
         type: "boolean",
         value: boolean | null
-        displayText?: string // what value to display (e.g., TRUE, Yes, Y, Coding, FALSE, N, No, etc)
+        displayText?: BasicType  // what value to display (e.g., TRUE, Yes, Y, Coding, FALSE, N, No, etc)
     }>>
 
 export type LinkCell = Expand<Modify<AbstractCell,
-    { type: "link", url: string, displayText: string, tooltip?: string }>>
+    { type: "link", url: string, tooltip?: string }>>
+
+export type LinkListCell = Expand<Modify<AbstractCell,
+    { type: "link_list", value: string, items: LinkCell[]}>>
 
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type Cell = PercentageBarCell | FloatCell | AbstractCell | TextCell | BadgeCell | BooleanCell | LinkCell
+export type Cell = PercentageBarCell | FloatCell | AbstractCell | TextCell | TextListCell | BadgeCell | BooleanCell | LinkCell | LinkListCell
 
 // create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
 export type CellType = keyof CellTypeMapper
+
+// this does not include LinkList & TextList b/c those are internal cell types
 const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "text", "annotated_text", "badge", "link", "percentage_bar"]
 
 
@@ -108,13 +115,22 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
     }
 }
 
-
 const __resolveLinkCell = (cell: GenericCell): GenericCell => {
-    const displayText = _get('displayText', cell)
+    const value = _get('value', cell)
     const url = _get('url', cell)
-    Object.assign(cell as any, { 'value': displayText ? displayText : url, 'type': 'link' })
+    Object.assign(cell as any, { 'value': value ? value : url, 'type': 'link' })
     return cell
 }
+
+
+const __resolveListCell = (cells: GenericCell[]) => {
+    const values = cells.map((c: GenericCell) => (_get('value',c)))
+    const value = values.join(' // ')
+
+    return {type: "abstract", value: value, items: cells}
+}
+
+
 
 // assigns parent column cell type to each cell (to facilitate rendering)
 // sets cell type to "abstract" if undefined
@@ -122,14 +138,33 @@ const __resolveLinkCell = (cell: GenericCell): GenericCell => {
 // 1. makes sure user specified a cell type to the parent column if cell value is an object/JSON
 
 export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericColumn): GenericCell | GenericCell[] => {
-    if (Array.isArray(cell)) {
-        return cell.map((c: GenericCell) => (resolveCell(c, column) as GenericCell))
-    }
-
     let resolvedCellType = _get('type', column, "abstract")
     let resolvedCell: GenericCell = {}
 
-    if (_isJSON(cell)) {
+    if (Array.isArray(cell)) {
+        if (resolvedCellType == 'abstract') {
+            throw Error("Cell contains an array; must specify either " 
+                + "`text` or `link` as the cell `type` in the column defintion: " 
+                + JSON.stringify(cell))
+        }
+
+        const cellList = cell.map((c: GenericCell) => (resolveCell(c, column) as GenericCell))
+        if (resolvedCellType == 'text') {
+            resolvedCell = __resolveListCell(cellList)
+            resolvedCellType = 'text_list'
+        }
+        else if (resolvedCellType == 'link') {
+            resolvedCell = __resolveListCell(cellList)
+            resolvedCellType = 'link_list'
+        }
+        else {
+            throw Error("Arrays of values are only supported for " 
+                + "`text` or `link` table cell types: " 
+                + JSON.stringify(cell))
+        }   
+    }
+
+    else if (_isJSON(cell)) {
         resolvedCell = _deepCopy(cell)
 
         if (resolvedCellType == "link") {
@@ -148,16 +183,8 @@ export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericCo
                 + resolvedCellType + "` cell: " + JSON.stringify(cell))
         }
 
-        // already caught this if a link
-        const RESOLVED_DISPLAYS = ["link", "boolean"]
-        if (!RESOLVED_DISPLAYS.includes(resolvedCellType) && _get('value', cell) == null) {
-            if (_get('displayText', cell) != null) {
-                Object.assign(resolvedCell as any, { 'value': _get('displayText', cell) })
-                console.warn("Missing `value` field.  Setting `displayText` to value for cell: " + JSON.stringify(cell))
-            }
-            else {
-                throw Error("unable to infer `value` for cell: " + JSON.stringify(cell))
-            }
+        if (_get('value', resolvedCell) == null) {
+            throw Error("unable to infer `value` for cell: " + JSON.stringify(cell))
         }
 
     }
@@ -166,12 +193,36 @@ export const resolveCell = (cell: GenericCell | GenericCell[], column: GenericCo
         Object.assign(resolvedCell as any, { 'value': cell })
     }
 
-    // assign relevant column properties & cell type
-    Object.assign(resolvedCell as any, {
-        'type': resolvedCellType,
-        'nullValue': _get('nullValue', column),
-        'naValue': _get('naValue', column, DEFAULT_NA_VALUE)
-    })
+    if (resolvedCellType === "abstract") {
+        resolvedCellType = "text"
+    }
+
+    Object.assign(resolvedCell as any, {'type': resolvedCellType})
+
+    // assign column formatting based on cell type
+    const fOptions = _get('format', column)
+    if (fOptions) {
+        if (resolvedCellType == "boolean") {
+            const value = _get('value', resolvedCell)
+            const trueDisplay = _get('trueValue', fOptions)
+            if (trueDisplay && value === true) {
+                Object.assign(resolvedCell as BooleanCell, {'displayText': trueDisplay})
+            }
+        }
+
+        if (resolvedCellType == "float") {
+            const precision = _get('precision', fOptions)
+            if (precision) {
+                Object.assign(resolvedCell as FloatCell, {'precision': precision})
+            }
+        }
+
+        // assign common column properties 
+        Object.assign(resolvedCell as any, {
+            'nullValue': _get('nullValue', fOptions),
+            'naValue': _get('naValue', fOptions, DEFAULT_NA_VALUE)
+        })
+    } 
 
     return resolvedCell
 }
@@ -192,13 +243,13 @@ export const renderCell = (cell: Cell) => {
             return <Float props={cell}></Float>
         case "percentage_bar":
             return <PercentageBar props={cell}></PercentageBar>
+        case "text_list":
+            return <TextList props={cell}></TextList>
+        case "link_list": 
+            return <LinkList props={cell}></LinkList>
         default:
-            // FIXME: typescript thinks cell is of type 'never'
-            // <div><p><em>Cell Type</em>: {cell.type}</p><p>{JSON.stringify(cell)}</p></div>
-            return <div><p><em>Cell Type</em>: {cell['type']}</p><p>{JSON.stringify(cell as Cell)}</p></div>
-        //throw Error("Unknown cell type for rendering")
+            throw Error(`Unknown cell type for rendering: ${JSON.stringify(cell as Cell)}`)
     }
-
 }
 
 export const renderCellHeader = (label: string, helpText: string) => {
