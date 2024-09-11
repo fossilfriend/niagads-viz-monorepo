@@ -5,6 +5,9 @@ const config: StorybookConfig = {
     core: {
         disableTelemetry: true, // Disables telemetry (tracking / usage stats)
     },
+    typescript: {
+		reactDocgen: 'react-docgen-typescript'
+	},
     addons: [
         "@storybook/addon-links",
         "@storybook/addon-essentials",
