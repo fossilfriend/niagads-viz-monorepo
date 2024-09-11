@@ -1,3 +1,4 @@
+//@ts-nocheck
 /*
 const getAccessorType = (value: any) => {
     const accessorType = value.type

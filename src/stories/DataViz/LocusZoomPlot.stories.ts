@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LocusZoomPlot } from "@components/LocusZoom";
 
 const meta: Meta<typeof LocusZoomPlot> = {
-    title: "NIAGADS-VIZ/LocusZoom/LocusZoomPlot",
+    title: "NIAGADS-VIZ/Data Vizualization/LocusZoomPlot",
     component: LocusZoomPlot,
     parameters: {
         // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout

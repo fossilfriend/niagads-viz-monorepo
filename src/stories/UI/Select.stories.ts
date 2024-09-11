@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { BooleanCheck } from '@components/TextRenderers/__deprecated__/index';
+import { Select } from '@components/UI/Select'
 
-const meta: Meta<typeof BooleanCheck> = {
-  title: 'NIAGADS-VIZ/Text/BooleanCheck',
-  component: BooleanCheck,
+const meta: Meta<typeof Select> = {
+  title: 'NIAGADS-VIZ/UI/Select',
+  component: Select,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -14,11 +14,15 @@ const meta: Meta<typeof BooleanCheck> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof BooleanCheck>;
+type Story = StoryObj<typeof Select>;
 
 export const Default: Story = {
   args: {
-    value: true,
-    color: "red"
+    fields: [0, 10, 20, 50, 100, 500],
+    label: 'Results per page',
+    id: "pages",
+    inline: true,
+    variant: 'outline',
+    //defaultValue: undefined
   },
 };

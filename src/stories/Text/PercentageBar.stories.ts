@@ -16,9 +16,9 @@ const meta: Meta<typeof PercentageBar> = {
 export default meta;
 type Story = StoryObj<typeof PercentageBar>;
 
+
 export const Default: Story = {
   args: {
-    //@ts-ignore
-    value: '.92'
+    props: {value: .62}
   },
 };

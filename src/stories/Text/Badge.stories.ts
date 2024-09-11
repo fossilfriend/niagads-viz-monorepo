@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ColoredText } from '@components/TextRenderers/__deprecated__/index';
+import { Badge } from '@components/TextRenderers/Badge';
 
-const meta: Meta<typeof ColoredText> = {
-  title: 'NIAGADS-VIZ/Text/ColoredText',
-  component: ColoredText,
+const meta: Meta<typeof Badge> = {
+  title: 'NIAGADS-VIZ/Text/Badge',
+  component: Badge,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -14,11 +14,16 @@ const meta: Meta<typeof ColoredText> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof ColoredText>;
+type Story = StoryObj<typeof Badge>;
+
+// FIXME:
+
+const props = {
+    value: 'Story not implemented; see notes in Boolean Badge story code'
+}
 
 export const Default: Story = {
   args: {
-    value: 'colored text',
-    color: 'red'
+    props: props
   },
 };

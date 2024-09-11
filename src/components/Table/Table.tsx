@@ -1,6 +1,7 @@
 // TODO: put sorting back in
 // TODO: filtering
-import React, { useMemo, useState, useEffect } from "react"
+
+import React, { useMemo, useState } from "react"
 import { withErrorBoundary } from "react-error-boundary";
 import {
     flexRender,
@@ -8,36 +9,51 @@ import {
     getPaginationRowModel,
     useReactTable,
     SortingState,
-    getSortedRowModel,
     createColumnHelper,
     ColumnDef,
+    HeaderGroup,
     SortingFnOption,
+    getSortedRowModel,
 } from "@tanstack/react-table"
-import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from "@heroicons/react/24/solid";
-import { _get, _hasOwnProperty } from "@common/utils"
+
+import { _get, _hasOwnProperty, toTitleCase } from "@common/utils"
 import { errorFallback } from "@common/errors"
-import { GenericColumn, getColumn } from "./Column"
-import { Cell, GenericCell, getCellValue, renderCell, resolveCell, validateCellType } from "./Cell"
-import { TableConfig } from "./TableProperties"
-import PaginationControls from "./PaginationControls";
+
+import {
+    Cell,
+    GenericCell,
+    getCellValue,
+    renderCell,
+    resolveCell,
+    validateCellType
+} from "@table/Cell"
+import { TableConfig, TableData, TableRow } from "@table/TableProperties";
+import { GenericColumn, getColumn } from "@table/Column"
+import { PaginationControls } from "@table/PaginationControls";
+import { TableColumnHeader } from "@table/TableColumnHeader";
 import { CustomSortingFunctions } from "./TableSortingFunctions";
 
 const __TAILWIND_CSS = {
-    container: "relative overflow-x-auto shadow-md sm:rounded-lg",
-    table: "w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400",
-    thead: "text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400",
-    th: "px-6 py-3", //"px-2",
-    htr: "",
-    td: "",
-    dtr: "hover:bg-gray-50 bg-white border-b dark:bg-gray-800 odd:border-gray-700"
+    container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",
+    table_border: "border-collapse border-0 border-t-[4px] border-solid border-black",
+    table_layout: "w-full overflow-x-scroll",
+    table_text: "text-sm text-left rtl:text-right text-gray-700",
+    td: "py-1.5 pr-6 pl-4 text-xs font-roboto border-solid border-slate-200 border-0 border-b-[1px] border-r-[1px]",
+    dtr: "hover:bg-gray-50 bg-white border-b odd:border-gray-700"
 }
 
-export type TableRow = Record<string, GenericCell | GenericCell[]>
-export type TableData = TableRow[]
+const TABLE_CLASSES = `${__TAILWIND_CSS.table_border} ${__TAILWIND_CSS.table_layout} ${__TAILWIND_CSS.table_text}`
+
 export interface Table {
     options?: TableConfig
     columns: GenericColumn[]
     data: TableData
+}
+
+// FIXME: type of return should be custom sorting function
+const __resolveSortingFn = (type: string) => {
+    // ! point here says that as this point, we know options will not be undefined
+    return 'alphanumeric';
 }
 
 const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericColumn, index: number) => {
@@ -50,16 +66,20 @@ const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericCol
     }
 }
 
-// add row and column indexes to the object so that unique ui keys can be generated 
-// if required; e.g., tooltips
-// TODO: array of values?!
-const __resolveRenderableCell = (value: Cell, rowId: string, columnId: string): Cell => (
-    Object.assign(
-        {
-            rowId: rowId,
-            columnId: columnId,
-        },
-        value)
+// NOTE: according to documentation https://tanstack.com/table/latest/docs/guide/column-visibility#column-visibility-state
+// the HeaderGroup API will take column visibility into account
+const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
+    <thead>
+        {hGroups.map((headerGroup: HeaderGroup<TableRow>) => (
+            <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                    return (
+                        <TableColumnHeader key={header.id} header={header} />
+                    );
+                })}
+            </tr>
+        ))}
+    </thead>
 )
 
 const Table: React.FC<Table> = ({ columns, data, options }) => {
@@ -69,7 +89,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     // TODO: parse table options from column definitions to set the following
     // to be later passed to the useReactTable config
     const tableOptions: any = useMemo(() => {
-        // from column definitions
         // hidden columns
         // initial sort
         // initial filter
@@ -90,15 +109,19 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             catch (e: any) {
                 throw Error("Error processing column definition for `" + col.id + "`.\n" + e.message)
             }
+
             columnDefs.push(
                 columnHelper.accessor(row => getCellValue(row[col.id as keyof typeof row] as Cell),
                     {
                         id: col.id,
-                        // TODO: custom renderer for cell headers that has information bubbles
-                        // header: renderCellHeader(col.header, col.description),
-                        cell: props => renderCell(__resolveRenderableCell(props.cell.row.original[col.id] as Cell, props.row.id, props.column.id)),
-                        sortingFn: (col.sort?.sortingFn || 'alphanumeric') as SortingFnOption<TableRow>,
-                        enableSorting: !!col.sort?.enable,
+                        header: _get('header', col, toTitleCase(col.id)),
+                        enableColumnFilter: _get('canFilter', col, true),
+                        enableGlobalFilter: _get('disableGlobalFilter', col, false),
+                        enableSorting: col.canSort === undefined ? true : !!col.canSort,
+                        sortingFn: __resolveSortingFn(col.type) as SortingFnOption<TableRow>,
+                        enableHiding: !(_get('required', col, false)), // if required is true, enableHiding is false
+                        meta: { description: _get('description', col) },
+                        cell: props => renderCell(props.cell.row.original[col.id] as Cell),
                     }
                 )
             )
@@ -126,17 +149,14 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     if (currentColumn === undefined) {
                         throw new Error("Invalid column name found in table data definition `" + columnId + "`");
                     }
-
                     tableRow[columnId] = __resolveCell(value, currentColumn, index)
                 }
-
                 tableData.push(tableRow)
             });
         }
         catch (e: any) {
             throw Error(e.message)
         }
-
         return tableData;
     }, [columns])
 
@@ -146,11 +166,11 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        defaultColumn: {
+        /*defaultColumn: {
             size: 150,
-            minSize: 20,
+            minSize: 0,
             maxSize: 300,
-        },
+        },*/
         state: { sorting },
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),      
@@ -161,50 +181,23 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
-                <table className={__TAILWIND_CSS.table}>
-                    <thead className={__TAILWIND_CSS.thead}>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <tr key={headerGroup.id} className={__TAILWIND_CSS.htr}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <th key={header.id} colSpan={header.colSpan} scope="col" className={__TAILWIND_CSS.th}>
-                                            {header.isPlaceholder ? null : (
-                                                <div
-                                                    style={
-                                                        header.column.getCanSort() ? { "cursor": "pointer" } : {}
-                                                    }
-                                                    onClick={header.column.getToggleSortingHandler()}
-                                                >
-                                                    {flexRender(
-                                                        header.column.columnDef.header,
-                                                        header.getContext()
-                                                    )}
-                                                    {{
-                                                        sort: <ArrowsUpDownIcon className="h4 text-blue-600 pl-px" />,
-                                                        asc: <ArrowUpIcon className="h-4 text-blue-600 pl-px" />,
-                                                        desc: <ArrowDownIcon className="h-4 text-blue-600 pl-px" />,
-                                                    }[header.column.getIsSorted() as string] ?? null}
-                                                </div>
-                                            )}
-                                        </th>
-                                    );
-                                })}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody>
-                        {table.getRowModel().rows.map((row) => (
-                            <tr key={row.id} className={__TAILWIND_CSS.dtr}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id}>
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table >
                 <PaginationControls table={table} />
+                <div className="overflow-auto">
+                    <table className={TABLE_CLASSES}>
+                        {__renderTableHeader(table.getHeaderGroups())}
+                        <tbody>
+                            {table.getRowModel().rows.map((row) => (
+                                <tr key={row.id} className={__TAILWIND_CSS.dtr}>
+                                    {row.getVisibleCells().map((cell) => (
+                                        <td className={__TAILWIND_CSS.td} key={cell.id}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
         ) :
