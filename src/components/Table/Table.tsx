@@ -32,7 +32,7 @@ import { TableColumnHeader } from "@table/TableColumnHeader";
 
 const __TAILWIND_CSS = {
     container: "", //"p-2 block max-w-full relative shadow-md sm:rounded-lg",
-    table_border: "border-collapse",
+    table_border: "border-collapse border-0 border-t-[4px] border-solid border-black",
     table_layout: "w-full overflow-x-scroll",
     table_text: "text-sm text-left rtl:text-right text-gray-700",
     td: "py-1.5 pr-6 pl-4 text-xs font-roboto border-solid border-slate-200 border-0 border-b-[1px] border-r-[1px]",

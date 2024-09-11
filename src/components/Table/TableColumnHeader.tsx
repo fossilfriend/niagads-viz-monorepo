@@ -11,7 +11,7 @@ import { _get } from "@common/utils";
 import { renderTooltip } from "@components/UI/Tooltip";
 
 const __TAILWIND_CSS = {
-    root: "bg-primary/10 px-6 py-3 border-0 border-t-[4px] border-solid border-black",
+    root: "bg-primary/10 px-6 py-3 border-0 border-r-[1px] border-solid border-slate-50",
     text: "text-sm text-nowrap text-slate-700  font-bold", //"px-2",
     icon: "ml-1 text-slate-700 pl-px size-5",
     sortable: "cursor-pointer"
