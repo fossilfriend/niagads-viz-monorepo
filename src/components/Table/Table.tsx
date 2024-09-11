@@ -31,14 +31,13 @@ import { PaginationControls } from "@table/PaginationControls";
 import { TableColumnHeader } from "@table/TableColumnHeader";
 
 const __TAILWIND_CSS = {
-    container: "", //"p-2 block max-w-full relative shadow-md sm:rounded-lg",
+    container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",
     table_border: "border-collapse border-0 border-t-[4px] border-solid border-black",
     table_layout: "w-full overflow-x-scroll",
     table_text: "text-sm text-left rtl:text-right text-gray-700",
     td: "py-1.5 pr-6 pl-4 text-xs font-roboto border-solid border-slate-200 border-0 border-b-[1px] border-r-[1px]",
     dtr: "hover:bg-gray-50 bg-white border-b odd:border-gray-700"
 }
-
 
 const TABLE_CLASSES = `${__TAILWIND_CSS.table_border} ${__TAILWIND_CSS.table_layout} ${__TAILWIND_CSS.table_text}`
 
@@ -64,6 +63,8 @@ const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericCol
     }
 }
 
+// NOTE: according to documentation https://tanstack.com/table/latest/docs/guide/column-visibility#column-visibility-state
+// the HeaderGroup API will take column visibility into account
 const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
     <thead>
         {hGroups.map((headerGroup: HeaderGroup<TableRow>) => (
@@ -85,7 +86,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     // TODO: parse table options from column definitions to set the following
     // to be later passed to the useReactTable config
     const tableOptions: any = useMemo(() => {
-        // from column definitions
         // hidden columns
         // initial sort
         // initial filter
@@ -114,10 +114,9 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                         header: _get('header', col, toTitleCase(col.id)),
                         enableColumnFilter: _get('canFilter', col, true),
                         enableGlobalFilter: _get('disableGlobalFilter', col, false),
-                        enableSorting: col.sort && _get('canSort', col, true),
+                        enableSorting: _get('canSort', col, true),
+                        enableHiding: !(_get('required', col, false)), // if required is true, enableHiding is false
                         meta: { description: _get('description', col) },
-                        // TODO: custom renderer for cell headers that has information bubbles
-                        // header: renderCellHeader(col.header, col.description),
                         cell: props => renderCell(props.cell.row.original[col.id] as Cell),
                         // TODO: sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }
@@ -147,10 +146,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     if (currentColumn === undefined) {
                         throw new Error("Invalid column name found in table data definition `" + columnId + "`");
                     }
-
                     tableRow[columnId] = __resolveCell(value, currentColumn, index)
                 }
-
                 tableData.push(tableRow)
             });
         }
@@ -183,22 +180,23 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
-                {/* FIXME: table overflow should scroll, not the container */}
                 <PaginationControls table={table} />
-                <table className={TABLE_CLASSES}>
-                    {__renderTableHeader(table.getHeaderGroups())}
-                    <tbody>
-                        {table.getRowModel().rows.map((row) => (
-                            <tr key={row.id} className={__TAILWIND_CSS.dtr}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td className={__TAILWIND_CSS.td} key={cell.id}>
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div className="overflow-auto">
+                    <table className={TABLE_CLASSES}>
+                        {__renderTableHeader(table.getHeaderGroups())}
+                        <tbody>
+                            {table.getRowModel().rows.map((row) => (
+                                <tr key={row.id} className={__TAILWIND_CSS.dtr}>
+                                    {row.getVisibleCells().map((cell) => (
+                                        <td className={__TAILWIND_CSS.td} key={cell.id}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
         ) :
