@@ -1,6 +1,5 @@
-import { FileFormat } from "@common/types"
+import { BasicType, FileFormat } from "@common/types"
 import { GenericCell } from "@table/Cell"
-import { GenericColumn } from "@table/Column"
 
 export interface RowSelectOptions {
     onSelectFn: any // behavior on select
@@ -8,11 +7,22 @@ export interface RowSelectOptions {
     multiSelect?: boolean // optional: allow selection of multiple rows, false if missing
 }
 
+interface SortConfig {[column: string]: 'asc' | 'desc'}
+interface FilterConfig {
+    column: string,
+    value: BasicType
+}
+interface InitialTableState {
+    sort?: SortConfig
+    filter?: FilterConfig[]
+}
+
 export interface TableConfig {
     title?: string
-    id?:string // optional: internal id for the table; if not provided will be generated from title
+    id?:string // optional: internal id for the table
+    initialize?: InitialTableState // optional: set initial sort and/or filter state for the table
     description?: string // optional: descriptive text describing the table for info popup
-    canFilter?: boolean // optional: table can be filtered; false if misssing
+    canFilter?: boolean // optional: disables all filtering on the table when false; default TRUE
     export?: FileFormat[] // optional: enable exports in the listed file formats; exports disabled if missing
     rowSelect?: RowSelectOptions // optional: enables row selection and related state change options
     columOrder?: string[] // optional: column ids listed in order in which they should be displayed; if none uses order in the column defs
