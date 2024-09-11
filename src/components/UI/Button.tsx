@@ -34,10 +34,10 @@ const __TAILWIND_CSS = {
 }
 
 
-type ButtonModes = 'default' | 'primary' | 'secondary' | 'white' | 'blue'
+type ButtonVariants = 'default' | 'primary' | 'secondary' | 'white' | 'blue'
 type ButtonSizes = 'sm' | 'md' | 'lg'
 interface Button {
-    variant?: ButtonModes
+    variant?: ButtonVariants 
     size?: ButtonSizes
     children: ReactNode | string
     disabled?:boolean
