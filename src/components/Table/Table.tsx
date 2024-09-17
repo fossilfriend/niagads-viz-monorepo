@@ -176,6 +176,13 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         // sortingFns: CustomSortingFunctions,
     });
 
+    useLayoutEffect(() => {
+        if (options?.onTableLoad) {
+            // TODO: if (firstUpdate.current)  // firstUpdate is a useRef / from GenomicsDB code / something to do w/linked panels and too many re-renders
+            table && options.onTableLoad(table);
+        }
+    }, [table]);
+
 
     return (
         table ? (<>
