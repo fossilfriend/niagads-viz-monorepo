@@ -1,7 +1,7 @@
 // TODO: put sorting back in
 // TODO: filtering
 
-import React, { useMemo, useState } from "react"
+import React, { useMemo, useState, useLayoutEffect } from "react"
 import { withErrorBoundary } from "react-error-boundary";
 import {
     flexRender,
@@ -29,6 +29,9 @@ import { TableConfig, TableData, TableRow } from "@table/TableProperties";
 import { ColumnSortConfig, GenericColumn, getColumn } from "@table/Column"
 import { PaginationControls } from "@table/PaginationControls";
 import { TableColumnHeader } from "@table/TableColumnHeader";
+import { Checkbox } from "@components/UI/Checkbox";
+import { Button } from "@components/UI";
+import { RadioButton } from "@components/UI/RadioButton";
 
 const __TAILWIND_CSS = {
     container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",
@@ -46,6 +49,7 @@ export interface Table {
     columns: GenericColumn[]
     data: TableData
 }
+
 
 // FIXME: type of return should be custom sorting function
 const __resolveSortingFn = (options: ColumnSortConfig) => {
@@ -79,25 +83,54 @@ const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
     </thead>
 )
 
-const Table: React.FC<Table> = ({ columns, data, options }) => {
 
+// TODO: use table options to initialize the state (e.g., initial sort, initial filter)
+const Table: React.FC<Table> = ({ columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
 
-    // TODO: parse table options from column definitions to set the following
-    // to be later passed to the useReactTable config
-    const tableOptions: any = useMemo(() => {
-        // hidden columns
-        // initial sort
-        // initial filter
-    }, [])
+    const enableRowSelect = !!options?.rowSelect?.onRowSelect
 
 
     // translate GenericColumns to ColumnDefs 
     const resolvedColumns = useMemo<ColumnDef<TableRow>[]>(() => {
         const columnHelper = createColumnHelper<TableRow>();
         const columnDefs: ColumnDef<TableRow>[] = [];
-        // TODO: add display column w/checkboxes if need row selection 
-        // if _hasOwnProperty('rowSelection', props.options) { resolvedColumns.push(columHelper.display(...)) } // add display column w/checkboxes
+
+        if (enableRowSelect) {
+            const multiSelect: boolean = !!options?.rowSelect?.disableMultiSelect;
+            columnDefs.push(
+                {
+                    id: 'select-col',
+                    header: ({ table }) => (
+                        multiSelect ?
+                            <div>
+                                <span>{options?.rowSelect?.header}</span>
+                                <Button variant="secondary"
+                                    disabled={table.getIsSomeRowsSelected()}
+                                    onClick={() => { table.resetRowSelection(true) }}>
+                                    Clear Selection
+                                </Button>
+                            </div>
+                            : options?.rowSelect?.header
+                    ),
+                    meta: { description: _get('description', options?.rowSelect?.description) },
+                    cell: ({ row }) => (
+                        multiSelect ? <Checkbox
+                            variant="secondary"
+                            checked={row.getIsSelected()}
+                            disabled={!row.getCanSelect()}
+                            onChange={row.getToggleSelectedHandler()}
+                        /> : <RadioButton
+                            variant="pink"
+                            checked={row.getIsSelected()}
+                            disabled={!row.getCanSelect()}
+                            onChange={row.getToggleSelectedHandler()} />
+                    ),
+                },
+            )
+        }
+
+
 
         columns.forEach((col: GenericColumn) => {
             try {

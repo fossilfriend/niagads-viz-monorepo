@@ -113,7 +113,11 @@ export const CELL_RENDERING_TEST_TABLE: Table = {
 
 export const FULL_TEST_TABLE = {
     options: {
-        initialize: { sort: { "publication_date": 'asc' } }
+        initialize: { sort: { "publication_date": 'asc' } },
+        rowSelect: {header: "ROI", 
+            description: "select row to target", 
+            onRowSelect: () => alert("I've been selected!") 
+        }
     },
     columns: [
         {
