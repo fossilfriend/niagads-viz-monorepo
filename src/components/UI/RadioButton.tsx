@@ -9,21 +9,21 @@ const __TAILWIND_CSS = {
     pink: "accent-pink-500"
 }
 
-type CheckboxVariants = 'default' | 'primary' | 'secondary' | 'pink' | 'accent'
-interface Checkbox {
-    variant: CheckboxVariants
+type RadioButtonVariants = 'default' | 'primary' | 'secondary' | 'pink' | 'accent'
+interface RadioButton {
+    variant: RadioButtonVariants
     value: string
     label?: string
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void | null
     disabled?: boolean
 }
 
-export const Checkbox = ({ variant = 'secondary', value, label, onChange, disabled = false }: Checkbox) => {
+export const RadioButton = ({ variant = 'secondary', value, label, onChange, disabled = false }: RadioButton) => {
     const className = __TAILWIND_CSS[variant]
-    const id = 'checkbox-' + value.replace(' ', '-')
+    const id = 'radio-' + value.replace(' ', '-')
     return (
         <div>
-            <input type="checkbox" className={className} id={id}
+            <input type="radio" className={className} id={id}
                 value={value}
                 onChange={onChange} 
                 disabled={disabled}/>

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Checkbox } from '@components/UI/Checkbox'
+import { RadioButton } from '@components/UI/RadioButton'
 
-const meta: Meta<typeof Checkbox> = {
-    title: 'NIAGADS-VIZ/UI/Checkbox',
-    component: Checkbox,
+const meta: Meta<typeof RadioButton> = {
+    title: 'NIAGADS-VIZ/UI/RadioButton',
+    component: RadioButton,
     parameters: {
         layout: 'centered',
     },
@@ -12,7 +12,7 @@ const meta: Meta<typeof Checkbox> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Checkbox>;
+type Story = StoryObj<typeof RadioButton>;
 
 export const Default: Story = {
     args: {
@@ -20,6 +20,6 @@ export const Default: Story = {
         value: 'A',
         label: 'Option A',
         disabled: false,
-        onChange: (event) => alert("I've been toggled!")
+        onChange: (event) => alert("I've been selected!")
     },
 };
