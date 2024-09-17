@@ -26,6 +26,7 @@ export interface TableConfig {
     rowSelect?: RowSelectOptions // optional: enables row selection and related state change options
     columOrder?: string[] // optional: specify columns by id in display order; else will use order in table definition
     defaultColumns?: string[] // optional: any column ids not listed will be hidden by default
+    onTableLoad?: any,
 }
 
 export type TableRow = Record<string, GenericCell | GenericCell[]>
