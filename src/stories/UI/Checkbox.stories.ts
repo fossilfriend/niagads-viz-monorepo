@@ -17,7 +17,6 @@ type Story = StoryObj<typeof Checkbox>;
 export const Default: Story = {
     args: {
         variant: "primary",
-        value: 'A',
         label: 'Option A',
         disabled: false,
         onChange: (event) => alert("I've been toggled!")

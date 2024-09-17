@@ -1,33 +1,20 @@
 import React from "react"
 
-const __TAILWIND_CSS = {
-    root: "",
-    default: "",
-    primary: "accent-primary",
-    secondary: "accent-secondary",
-    accent: "accent-accent",
-    pink: "accent-pink-500"
-}
+import { 
+    CheckboxProps as RadioButtonProps,
+    CHECKBOX_TAILWIND_CSS as __TAILWIND_CSS
+ } from "./Checkbox"
 
-type RadioButtonVariants = 'default' | 'primary' | 'secondary' | 'pink' | 'accent'
-interface RadioButton {
-    variant: RadioButtonVariants
-    value: string
-    label?: string
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void | null
-    disabled?: boolean
-}
 
-export const RadioButton = ({ variant = 'secondary', value, label, onChange, disabled = false }: RadioButton) => {
+export const RadioButton = ({ variant='default', label, onChange, disabled=false, checked=false }: RadioButtonProps) => {
     const className = __TAILWIND_CSS[variant]
-    const id = 'radio-' + value.replace(' ', '-')
     return (
         <div>
-            <input type="radio" className={className} id={id}
-                value={value}
+            <input type="radio" className={className} 
                 onChange={onChange} 
+                checked={checked}
                 disabled={disabled}/>
-            {label && <label htmlFor={id} className="text-sm ml-2">{label}</label>}
+            {label && <label className="text-sm ml-2">{label}</label>}
         </div>
     )
 }
