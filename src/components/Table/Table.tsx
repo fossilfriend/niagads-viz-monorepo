@@ -97,18 +97,18 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         const columnDefs: ColumnDef<TableRow>[] = [];
 
         if (enableRowSelect) {
-            const multiSelect: boolean = !!options?.rowSelect?.disableMultiSelect;
+            const multiSelect: boolean = !options?.rowSelect?.disableMultiSelect;
             columnDefs.push(
                 {
                     id: 'select-col',
                     header: ({ table }) => (
                         multiSelect ?
                             <div>
-                                <span>{options?.rowSelect?.header}</span>
-                                <Button variant="secondary"
-                                    disabled={table.getIsSomeRowsSelected()}
+                                <span className="mr-1">{options?.rowSelect?.header}</span>
+                                <Button size="sm" variant="accent"
+                                    disabled={!table.getIsSomeRowsSelected()}
                                     onClick={() => { table.resetRowSelection(true) }}>
-                                    Clear Selection
+                                    Clear Selected
                                 </Button>
                             </div>
                             : options?.rowSelect?.header
