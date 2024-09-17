@@ -2,7 +2,7 @@ import React, { useMemo, ReactNode } from "react"
 import { _get } from "@common/utils"
 
 const __TAILWIND_CSS = {
-    root: "cursor-pointer font-inter font-medium text-sm rounded-lg border-solid border-1 focus:ring-2 focus:z-10 inline-flex items-center", //me-2 mb-2 
+    root: "cursor-pointer font-inter font-medium text-sm rounded-lg border-solid border focus:ring-2 focus:z-10 inline-flex items-center", //me-2 mb-2 
     primary: "text-white border-primary/50 bg-primary hover:bg-primary/85 focus:ring-accent",
     secondary:"text-primary border-secondary bg-secondary hover:bg-secondary/85 focus:ring-secondary/30",
     accent: "text-white border-accent bg-accent hover:bg-accent/50 focus:ring-accent/30 focus:outline-none",
