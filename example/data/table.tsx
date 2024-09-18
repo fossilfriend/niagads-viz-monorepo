@@ -70,7 +70,6 @@ export const CELL_RENDERING_TEST_TABLE: Table = {
             format: {
                 nullValue: "NA"
             }
-
         },
         {
             header: "Is Valid?",

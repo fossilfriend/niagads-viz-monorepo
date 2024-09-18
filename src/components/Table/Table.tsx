@@ -50,9 +50,13 @@ export interface Table {
     data: TableData
 }
 
-// FIXME: type of return should be custom sorting function
-const __resolveSortingFn = (type: string) => {
-    // ! point here says that as this point, we know options will not be undefined
+const __resolveSortingFn = (col: GenericColumn) => {
+    if (col.type === 'boolean') {
+        return 'boolean';
+    }
+    if (col.type === 'float') {
+        return 'scientific';
+    }
     return 'alphanumeric';
 }
 
@@ -117,8 +121,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                         header: _get('header', col, toTitleCase(col.id)),
                         enableColumnFilter: _get('canFilter', col, true),
                         enableGlobalFilter: _get('disableGlobalFilter', col, false),
-                        enableSorting: col.canSort === undefined ? true : !!col.canSort,
-                        sortingFn: __resolveSortingFn(col.type) as SortingFnOption<TableRow>,
+                        enableSorting: !col.disableSorting,
+                        sortingFn: __resolveSortingFn(col) as SortingFnOption<TableRow>,
                         enableHiding: !(_get('required', col, false)), // if required is true, enableHiding is false
                         meta: { description: _get('description', col) },
                         cell: props => renderCell(props.cell.row.original[col.id] as Cell),

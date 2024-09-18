@@ -7,14 +7,21 @@ const booleanSort: SortingFn<TableRow> = (rowA: Row<TableRow>, rowB: Row<TableRo
 } 
 
 const scientificNotationSort: SortingFn<TableRow> = (rowA: Row<TableRow>, rowB: Row<TableRow>, columnId: string) => {
-    let a = rowA.getValue(columnId);
-    let b = rowB.getValue(columnId);
+    let a = rowA.getValue(columnId) as string | number;
+    let b = rowB.getValue(columnId) as string | number;
+
+    const naComparison = _resolveNAs(`${a}`, `${b}`);
+    if (naComparison != null) {
+        return naComparison;
+    }
 
     a = a === null || a === undefined ? -Infinity : a;
     b = b === null || b === undefined ? -Infinity : b;
 
-    a = /\d\.\d+e-\d+/.test(a) ? +a : a;
-    b = /\d\.\d+e-\d+/.test(b) ? +b : b;
+    // tests to see if the value is a string in scientific notation (x.xe-x)
+    // if so, convert to number
+    a = /\d\.\d+e-\d+/.test(a as string) ? +a : a;
+    b = /\d\.\d+e-\d+/.test(b as string) ? +b : b;
 
     if (a > b) return 1;
     if (a < b) return -1;

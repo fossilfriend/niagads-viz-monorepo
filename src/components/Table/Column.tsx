@@ -26,7 +26,7 @@ export interface GenericColumn {
     type?: CellType 
     canFilter?: boolean // defaults to TRUE
     disableGlobalFilter?: boolean // defaults to FALSE
-    canSort?: boolean // defaults to TRUE 
+    disableSorting?: boolean // defaults to FALSE 
     required?: boolean // if required = true then cannot be hidden
     format?: ColumnValueFormat
 }
