@@ -6,10 +6,10 @@ import {
  } from "./Checkbox"
 
 
-export const RadioButton = ({ variant='default', label, onChange, disabled=false, checked=false }: RadioButtonProps) => {
+export const RadioButton = ({ variant='default', label, onChange, disabled=false, checked=false, alignCenter=false }: RadioButtonProps) => {
     const className = __TAILWIND_CSS[variant]
     return (
-        <div>
+        <div className={alignCenter ? __TAILWIND_CSS.alignCenter : ""}>
             <input type="radio" className={className} 
                 onChange={onChange} 
                 checked={checked}

@@ -29,12 +29,11 @@ const __ICONS = {
 
 
 export const TableColumnHeader = ({ header }: TableColumnHeader) => {
-
-    const canSort = header.column.getCanSort()
     const isSorted = header.column.getIsSorted()
     const SortIcon = __ICONS[isSorted !== false ? isSorted : 'sort']
     const description = _get('description', header.column.columnDef.meta)
-
+    const canSort = header.column.getCanSort()
+    
     return <th key={header.id} scope="col" className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS.text}`}>
         <div className="inline-flex">
             <div className={`inline-flex py-1 ${header.column.getCanSort() ? "cursor-pointer" : "cursor-default"}`}
@@ -46,7 +45,7 @@ export const TableColumnHeader = ({ header }: TableColumnHeader) => {
             {/* TODO: make into toggle button */}
             {
                 header.column.getCanFilter() &&
-                <div className="ml-5"><Button variant="primary" size="sm" onClick={e=> (alert('TODO: Open Filter Menu'))}>
+                <div className="ml-5"><Button variant="primary" size="sm" onClick={e => (alert('TODO: Open Filter Menu'))}>
                     <FunnelIcon className="icon-button stroke-white"></FunnelIcon>
                 </Button></div>
             }
@@ -54,3 +53,4 @@ export const TableColumnHeader = ({ header }: TableColumnHeader) => {
 
     </th>
 }
+

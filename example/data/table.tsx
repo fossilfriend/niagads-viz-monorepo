@@ -114,9 +114,11 @@ export const CELL_RENDERING_TEST_TABLE: Table = {
 export const FULL_TEST_TABLE = {
     options: {
         initialize: { sort: { "publication_date": 'asc' } },
-        rowSelect: {header: "ROI", 
+        rowSelect: {
+            header: "ROI", 
             description: "select row to target", 
-            onRowSelect: () => alert("I've been selected!") 
+            onRowSelect: () => alert("I've been selected!"),
+            disableMultiSelect: true,
         }
     },
     columns: [

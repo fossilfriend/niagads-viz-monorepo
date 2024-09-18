@@ -14,6 +14,8 @@ import {
     HeaderGroup,
 } from "@tanstack/react-table"
 
+import { TrashIcon } from '@heroicons/react/24/outline'
+
 import { _get, _hasOwnProperty, toTitleCase } from "@common/utils"
 import { errorFallback } from "@common/errors"
 
@@ -29,8 +31,9 @@ import { TableConfig, TableData, TableRow } from "@table/TableProperties";
 import { ColumnSortConfig, GenericColumn, getColumn } from "@table/Column"
 import { PaginationControls } from "@table/PaginationControls";
 import { TableColumnHeader } from "@table/TableColumnHeader";
+
 import { Checkbox } from "@components/UI/Checkbox";
-import { Button } from "@components/UI";
+import { Button, Tooltip } from "@components/UI";
 import { RadioButton } from "@components/UI/RadioButton";
 
 const __TAILWIND_CSS = {
@@ -103,28 +106,35 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     id: 'select-col',
                     header: ({ table }) => (
                         multiSelect ?
-                            <div>
-                                <span className="mr-1">{options?.rowSelect?.header}</span>
-                                <Button size="sm" variant="accent"
-                                    disabled={!table.getIsSomeRowsSelected()}
-                                    onClick={() => { table.resetRowSelection(true) }}>
-                                    Clear Selected
-                                </Button>
+                            <div className="inline-flex">
+                                <div className="group relative inline-block bottom-[2px]"> {/* FIXME: needed to offset tooltip alignment */}
+                                    <Tooltip message="Reset selected rows">
+                                        <Button size="sm" variant="primary"
+                                            disabled={!table.getIsSomeRowsSelected()}
+                                            onClick={() => { table.resetRowSelection(true) }}>
+                                            <TrashIcon className="icon-button"></TrashIcon>
+                                        </Button>
+                                    </Tooltip>
+                                </div>
+                                <span className="ml-4">{options?.rowSelect?.header}</span>
                             </div>
                             : options?.rowSelect?.header
                     ),
-                    meta: { description: _get('description', options?.rowSelect?.description) },
+                    enableSorting: true, // FIXME: enable sorting doesn't seem to work / header.canSort() returns false
+                    meta: { description: options?.rowSelect?.description },
                     cell: ({ row }) => (
                         multiSelect ? <Checkbox
-                            variant="secondary"
+                            variant="default"
                             checked={row.getIsSelected()}
                             disabled={!row.getCanSelect()}
                             onChange={row.getToggleSelectedHandler()}
+                            alignCenter={true}
                         /> : <RadioButton
                             variant="pink"
                             checked={row.getIsSelected()}
                             disabled={!row.getCanSelect()}
-                            onChange={row.getToggleSelectedHandler()} />
+                            onChange={row.getToggleSelectedHandler()} 
+                            alignCenter={true}/>
                     ),
                 },
             )
