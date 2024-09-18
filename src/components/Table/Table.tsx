@@ -12,6 +12,7 @@ import {
     createColumnHelper,
     ColumnDef,
     HeaderGroup,
+    getFilteredRowModel,
 } from "@tanstack/react-table"
 
 import { _get, _hasOwnProperty, toTitleCase } from "@common/utils"
@@ -29,6 +30,7 @@ import { TableConfig, TableData, TableRow } from "@table/TableProperties";
 import { ColumnSortConfig, GenericColumn, getColumn } from "@table/Column"
 import { PaginationControls } from "@table/PaginationControls";
 import { TableColumnHeader } from "@table/TableColumnHeader";
+import { TextInput } from "@components/UI/TextInput";
 
 const __TAILWIND_CSS = {
     container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",
@@ -80,8 +82,8 @@ const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
 )
 
 const Table: React.FC<Table> = ({ columns, data, options }) => {
-
     const [sorting, setSorting] = useState<SortingState>([]);
+    const [globalFilter, setGlobalFilter] = useState('');
 
     // TODO: parse table options from column definitions to set the following
     // to be later passed to the useReactTable config
@@ -113,7 +115,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                         id: col.id,
                         header: _get('header', col, toTitleCase(col.id)),
                         enableColumnFilter: _get('canFilter', col, true),
-                        enableGlobalFilter: _get('disableGlobalFilter', col, false),
+                        enableGlobalFilter: !col.disableGlobalFilter,
                         enableSorting: _get('canSort', col, true),
                         enableHiding: !(_get('required', col, false)), // if required is true, enableHiding is false
                         meta: { description: _get('description', col) },
@@ -163,13 +165,17 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: 'includesString',
         /* defaultColumn: {
             size: 150,
             minSize: 0,
             maxSize: 300,
         }, */
-        enableColumnResizing: true
-        /*state: { sorting },
+        enableColumnResizing: true,
+        state: { globalFilter },
+        onGlobalFilterChange: setGlobalFilter
+        /*
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),      
         */
@@ -180,7 +186,10 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
-                <PaginationControls table={table} />
+                <div className="flex justify-between">
+                    <TextInput value={globalFilter} onChange={val => setGlobalFilter(val)} />
+                    <PaginationControls table={table} />
+                </div>
                 <div className="overflow-auto">
                     <table className={TABLE_CLASSES}>
                         {__renderTableHeader(table.getHeaderGroups())}

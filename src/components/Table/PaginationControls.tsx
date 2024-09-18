@@ -49,7 +49,7 @@ export const PaginationControls = ({ table }: PaginationControlsProps) => {
     /*{table.setPageSize(Number(e.target.value))} */
 
     return <>
-        <div className="flex justify-end gap-2 m-2">
+        <div className="flex gap-2 m-2">
             <Select defaultValue={pageSize.toString()} fields={pageSizeOptions}
                 onChange={(e: any) => { onChangePageSize(Number(e.target.value)) }}
                 label="Results per page" id="pages" inline variant='plain' />
