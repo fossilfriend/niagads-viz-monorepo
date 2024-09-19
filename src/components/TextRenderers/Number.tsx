@@ -1,9 +1,15 @@
-import React from "react"
+import React, {useMemo} from "react"
 
-import { TextRenderer, renderNullValue, renderWithInfo} from "./TextRenderer"
+import { TextRenderer, renderNullValue, renderWithInfo } from "./TextRenderer"
 import { Text } from "./BasicText"
 
-import { _get, _hasOwnProperty, _isNA, _isNull, toExponential, toFixedWithoutZeros } from "@common/utils";
+import {
+    _get,
+    _isNA,
+    _isNull,
+    toExponential,
+    toFixedWithoutZeros
+} from "@common/utils";
 
 
 export const formatFloat = (value: number, precision: number = 2) => {
@@ -25,7 +31,7 @@ export const Float = <T,>({ props }: TextRenderer<T>) => {
         return renderNullValue()
     }
 
-    value = formatFloat(value, _get('precision', props, null) )
+    value = useMemo(() => formatFloat(value, _get('precision', props, null)), [props])
 
-    return <Text props={Object.assign(props as any, {value: value})}/>
+    return <Text props={Object.assign(props as any, { value: value })} />
 }
