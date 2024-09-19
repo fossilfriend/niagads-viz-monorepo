@@ -8,7 +8,7 @@ export const TABLE_DEFINTION: Table = {
             header: "ROI", 
             description: "select row to target", 
             onRowSelect: () => alert("I've been selected!"),
-            disableMultiSelect: true,
+            enableMultiRowSelect: false,
         }
     },
     columns: [

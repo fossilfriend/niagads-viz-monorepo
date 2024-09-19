@@ -88,19 +88,23 @@ const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
 
 
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
+
+
 const Table: React.FC<Table> = ({ columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
 
     const enableRowSelect = !!options?.rowSelect?.onRowSelect
 
-
-    // translate GenericColumns to ColumnDefs 
+    /**
+     * Translate GenericColumns provided by user into table ColumnDefs
+     * also adds in checkbox column if rowSelect options are set for the table
+     */
     const resolvedColumns = useMemo<ColumnDef<TableRow>[]>(() => {
         const columnHelper = createColumnHelper<TableRow>();
         const columnDefs: ColumnDef<TableRow>[] = [];
 
         if (enableRowSelect) {
-            const multiSelect: boolean = !options?.rowSelect?.disableMultiSelect;
+            const multiSelect: boolean = !!options?.rowSelect?.enableMultiRowSelect;
             columnDefs.push(
                 {
                     id: 'select-col',
@@ -130,7 +134,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                             onChange={row.getToggleSelectedHandler()}
                             alignCenter={true}
                         /> : <RadioButton
-                            variant="pink"
+                            variant="default"
                             checked={row.getIsSelected()}
                             disabled={!row.getCanSelect()}
                             onChange={row.getToggleSelectedHandler()} 
@@ -139,8 +143,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                 },
             )
         }
-
-
 
         columns.forEach((col: GenericColumn) => {
             try {
@@ -211,7 +213,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             minSize: 0,
             maxSize: 300,
         }, */
-        enableColumnResizing: true
+        enableColumnResizing: true,
+        enableMultiRowSelection: !!options?.rowSelect?.enableMultiRowSelect
         /*state: { sorting },
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),      

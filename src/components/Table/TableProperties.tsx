@@ -5,7 +5,7 @@ export interface RowSelectOptions {
     onRowSelect: any // behavior on select
     header: string,
     description?: string,
-    disableMultiSelect?: boolean // optional: allow selection of multiple rows, false if missing
+    enableMultiRowSelect?: boolean // optional: allow selection of multiple rows, false if missing
 }
 
 interface SortConfig {[column: string]: 'asc' | 'desc'}
