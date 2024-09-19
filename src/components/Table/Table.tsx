@@ -1,7 +1,7 @@
 // TODO: put sorting back in
 // TODO: filtering
 
-import React, { useMemo, useState, useLayoutEffect } from "react"
+import React, { useMemo, useState, useLayoutEffect, useEffect, useRef } from "react"
 import { withErrorBoundary } from "react-error-boundary";
 import {
     flexRender,
@@ -12,6 +12,9 @@ import {
     createColumnHelper,
     ColumnDef,
     HeaderGroup,
+    RowSelectionState,
+    TableOptions,
+    Table as ReactTable
 } from "@tanstack/react-table"
 
 import { TrashIcon } from '@heroicons/react/24/outline'
@@ -86,14 +89,30 @@ const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
     </thead>
 )
 
+// checks to see if a field contains a unique value for each row in the table
+// allowing it to be used as a valid "primary key" or row_id for row selection
+const __isValidRowId = (data: TableData, columnId: string) => {
+    const values = data.map((row) => getCellValue(row[columnId as keyof typeof row] as Cell))
+    return (Array.from(new Set(values)).length == data.length)
+}
+
+
+// for row selection, allows return of a column value instead of 
+// the row index upon row selection
+// ; e.g. use case: variant_id or genome browser track_id
+const __getCellValue = (row: TableRow, colId: string) => {
+    console.log(row[colId])
+    return
+}
+
 
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
-
-
 const Table: React.FC<Table> = ({ columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
+    const initialRender = useRef(true) // to regulate callbacks affected by the initial state
 
     const enableRowSelect = !!options?.rowSelect?.onRowSelect
+
 
     /**
      * Translate GenericColumns provided by user into table ColumnDefs
@@ -137,8 +156,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                             variant="default"
                             checked={row.getIsSelected()}
                             disabled={!row.getCanSelect()}
-                            onChange={row.getToggleSelectedHandler()} 
-                            alignCenter={true}/>
+                            onChange={row.getToggleSelectedHandler()}
+                            alignCenter={true} />
                     ),
                 },
             )
@@ -203,32 +222,76 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     }, [columns])
 
 
-    const table = useReactTable({
+    // build table options conditionally
+    // cannot memoize this b/c it depends on the state; 
+    // doing so leads to very slow rerenders
+    let reactTableOptions: TableOptions<TableRow> = {
         data: resolvedData,
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        /* defaultColumn: {
-            size: 150,
-            minSize: 0,
-            maxSize: 300,
-        }, */
         enableColumnResizing: true,
-        enableMultiRowSelection: !!options?.rowSelect?.enableMultiRowSelect
-        /*state: { sorting },
-        onSortingChange: setSorting,
-        getSortedRowModel: getSortedRowModel(),      
-        */
-        // sortingFns: CustomSortingFunctions,
-    });
+
+    }
+
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+    if (enableRowSelect) {
+        const enableMultiRowSelect = !!options?.rowSelect?.enableMultiRowSelect
+        Object.assign(reactTableOptions, {
+            enableMultiRowSelection: enableMultiRowSelect,
+            onRowSelectionChange: setRowSelection, //hoist up the row selection state to your own scope
+        })
+
+        const rowIdColumn = options?.rowSelect?.rowId
+        if (!!rowIdColumn) {
+            if (__isValidRowId(resolvedData, rowIdColumn)) {
+                Object.assign(reactTableOptions, {
+                    getRowId: (row: TableRow) => getCellValue(row[rowIdColumn as keyof typeof row] as Cell)
+                })
+            }
+            else {
+                throw Error(`The field ${rowIdColumn} does not contain a unique value for each row.  It cannot be used as the 'rowId' for the rowSelect callback.`)
+            }
+        }
+
+        /* 
+        if (!enableMultiRowSelect) {
+            const selectedRow = (!!rowIdColumn)
+                ? getCellValue(resolvedData[0][rowIdColumn] as Cell)
+                : "0"
+            setRowSelection({ selectedRow: true })
+        }*/
+    }
+
+    // this is done last so we can update the row selection w/any 
+    Object.assign(reactTableOptions, {
+        state: {
+            rowSelection
+        }
+    })
+
+
+
+
+
+
+    const table = useReactTable(reactTableOptions);
 
     useLayoutEffect(() => {
         if (options?.onTableLoad) {
-            // TODO: if (firstUpdate.current)  // firstUpdate is a useRef / from GenomicsDB code / something to do w/linked panels and too many re-renders
+            // TODO: if (firstUpdate.current)  // firstUpdate is a useRef / from GenomicsDB code; has to do w/pre-selected rows
             table && options.onTableLoad(table);
         }
     }, [table]);
 
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false;
+            return;
+        }
+        options?.rowSelect?.onRowSelect(rowSelection)
+        // TODO: if (firstUpdate.current)  // firstUpdate is a useRef / from GenomicsDB code; has to do w/pre-selected rows
+    }, [rowSelection])
 
     return (
         table ? (<>
