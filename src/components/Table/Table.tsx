@@ -50,13 +50,6 @@ const __TAILWIND_CSS = {
 
 const TABLE_CLASSES = `${__TAILWIND_CSS.table_border} ${__TAILWIND_CSS.table_layout} ${__TAILWIND_CSS.table_text}`
 
-export interface Table {
-    options?: TableConfig
-    columns: GenericColumn[]
-    data: TableData
-}
-
-
 // FIXME: type of return should be custom sorting function
 const __resolveSortingFn = (options: ColumnSortConfig) => {
     // ! point here says that as this point, we know options will not be undefined
@@ -96,23 +89,30 @@ const __isValidRowId = (data: TableData, columnId: string) => {
     return (Array.from(new Set(values)).length == data.length)
 }
 
+const __setInitialRowSelection = (ids: string[] | undefined) => { 
+    let rSelection:any = {}
+    if (ids) {
+        //FIXME: not using the id param why?
+        ids.forEach((id:string)=> { Object.assign(rSelection, {id: true})})
 
-// for row selection, allows return of a column value instead of 
-// the row index upon row selection
-// ; e.g. use case: variant_id or genome browser track_id
-const __getCellValue = (row: TableRow, colId: string) => {
-    console.log(row[colId])
-    return
+    }
+    return rSelection
 }
 
+
+export interface Table {
+    options?: TableConfig
+    columns: GenericColumn[]
+    data: TableData
+}
 
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
 const Table: React.FC<Table> = ({ columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const initialRender = useRef(true) // to regulate callbacks affected by the initial state
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>(__setInitialRowSelection(options?.rowSelect?.selectedValues))
 
     const enableRowSelect = !!options?.rowSelect?.onRowSelect
-
 
     /**
      * Translate GenericColumns provided by user into table ColumnDefs
@@ -231,10 +231,12 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         enableColumnResizing: true,
+        state: {
+            rowSelection
+        }
 
     }
-
-    const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+ 
     if (enableRowSelect) {
         const enableMultiRowSelect = !!options?.rowSelect?.enableMultiRowSelect
         Object.assign(reactTableOptions, {
@@ -253,22 +255,9 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                 throw Error(`The field ${rowIdColumn} does not contain a unique value for each row.  It cannot be used as the 'rowId' for the rowSelect callback.`)
             }
         }
-
-        /* 
-        if (!enableMultiRowSelect) {
-            const selectedRow = (!!rowIdColumn)
-                ? getCellValue(resolvedData[0][rowIdColumn] as Cell)
-                : "0"
-            setRowSelection({ selectedRow: true })
-        }*/
     }
 
-    // this is done last so we can update the row selection w/any 
-    Object.assign(reactTableOptions, {
-        state: {
-            rowSelection
-        }
-    })
+
 
 
 
