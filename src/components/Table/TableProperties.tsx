@@ -8,13 +8,11 @@ export interface RowSelectOptions {
 }
 
 interface SortConfig {[column: string]: 'asc' | 'desc'}
-interface FilterConfig {
-    column: string,
-    value: BasicType
-}
+interface FilterConfig {[column: string]: BasicType}
+
 interface InitialTableState {
     sort?: SortConfig
-    filter?: FilterConfig[]
+    filter?: FilterConfig
 }
 export interface TableConfig {
     title?: string
@@ -24,7 +22,6 @@ export interface TableConfig {
     canFilter?: boolean // optional: disables all filtering on the table when false; default TRUE
     export?: FileFormat[] // optional: enable exports in the listed file formats; exports disabled if missing
     rowSelect?: RowSelectOptions // optional: enables row selection and related state change options
-    columOrder?: string[] // optional: specify columns by id in display order; else will use order in table definition
     defaultColumns?: string[] // optional: any column ids not listed will be hidden by default
 }
 
