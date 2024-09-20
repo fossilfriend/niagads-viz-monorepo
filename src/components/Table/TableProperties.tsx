@@ -1,8 +1,9 @@
 import { BasicType, FileFormat } from "@common/types"
 import { GenericCell } from "@table/Cell"
+import { RowSelectionState } from "@tanstack/react-table"
 
 export interface RowSelectOptions {
-    onRowSelect: any // behavior on select
+    onRowSelect: (rowSelection: RowSelectionState) => void // behavior on select
     header: string,
     description?: string,
     enableMultiRowSelect?: boolean // optional: allow selection of multiple rows, false if missing
@@ -26,7 +27,6 @@ export interface TableConfig {
     canFilter?: boolean // optional: disables all filtering on the table when false; default TRUE
     export?: FileFormat[] // optional: enable exports in the listed file formats; exports disabled if missing
     rowSelect?: RowSelectOptions // optional: enables row selection and related state change options
-    columOrder?: string[] // optional: specify columns by id in display order; else will use order in table definition
     defaultColumns?: string[] // optional: any column ids not listed will be hidden by default
     onTableLoad?: any,
     disableMultiSelect?: boolean //optional: only allows a single row to be selected; uses radio buttons instead of checkboxes
