@@ -32,7 +32,6 @@ export const TableColumnHeader = ({ header }: TableColumnHeader) => {
     const isSorted = header.column.getIsSorted()
     const SortIcon = __ICONS[isSorted !== false ? isSorted : 'sort']
     const description = _get('description', header.column.columnDef.meta)
-    const canSort = header.column.getCanSort()
     
     return <th key={header.id} scope="col" className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS.text}`}>
         <div className="inline-flex">
