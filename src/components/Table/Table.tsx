@@ -56,18 +56,23 @@ const __resolveSortingFn = (options: ColumnSortConfig) => {
     return _hasOwnProperty('sortingFn', options) ? options.sortingFn : 'alphanumeric'
 }
 
+// wrapper to catch any errors thrown during cell type and properties validation so that 
+// user can more easily identify the problematic table cell by row/column
 const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericColumn, index: number) => {
     try {
-        const cell = resolveCell(userCell, column)
-        return cell
+        return resolveCell(userCell, column)
     }
     catch (e: any) {
         throw Error("Validation Error parsing field value for row " + index + " column `" + column.id + "`.\n" + e.message)
     }
 }
 
+
+// TODO: (maybe?) catch hidden to skip during rendering
 // NOTE: according to documentation https://tanstack.com/table/latest/docs/guide/column-visibility#column-visibility-state
 // the HeaderGroup API will take column visibility into account
+
+// render the table header
 const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
     <thead>
         {hGroups.map((headerGroup: HeaderGroup<TableRow>) => (
@@ -82,6 +87,7 @@ const __renderTableHeader = (hGroups: HeaderGroup<TableRow>[]) => (
     </thead>
 )
 
+
 // checks to see if a field contains a unique value for each row in the table
 // allowing it to be used as a valid "primary key" or row_id for row selection
 const __isValidRowId = (data: TableData, columnId: string) => {
@@ -89,12 +95,12 @@ const __isValidRowId = (data: TableData, columnId: string) => {
     return (Array.from(new Set(values)).length == data.length)
 }
 
-const __setInitialRowSelection = (ids: string[] | undefined) => { 
-    let rSelection:any = {}
-    if (ids) {
-        //FIXME: not using the id param why?
-        ids.forEach((id:string)=> { Object.assign(rSelection, {id: true})})
 
+// builds data structure to initialize row selection state
+const __setInitialRowSelection = (columnIds: string[] | undefined) => {
+    let rSelection: RowSelectionState = {}
+    if (columnIds) {
+        columnIds.forEach((colId) => { rSelection[colId] = true })
     }
     return rSelection
 }
@@ -109,15 +115,12 @@ export interface Table {
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
 const Table: React.FC<Table> = ({ columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
-    const initialRender = useRef(true) // to regulate callbacks affected by the initial state
     const [rowSelection, setRowSelection] = useState<RowSelectionState>(__setInitialRowSelection(options?.rowSelect?.selectedValues))
-
+    const initialRender = useRef(true) // to regulate callbacks affected by the initial state
     const enableRowSelect = !!options?.rowSelect?.onRowSelect
 
-    /**
-     * Translate GenericColumns provided by user into table ColumnDefs
-     * also adds in checkbox column if rowSelect options are set for the table
-     */
+    // Translate GenericColumns provided by user into React Table ColumnDefs
+    // also adds in checkbox column if rowSelect options are set for the table
     const resolvedColumns = useMemo<ColumnDef<TableRow>[]>(() => {
         const columnHelper = createColumnHelper<TableRow>();
         const columnDefs: ColumnDef<TableRow>[] = [];
@@ -130,7 +133,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     header: ({ table }) => (
                         multiSelect ?
                             <div className="inline-flex">
-                                <div className="group relative inline-block bottom-[2px]"> {/* FIXME: needed to offset tooltip alignment */}
+                                <div className="group relative inline-block bottom-[2px]">
                                     <Tooltip message="Reset selected rows">
                                         <Button size="sm" variant="primary"
                                             disabled={!table.getIsSomeRowsSelected()}
@@ -236,7 +239,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         }
 
     }
- 
+
     if (enableRowSelect) {
         const enableMultiRowSelect = !!options?.rowSelect?.enableMultiRowSelect
         Object.assign(reactTableOptions, {
