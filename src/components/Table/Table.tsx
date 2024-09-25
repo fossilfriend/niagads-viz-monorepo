@@ -237,7 +237,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         state: {
             rowSelection
         }
-
     }
 
     if (enableRowSelect) {
@@ -259,13 +258,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             }
         }
     }
-
-
-
-
-
-
-
 
     const table = useReactTable(reactTableOptions);
 
