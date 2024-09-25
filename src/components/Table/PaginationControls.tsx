@@ -1,18 +1,14 @@
 import React, { useState, useMemo } from "react"
 
 import { Table } from "@tanstack/react-table"
-
-import _range from "lodash.range"
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import { Select, Button } from "@components/UI"
 import range from "lodash.range"
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
+import { Select, Button } from "@components/UI"
 
 interface PaginationControlsProps {
     table: Table<any>
 }
-
-// Results per page <select> start-end row count of total rows <previous> <next>
 
 const __generatePageSizeOptions = (nRows: number) => {
     let nearestTenth = Math.ceil(nRows / 10) * 10
@@ -45,8 +41,6 @@ export const PaginationControls = ({ table }: PaginationControlsProps) => {
         table.setPageSize(pSize)
         setPageSize(pSize)
     }
-
-    /*{table.setPageSize(Number(e.target.value))} */
 
     return <>
         <div className="flex justify-end gap-2 m-2">
