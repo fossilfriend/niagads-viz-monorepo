@@ -246,9 +246,10 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             onRowSelectionChange: setRowSelection, //hoist up the row selection state to your own scope
         })
 
-        const rowIdColumn = options?.rowSelect?.rowId
+        const rowIdColumn = options?.rowSelect?.rowId 
         if (!!rowIdColumn) {
-            if (__isValidRowId(resolvedData, rowIdColumn)) {
+            const isValidRowId = useMemo(()=>(__isValidRowId(resolvedData, rowIdColumn)), [rowIdColumn])
+            if (isValidRowId) {
                 Object.assign(reactTableOptions, {
                     getRowId: (row: TableRow) => getCellValue(row[rowIdColumn as keyof typeof row] as Cell)
                 })
@@ -263,18 +264,17 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
 
     useLayoutEffect(() => {
         if (options?.onTableLoad) {
-            // TODO: if (firstUpdate.current)  // firstUpdate is a useRef / from GenomicsDB code; has to do w/pre-selected rows
+            // TODO: if (initialRender.current)  // not sure if necessary - initialRender is a useRef / from GenomicsDB code; has to do w/pre-selected rows
             table && options.onTableLoad(table);
         }
     }, [table]);
 
     useEffect(() => {
-        if (initialRender.current) {
+        if (initialRender.current) { // necessary to prevent actions on pre-selected rows
             initialRender.current = false;
             return;
         }
         options?.rowSelect?.onRowSelect(rowSelection)
-        // TODO: if (firstUpdate.current)  // firstUpdate is a useRef / from GenomicsDB code; has to do w/pre-selected rows
     }, [rowSelection])
 
     return (
