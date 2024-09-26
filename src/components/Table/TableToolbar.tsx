@@ -4,13 +4,15 @@ import { Table } from "@tanstack/react-table"
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 import { Select, Button } from "@components/UI"
+import { FileFormat } from "@common/types"
 
+// column.getCanHide
 
 interface ToolbarProps {
     table: Table<any>
-    allowableExports: string[] | null
+    exportTypes: FileFormat[]
 }
 
-export const TableToolbar = ({ table }: ToolbarProps) => {
-
+const TableToolbar = ({table, exportTypes}: ToolbarProps) => {
+    return <></>
 }
