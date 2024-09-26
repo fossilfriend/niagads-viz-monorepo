@@ -14,7 +14,6 @@ import {
     HeaderGroup,
     RowSelectionState,
     TableOptions,
-    Table as ReactTable
 } from "@tanstack/react-table"
 
 import { TrashIcon } from '@heroicons/react/24/outline'
@@ -38,6 +37,7 @@ import { TableColumnHeader } from "@table/TableColumnHeader";
 import { Checkbox } from "@components/UI/Checkbox";
 import { Button, Tooltip } from "@components/UI";
 import { RadioButton } from "@components/UI/RadioButton";
+import { TableToolbar } from "./TableToolbar";
 
 const __TAILWIND_CSS = {
     container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",
@@ -146,6 +146,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                             </div>
                             : options?.rowSelect?.header
                     ),
+                    enableHiding: false,
                     enableSorting: true, // FIXME: enable sorting doesn't seem to work / header.canSort() returns false
                     meta: { description: options?.rowSelect?.description },
                     cell: ({ row }) => (
@@ -280,6 +281,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
+                <TableToolbar table={table} exportTypes={options?.exportFileTypes}/>
                 <PaginationControls table={table} />
                 <div className="overflow-auto">
                     <table className={TABLE_CLASSES}>
