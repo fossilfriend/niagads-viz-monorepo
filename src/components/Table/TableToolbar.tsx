@@ -21,14 +21,16 @@ const __canToggleColumns = (columns: Column<TableRow>[]) => {
     return requiredColumns.some(x => (x === false))
 }
 
+
+
 export const TableToolbar = ({ table, exportTypes }: ToolbarProps) => {
     const canToggleColumns = useMemo(() => (__canToggleColumns(table.getAllColumns())), [])
 
     return <div className="flex justify-end gap-2 m-2">
-        {canToggleColumns && <Tooltip message="select visible columns">
+        {canToggleColumns && <Tooltip message="Show/Hide Columns">
             <Button variant="white" onClick={() => alert('show hide columns')} >
                 <ViewColumnsIcon className={`icon-button`}></ViewColumnsIcon>
-                <span className="ml-2 uppercase">Columns</span>
+               
             </Button>
         </Tooltip>}
         {exportTypes && <Tooltip message="export table data">
