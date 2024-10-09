@@ -20,7 +20,7 @@ export interface ColumnValueFormat {
 // allowable fields provided by users
 // TODO: custom sorting /filtering functions?!
 export interface GenericColumn {
-    header: string
+    header?: string
     id: string
     description?: string
     type?: CellType 

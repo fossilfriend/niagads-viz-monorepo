@@ -2,6 +2,8 @@
 
 React Component Library for NIAGADS Visualizations: including Tanstack React-Tables with GUI-driven filtering and custom adapters for LocusZoom.js that query NIAGADS APIs
 
+> **WARNING: for third-party developers. This toolkit is still under development and not ready or recommended for general usage**
+
 > **NOTE: until `Material-UI` is removed,  `npm install` must be run with the `--legacy-peer-deps` option.**
 
 ## Component Library Build for Development

@@ -86,6 +86,7 @@ interface RenderIconOptions {
     className?: string,
     iconClassName?: string,
     style?: any
+    iconStyle?:any
 }
 
 export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode | string, options: RenderIconOptions) => {
@@ -95,15 +96,16 @@ export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode 
     const className = _get('className', options, '')
     const iconClassName = _get('iconClassName', options, "")
     const style = _get('style', options, {})
+    const iconStyle = _get('iconStyle', options)
 
     return prefix
         ? <div className={`flex ${className}`} style={style}>
-            {IconComponent ? <IconComponent className={iconClassName} /> : icon}
+            {IconComponent ? <IconComponent className={iconClassName} style={iconStyle}/> : icon}
             {!iconOnly && textElement}
         </div>
         : <div className={`flex ${className}`} style={style}>
             {!iconOnly && textElement}
-            {IconComponent ? <IconComponent className={iconClassName}/> : icon}
+            {IconComponent ? <IconComponent className={iconClassName} style={iconStyle}/> : icon}
         </div>
 }
 

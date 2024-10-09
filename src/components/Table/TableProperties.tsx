@@ -1,21 +1,24 @@
 import { BasicType, FileFormat } from "@common/types"
 import { GenericCell } from "@table/Cell"
+import { RowSelectionState } from "@tanstack/react-table"
 
 export interface RowSelectOptions {
-    onSelectFn: any // behavior on select
-    selectType: 'highlight' | 'checkbox' // how row selection is indicated
-    multiSelect?: boolean // optional: allow selection of multiple rows, false if missing
+    onRowSelect: (rowSelection: RowSelectionState) => void // behavior on select
+    header: string,
+    description?: string,
+    enableMultiRowSelect?: boolean // optional: allow selection of multiple rows, false if missing
+    selectedValues?: string[], // a list of unique row identifiers the be selected in advance
+    rowId?: string // specify a field containing unique values to return as the row_id (e.g., browser track key) instead of the index
 }
 
 interface SortConfig {[column: string]: 'asc' | 'desc'}
-interface FilterConfig {
-    column: string,
-    value: BasicType
-}
+interface FilterConfig {[column: string]: BasicType}
+
 interface InitialTableState {
     sort?: SortConfig
-    filter?: FilterConfig[]
+    filter?: FilterConfig
 }
+
 export interface TableConfig {
     title?: string
     id?:string // optional: internal id for the table
@@ -24,8 +27,9 @@ export interface TableConfig {
     canFilter?: boolean // optional: disables all filtering on the table when false; default TRUE
     export?: FileFormat[] // optional: enable exports in the listed file formats; exports disabled if missing
     rowSelect?: RowSelectOptions // optional: enables row selection and related state change options
-    columOrder?: string[] // optional: specify columns by id in display order; else will use order in table definition
     defaultColumns?: string[] // optional: any column ids not listed will be hidden by default
+    onTableLoad?: any,
+    disableMultiSelect?: boolean //optional: only allows a single row to be selected; uses radio buttons instead of checkboxes
 }
 
 export type TableRow = Record<string, GenericCell | GenericCell[]>
