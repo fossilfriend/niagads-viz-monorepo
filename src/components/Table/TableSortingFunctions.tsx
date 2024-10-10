@@ -20,8 +20,8 @@ const scientificNotationSort: SortingFn<TableRow> = (rowA: Row<TableRow>, rowB: 
 
     // tests to see if the value is a string in scientific notation (x.xe-x)
     // if so, convert to number
-    a = /\d\.\d+e-\d+/.test(a as string) ? +a : a;
-    b = /\d\.\d+e-\d+/.test(b as string) ? +b : b;
+    a = /\d(\.\d+)?e-\d+/.test(a as string) ? +a : a;
+    b = /\d(\.\d+)?e-\d+/.test(b as string) ? +b : b;
 
     if (a > b) return 1;
     if (a < b) return -1;
