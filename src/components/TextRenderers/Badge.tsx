@@ -17,7 +17,7 @@ export type BadgeIconType = keyof typeof ICONS;
 const __TAILWIND_CSS = {
     root: "px-2 rounded-full py-1",
     icon: "size-5 py-1",
-    icon_only_badge: "size-5" 
+    icon_only_badge: "size-5 m-auto" 
 }
 
 export const Badge = <T,>({ props }: TextRenderer<T>) => {
@@ -40,6 +40,7 @@ export const Badge = <T,>({ props }: TextRenderer<T>) => {
 
     if (_hasOwnProperty('icon', props)) {
         const iconOnly = _get('iconOnly', props, false)
+        const iconStyle =  _get('iconStyle', props, false)
         const iconClassName = iconOnly ? __TAILWIND_CSS.icon_only_badge : __TAILWIND_CSS.icon
         textElement = renderWithIcon(textElement, _get('icon', props),
             {
@@ -75,9 +76,7 @@ export const BooleanBadge = <T,>({ props }: TextRenderer<T>) => {
 
     if (_hasOwnProperty('icon', props)) {
         const iconStyle = buildElementStyle(props, 'color')
-        const IconComponent = getIconElement(_get('icon', props))
-        Object.assign(displayProps, { 'iconOnly': true, 
-            'icon': <IconComponent style={iconStyle} className={`${__TAILWIND_CSS.icon} m-auto`} /> })
+        Object.assign(displayProps, { 'iconOnly': true, iconStyle: iconStyle})
     }
 
     return <Badge props={Object.assign(props as any, displayProps)} />

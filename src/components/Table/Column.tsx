@@ -1,7 +1,5 @@
-
 import { BasicType, NAString } from "@common/types"
 import { CellType } from "./Cell";
-
 
 export interface ColumnSortConfig {
     sortingFn?: string // TODO: should be keys for CustomSortingFunctions / SortingFns
@@ -22,13 +20,13 @@ export interface ColumnValueFormat {
 // allowable fields provided by users
 // TODO: custom sorting /filtering functions?!
 export interface GenericColumn {
-    header: string
+    header?: string
     id: string
     description?: string
     type?: CellType 
     canFilter?: boolean // defaults to TRUE
     disableGlobalFilter?: boolean // defaults to FALSE
-    canSort?: boolean // defaults to TRUE 
+    disableSorting?: boolean // defaults to FALSE 
     required?: boolean // if required = true then cannot be hidden
     format?: ColumnValueFormat
 }
@@ -36,4 +34,3 @@ export interface GenericColumn {
 export const getColumn = (columnId:string, columns:GenericColumn[]) => {
     return columns.find(col => col.id === columnId)
 }
-

@@ -1,8 +1,8 @@
 //@ts-nocheck
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 
 import Table  from '@table/Table';
-import { CELL_RENDERING_TEST_TABLE as table } from '../../../../example/data/table.tsx';
+import { TABLE_DEFINTION as table } from '../../../../example/data/table_rendering_test'
 
 const meta: Meta<typeof Table> = {
   title: 'NIAGADS-VIZ/Data Vizualization/Table/Rendering Test Table',
@@ -20,8 +20,8 @@ type Story = StoryObj<typeof Table>;
 
 export const Default: Story = {
     args: {
-       columns: table.columns,
-       options: table.options,
-       data: table.data
-    }
+        columns: table.columns,
+        options: table.options,
+        data: table.data,
+    },
 };

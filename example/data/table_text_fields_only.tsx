@@ -1,121 +1,20 @@
-import { initialize } from '@components/LocusZoom/plot'
 import { Table } from '../../src/components/Table/Table'
 
 
-export const CELL_RENDERING_TEST_TABLE: Table = {
-    data: [
-        {
-            label: { color: "blue", value: "r1" },
-            population: "european",
-            valid: true,
-            count: 5,
-            percent: 0.5,
-            p_value: { value: 0.000001, color: 'red' },
-            website: { url: "https://amazon.com", value: "Amazon" },
-            state: { value: 'PASS', color: 'white', backgroundColor: 'green', icon: "solidCheck" }
-        },
-        {
-            label: { value: "r2", tooltip: "my favorite group" },
-            population: {
-                value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis massa sed elementum tempus. Aenean sed adipiscing diam donec adipiscing tristique. Maecenas sed enim ut sem viverra aliquet.",
-                color: 'purple'
-            },
-            valid: { value: false, color: 'green' },
-            count: 6,
-            p_value: { value: 0.0000510001, precision: 3 },
-            percent: 0.2,
-            website: null,
-            state: { value: 'PASS', backgroundColor: 'green' }
-        },
-        {
-            label: "r3",
-            population: null,
-            valid: null,
-            count: 0,
-            percent: { value: 0.9121335 },
-            p_value: 0.0000999,
-            website: { url: "https://google.com", tooltip: "google!" },
-            state: null,
-        },
-        {
-            label: "r4",
-            valid: { value: true, icon: "solidCheck", color: "orange" },
-            count: null,
-            population: {
-                color: "teal", value: "other",
-                tooltip: "non-standard population"
-            },
-            percent: null,
-            p_value: { value: .222, precision: 2 },
-            website: { value: "FedEx" },
-            state: { value: 'FAIL', icon: 'xMark', color: 'red', borderColor: 'red', tooltip: "This one did't pass :(" }
-        },
-    ],
-
-    columns: [
-        {
-            header: "Label",
-            id: "label"
-        },
-        {
-            header: "State",
-            id: "state",
-            description: "badge test",
-            type: "badge"
-        },
-        {
-            header: "Population",
-            id: "population",
-            description: "sample population",
-            format: {
-                nullValue: "NA"
-            }
-
-        },
-        {
-            header: "Is Valid?",
-            id: "valid",
-            description: "boolean test",
-            type: "boolean",
-            format: { nullValue: 'NA', trueValue: "Yes" }
-        },
-        {
-            header: "Count",
-            id: "count",
-            description: "integer test"
-        },
-        {
-            header: "Percent",
-            id: "percent",
-            description: "% bar test",
-            type: "percentage_bar",
-        },
-        {
-            header: "p-Value",
-            id: "p_value",
-            description: "numeric test",
-            type: "float",
-            format: {
-                precision: 1,
-            }
-        },
-        {
-            header: "Website",
-            id: "website",
-            // type: "link"
-        }
-
-    ],
-
-    options: {}
-}
-
-
-export const FULL_TEST_TABLE = {
+export const TABLE_DEFINTION: Table = {
     options: {
-        initialize: { sort: { "publication_date": 'asc' } }
+        initialize: { sort: { "publication_date": 'asc' } },
+        rowSelect: {
+            header: "ROI", 
+            description: "select row to target", 
+            onRowSelect: (selectedRows: any) => alert(`Selection: ${JSON.stringify(selectedRows)}`),
+            enableMultiRowSelect: true,
+            selectedValues: ["R5", "R2"],
+            rowId: 'id'
+        }
     },
     columns: [
+        { id: 'id', description: 'test alternative field to return for row selection', canFilter: false},
         {
             id: 'dataset_accession',
             header: 'Accession',
@@ -128,7 +27,7 @@ export const FULL_TEST_TABLE = {
         },
         {
             id: 'description',
-            canSort: false,
+            disableSorting: true,
         },
         {
             id: 'biomarker',
@@ -174,6 +73,7 @@ export const FULL_TEST_TABLE = {
 
     data: [
         {
+            "id": "R1",
             "dataset_accession": "NG00115",
             "consortium": null,
             "description": "summary statistics from a sex-stratified genome-wide association study of SNPS from Alzheimer's Disease Genetics Consortium (ADGC) female samples with European ancestry. Subjects with individual-pairwise genetic relationship matrix (GRM) > 0.1 were excluded from analyses to ensure sample independence.  Samples were selected from both ADGC phase 1 and phase 2 cohorts. (Lifted Over from GRCh37 to GRCh38)",
@@ -189,6 +89,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R2",
             "dataset_accession": "NG00115",
             "consortium": null,
             "description": "summary statistics from a sex-stratified genome-wide association study of SNPS from Alzheimer's Disease Genetics Consortium (ADGC) male samples with European ancestry. Subjects with individual-pairwise genetic relationship matrix (GRM) > 0.1 were excluded from analyses to ensure sample independence.  Samples were selected from both ADGC phase 1 and phase 2 cohorts. (Lifted Over from GRCh37 to GRCh38)",
@@ -204,6 +105,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R3",
             "dataset_accession": "NG00075",
             "consortium": "IGAP",
             "description": "summary statistics from meta-analysis results obtained in the stage 1 GWAS study, including genotyped and imputed data (11,480,632 variants, phase 1 integrated release 3, March 2012) of 21,982 Alzheimer's disease cases and 41,944 cognitively normal controls. The meta-analysis examined SNPs genotyped or imputed in at least 30% of the AD cases and 30% of the control samples across all datasets. (Lifted Over from GRCh37 to GRCh38)",
@@ -219,6 +121,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R4",
             "dataset_accession": "NG00075",
             "consortium": "IGAP",
             "description": "summary statistics from meta-analysis results of the stage 2 GWAS study (including 11,632 variants that were genotyped on the I-select chip and tested for association in an independent set of 8,362 Alzheimer's disease cases and 10,483 controls) with the combined stage1/stage2 p-values. 11,540 of the I-select chip variants were available for meta-analysis with the stage 1 dataset.  The meta-analysis examined SNPs genotyped or imputed in at least 30% of the AD cases and 30% of the control samples across all datasets. (Lifted Over from GRCh37 to GRCh38)",
@@ -234,6 +137,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R5",
             "dataset_accession": "NG00055",
             "consortium": null,
             "description": "summary statistics for CSF beta-amyloid 42 (Aβ₄₂) levels in cerebrospinal fluid (CSF) from 3146 participants across nine studies, adjusted for age, gender, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -249,6 +153,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R6",
             "dataset_accession": "NG00055",
             "consortium": null,
             "description": "summary statistics for CSF tau phosphorylated at threonine 181 (ptau) levels in cerebrospinal fluid (CSF) from 3146 participants across nine studies, adjusted for age, gender, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -264,6 +169,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R7",
             "dataset_accession": "NG00055",
             "consortium": null,
             "description": "summary statistics for CSF tau levels in cerebrospinal fluid (CSF) from 3146 participants across nine studies, adjusted for age, gender, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -279,6 +185,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R8",
             "dataset_accession": "NG00058",
             "consortium": "IGAP",
             "description": "Summary statistics from a genome-wide survival analysis of the age of onset (AAO) of Alzheimer's disease and AAO-defined survival. (Lifted Over from GRCh37 to GRCh38)",
@@ -294,6 +201,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R9",
             "dataset_accession": "NG00056",
             "consortium": null,
             "description": "summary statistics for a transethnic GWAS study of late-onset AD, adjusted for age, sex, and population stratification (all samples) (Lifted Over from GRCh37 to GRCh38)",
@@ -309,6 +217,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R10",
             "dataset_accession": "NG00056",
             "consortium": null,
             "description": "summary statistics for a transethnic GWAS study of late-onset AD, adjusted for age, sex, population stratification, and APOE ε4 status (all samples) (Lifted Over from GRCh37 to GRCh38)",
@@ -324,6 +233,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R11",
             "dataset_accession": "NG00056",
             "consortium": null,
             "description": "summary statistics for APOE ε4 carriers in a transethnic GWAS study of late-onset AD, adjusted for age, sex, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -339,6 +249,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R12",
             "dataset_accession": "NG00056",
             "consortium": null,
             "description": "summary statistics for APOE ε4 non-carriers in a transethnic GWAS study of late-onset AD, adjusted for age, sex, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -354,6 +265,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R13",
             "dataset_accession": "NG00052",
             "consortium": null,
             "description": "Summary statistics for the association between cerebrospinal fluid (CSF) clusterin (CLU) levels and Alzheimer's Disease (Lifted Over from GRCh37 to GRCh38)",
@@ -369,6 +281,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R14",
             "dataset_accession": "NG00078",
             "consortium": "IGAP",
             "description": "Summary statistics from an APOE-stratified GWAS of the IGAP discovery phase dataset. (Lifted Over from GRCh37 to GRCh38)",
@@ -384,6 +297,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R15",
             "dataset_accession": "NG00078",
             "consortium": "IGAP",
             "description": "Summary statistics from an APOE-stratified GWAS of the APOEε4+ subgroup of the IGAP discovery phase dataset. (Lifted Over from GRCh37 to GRCh38)",
@@ -399,6 +313,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R16",
             "dataset_accession": "NG00078",
             "consortium": "IGAP",
             "description": "Summary statistics from an APOE-stratified GWAS of the APOEε4- subgroup of the IGAP discovery phase dataset. (Lifted Over from GRCh37 to GRCh38)",
@@ -414,6 +329,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R17",
             "dataset_accession": "NG00078",
             "consortium": "IGAP",
             "description": "Summary statistics from a genome-wide interaction test between SNPs and APOEε4 status in the IGAP discovery phase dataset. (Lifted Over from GRCh37 to GRCh38)",
@@ -429,6 +345,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R18",
             "dataset_accession": "NG00040",
             "consortium": null,
             "description": "a multi-ethnic exome array study to identify low-frequency coding variants that affect susceptibility to Alzheimer's disease  (Lifted Over from GRCh37 to GRCh38)",
@@ -444,6 +361,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R19",
             "dataset_accession": "NG00040",
             "consortium": null,
             "description": "a multi-ethnic exome array study to identify low-frequency coding variants that affect susceptibility to Frontotemporal dementia (Lifted Over from GRCh37 to GRCh38)",
@@ -459,6 +377,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Frontotemporal demential (FTD)"
         },
         {
+            "id": "R20",
             "dataset_accession": "NG00040",
             "consortium": null,
             "description": "a multi-ethnic exome array study to identify low-frequency coding variants that affect susceptibility to Progressive supranuclear palsy (Lifted Over from GRCh37 to GRCh38)",
@@ -474,6 +393,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Progressive supranuclear palsy (PSP)"
         },
         {
+            "id": "R21",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: CAA (presence vs. absence) (Lifted Over from GRCh37 to GRCh38)",
@@ -489,6 +409,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R22",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: HS (presence vs. absence) (Lifted Over from GRCh37 to GRCh38)",
@@ -504,6 +425,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R23",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: LBD (presence vs. absence) (Lifted Over from GRCh37 to GRCh38)",
@@ -519,6 +441,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": ["AD/ADRD related neuropathology", "Lewy body disease or neuropathology (LBD)"]
         },
         {
+            "id": "R24",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: LBD (none, brainstem-predominant, and all other regions or not specified) (Lifted Over from GRCh37 to GRCh38)",
@@ -534,6 +457,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": ["AD/ADRD related neuropathology", "Lewy body disease or neuropathology (LBD)"]
         },
         {
+            "id": "R25",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: LBD (none, brainstem-predominant, limbic, neocortical, and other regions or not specified) (Lifted Over from GRCh37 to GRCh38)",
@@ -549,6 +473,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": ["AD/ADRD related neuropathology", "Lewy body disease or neuropathology (LBD)"]
         },
         {
+            "id": "R26",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: NFTs (Braak stages) (Lifted Over from GRCh37 to GRCh38)",
@@ -564,6 +489,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R27",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: NFTs (Braak stages) (Lifted Over from GRCh37 to GRCh38)",
@@ -579,6 +505,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R28",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: NPs (presence vs. absence) (Lifted Over from GRCh37 to GRCh38)",
@@ -594,6 +521,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R29",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: NPs (CERAD score) (Lifted Over from GRCh37 to GRCh38)",
@@ -609,6 +537,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R30",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: NPs (presence versus absence) restricted to cases and controls with complete documentation (Lifted Over from GRCh37 to GRCh38)",
@@ -624,6 +553,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R31",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: NPs (presence versus absence), inclusive primary dataset allowing some incomplete documentation of pathological features (Lifted Over from GRCh37 to GRCh38)",
@@ -639,6 +569,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "AD/ADRD related neuropathology"
         },
         {
+            "id": "R32",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: general case/control analysis comparing individuals with dementia and AD neuropathologies  (cases) to those without clinical dementia and none or minimal AD neuropathologic changes (controls); includes both primary (relaxed documentation) and conservative (strict documentation) datasets (Lifted Over from GRCh37 to GRCh38)",
@@ -654,6 +585,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": ["AD/ADRD related neuropathology", "Alzheimer's disease", "Lewy body disease or neuropathology (LBD)", "Vascular brain injury (VBI)"]
         },
         {
+            "id": "R33",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: VBI (presence vs. absence) (Lifted Over from GRCh37 to GRCh38)",
@@ -669,6 +601,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Vascular brain injury (VBI)"
         },
         {
+            "id": "R34",
             "dataset_accession": "NG00041",
             "consortium": null,
             "description": "summary statistics from a comparative study of neuropathological features of Alzheimer's disease and related dementias: VBI (none, any microinfarcts, any lacunar or territorial infarcts) (Lifted Over from GRCh37 to GRCh38)",
@@ -684,6 +617,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Vascular brain injury (VBI)"
         },
         {
+            "id": "R35",
             "dataset_accession": "NG00048",
             "consortium": "ADGC",
             "description": "Summary statistics from a GWAS study of the effects of known Alzheimer's disease risk loci in modifying age-at-onset using LOAD datasets from ADGC, adjusted for sex, APOE number, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -699,6 +633,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R36",
             "dataset_accession": "NG00049",
             "consortium": null,
             "description": "summary statistics for CSF beta-amyloid 42 (Aβ₄₂) levels in cerebrospinal fluid (CSF), adjusted for age, gender, site, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -714,6 +649,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R37",
             "dataset_accession": "NG00049",
             "consortium": null,
             "description": "summary statistics for CSF tau phosphorylated at threonine 181 (ptau) levels in cerebrospinal fluid (CSF) from 3146 participants across nine studies, adjusted for age, gender, site, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -729,6 +665,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R38",
             "dataset_accession": "NG00049",
             "consortium": null,
             "description": "summary statistics for CSF tau levels in cerebrospinal fluid (CSF), adjusted for age, gender, site, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -744,6 +681,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R39",
             "dataset_accession": "NG00036",
             "consortium": "IGAP",
             "description": "summary statistics from the stage 1 IGAP (2013) meta-analysis of previously published GWAS datasets consisting of >7 million variants tested for association in 17,008 Alzheimer's disease cases and 37,154 controls (Lifted Over from GRCh37 to GRCh38)",
@@ -759,6 +697,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R40",
             "dataset_accession": "NG00036",
             "consortium": "IGAP",
             "description": "summary statistics from the combined stage 1 and stage 2 IGAP (2013) meta-analysis of previously published GWAS datasets consisting of >7 million variants tested for association in 17,008 Alzheimer's disease cases and 37,154 controls (stage 1) and 11,632 variants genotyped and tested for association in an independent set of 8,572 Alzheimer's disease cases and 11,312 controls (stage 2); (Lifted Over from GRCh37 to GRCh38)",
@@ -774,6 +713,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R41",
             "dataset_accession": "NG00053",
             "consortium": "IGAP",
             "description": "summary statistics from the IGAP (2013) meta-analysis of ADGC Phase I genome-wide association studies (Lifted Over from GRCh37 to GRCh38)",
@@ -789,6 +729,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R42",
             "dataset_accession": "NG00039",
             "consortium": "ADGC",
             "description": "summary statistics from an ADGC (2013) GWAS study of African Americans and their genetic risk for late-onset Alzheimer's disease (LOAD), adjusted for age, sex, and population stratification (Lifted Over from GRCh37 to GRCh38)",
@@ -804,6 +745,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R43",
             "dataset_accession": "NG00039",
             "consortium": "ADGC",
             "description": "summary statistics from an ADGC (2013) GWAS study of African Americans and their genetic risk for late-onset Alzheimer's disease (LOAD), adjusted for age, sex, population stratification, and APOE genotype (Lifted Over from GRCh37 to GRCh38)",
@@ -819,6 +761,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R44",
             "dataset_accession": "NG00027",
             "consortium": "ADGC",
             "description": "late-onset Alzheimer's disease; ADGC discovery stage 1 dataset",
@@ -834,6 +777,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R45",
             "dataset_accession": "NG00027",
             "consortium": "ADGC",
             "description": "late-onset Alzheimer's disease; ADGC discovery and replication stages (1 and 2, respectively)",
@@ -849,6 +793,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R46",
             "dataset_accession": "NG00027",
             "consortium": "ADGC",
             "description": "late-onset Alzheimer's disease; ADGC replication stage 2",
@@ -864,6 +809,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R47",
             "dataset_accession": "NG00027",
             "consortium": "ADGC",
             "description": "late-onset Alzheimer's disease; ADGC discovery stage 1 (Lifted Over from GRCh37 to GRCh38)",
@@ -879,6 +825,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R48",
             "dataset_accession": "NG00027",
             "consortium": "ADGC",
             "description": "late-onset Alzheimer's disease; ADGC discovery and replication stages (1 and 2, respectively) (Lifted Over from GRCh37 to GRCh38)",
@@ -894,6 +841,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R49",
             "dataset_accession": "NG00027",
             "consortium": "ADGC",
             "description": "late-onset Alzheimer's disease;  ADGC replication stage 2 (Lifted Over from GRCh37 to GRCh38)",
@@ -909,6 +857,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R50",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of a language predominant Alzheimer’s disease subgroup (Lifted Over from GRCh37 to GRCh38)",
@@ -924,6 +873,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R51",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of a memory predominant Alzheimer’s disease subgroup (Lifted Over from GRCh37 to GRCh38)",
@@ -939,6 +889,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R52",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of an Alzheimer’s disease subgroup with multiple domains (memory, visuospatial, language) of substantial cognitive impairment (Lifted Over from GRCh37 to GRCh38)",
@@ -954,6 +905,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R53",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of an Alzheimer’s disease subgroup with multiple domains (memory, visuospatial, language) of substantial cognitive impairment (Lifted Over from GRCh37 to GRCh38)",
@@ -969,6 +921,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R54",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of an Alzheimer’s disease subgroup with multiple domains (memory, visuospatial, language) of substantial cognitive impairment (Lifted Over from GRCh37 to GRCh38)",
@@ -984,6 +937,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R55",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of an Alzheimer’s disease subgroup with no domains (memory, visuospatial, language) of substantial relative cognitive impairment (Lifted Over from GRCh37 to GRCh38)",
@@ -999,6 +953,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R56",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of an Alzheimer’s disease subgroup with no domains (memory, visuospatial, language) of substantial relative cognitive impairment (Lifted Over from GRCh37 to GRCh38)",
@@ -1014,6 +969,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R57",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of an Alzheimer’s disease subgroup with no domains (memory, visuospatial, language) of substantial relative cognitive impairment (Lifted Over from GRCh37 to GRCh38)",
@@ -1029,6 +985,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R58",
             "dataset_accession": "NG00073",
             "consortium": null,
             "description": "summary statistics from a case-control analyses of a visuospatial predominant Alzheimer’s disease subgroup (Lifted Over from GRCh37 to GRCh38)",
@@ -1044,6 +1001,7 @@ export const FULL_TEST_TABLE = {
             "neuropathology": "Alzheimer's disease"
         },
         {
+            "id": "R59",
             "dataset_accession": "NG00076",
             "consortium": "IGAP",
             "description": "Summary statistics from a multi-stage association study for late-onset Alzhemier's disease (LOAD) using the subset of ADGC samples (N = 7,050). that were not included in the IGAP discovery phase. (Lifted Over from GRCh37 to GRCh38)",
