@@ -34,7 +34,7 @@ const __generatePageSizeOptions = (nRows: number) => {
 
 export const PaginationControls = ({ table }: PaginationControlsProps) => {
     const [pageSize, setPageSize] = useState<number>(table.getState().pagination.pageSize)
-    const [nRows, setNRows] = useState<number>(table.getRowCount())
+    const nRows = table.getPrePaginationRowModel().rows.length;
     const pageSizeOptions = useMemo(() => (__generatePageSizeOptions(nRows)), [nRows])
 
     const minDisplayedRow = table.getState().pagination.pageIndex * pageSize + 1
