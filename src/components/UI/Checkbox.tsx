@@ -27,7 +27,7 @@ export const Checkbox = ({ variant = 'secondary', label, onChange, disabled = fa
             <input type="checkbox" className={className} 
                 onChange={onChange} 
                 disabled={disabled}
-                defaultChecked={checked} />
+                checked={checked} />
             {label && <label className="text-sm ml-2">{label}</label>}
         </div>
     )
