@@ -25,7 +25,7 @@ interface Button {
     size?: ButtonSizes
     children: ReactNode | string
     disabled?:boolean
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | null;
+    onClick?: (event: | React.MouseEvent<HTMLButtonElement>) => void | null
 }
 
 
