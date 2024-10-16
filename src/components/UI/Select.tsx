@@ -16,6 +16,7 @@ const __TAILWIND_CSS = {
 interface Select {
     fields: string[] | { [key: string]: string } | number[]
     id: string
+    name?: string
     label?: string
     defaultValue?: string
     inline?: boolean
@@ -23,7 +24,7 @@ interface Select {
     variant?: 'outline' | 'underline' | 'plain' // select design: one of `outline`, `underline`, or `plain`
 }
 
-export const Select = ({ fields, id, label, defaultValue, inline=false, onChange, variant='outline' }: Select) => {
+export const Select = ({ fields, id, label, name, defaultValue, inline=false, onChange, variant='outline' }: Select) => {
     const _optionsFromArray = (values: string[] | number[]) => (
         values.map(v => (
             <option key={v.toString()} value={v}>{v}</option>
@@ -42,7 +43,7 @@ export const Select = ({ fields, id, label, defaultValue, inline=false, onChange
                     <label htmlFor={id} className={__TAILWIND_CSS.label}>{label}</label>
                 </div>
                 <div>
-                    <select defaultValue={defaultValue} id={id} onChange={onChange} className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS[variant]}`}>
+                    <select name={name ? name : id} defaultValue={defaultValue} id={id} onChange={onChange} className={`${__TAILWIND_CSS.root} ${__TAILWIND_CSS[variant]}`}>
                         {Array.isArray(fields)
                             ? _optionsFromArray(fields)
                             : _optionsFromObj(fields)}

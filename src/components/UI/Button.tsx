@@ -1,4 +1,4 @@
-import React, { useMemo, ReactNode } from "react"
+import React, { ReactNode } from "react"
 import { _get } from "@common/utils"
 
 const __TAILWIND_CSS = {
@@ -25,7 +25,7 @@ interface Button {
     size?: ButtonSizes
     children: ReactNode | string
     disabled?:boolean
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | null;
+    onClick?: (event: | React.MouseEvent<HTMLButtonElement>) => void | null
 }
 
 
@@ -38,3 +38,4 @@ export const Button = ({ variant='default', size='md', children, onClick, disabl
         {children} 
     </button>
 }
+

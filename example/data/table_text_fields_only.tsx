@@ -4,6 +4,7 @@ import { Table } from '../../src/components/Table/Table'
 export const TABLE_DEFINTION: Table = {
     options: {
         initialize: { sort: { "publication_date": 'asc' } },
+        exportFileTypes: ["csv", "json", "xlsx", "xml"],
         rowSelect: {
             header: "ROI", 
             description: "select row to target", 

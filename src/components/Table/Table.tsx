@@ -17,7 +17,7 @@ import {
     getSortedRowModel,
     RowSelectionState,
     TableOptions,
-    Table as ReactTable
+    Column as ReactTableColumn
 } from "@tanstack/react-table"
 
 import { TrashIcon } from '@heroicons/react/24/outline'
@@ -32,17 +32,16 @@ import {
     renderCell,
     resolveCell,
     validateCellType
-} from "@table/Cell"
-import { TableConfig, TableData, TableRow } from "@table/TableProperties";
-import { GenericColumn, getColumn } from "@table/Column"
-import { PaginationControls } from "@table/PaginationControls";
-import { TableColumnHeader } from "@table/TableColumnHeader";
-import { TextInput } from "@components/UI/TextInput";
-import { CustomSortingFunctions } from "./TableSortingFunctions";
+} from "./Cell"
+import { TableConfig, TableData, TableRow } from "./TableProperties"
+import { GenericColumn, getColumn } from "./Column"
+import { TableColumnHeader } from "./TableColumnHeader"
+import { CustomSortingFunctions } from "./TableSortingFunctions"
 
-import { Checkbox } from "@components/UI/Checkbox";
-import { Button, Tooltip } from "@components/UI";
-import { RadioButton } from "@components/UI/RadioButton";
+import { PaginationControls, TableToolbar } from "@table/ControlElements"
+
+import { Button, Tooltip, Checkbox, RadioButton, SearchInput } from "@components/UI"
+
 
 const __TAILWIND_CSS = {
     container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",
@@ -81,7 +80,6 @@ const __resolveCell = (userCell: GenericCell | GenericCell[], column: GenericCol
         throw Error("Validation Error parsing field value for row " + index + " column `" + column.id + "`.\n" + e.message)
     }
 }
-
 
 // TODO: (maybe?) catch hidden to skip during rendering
 // NOTE: according to documentation https://tanstack.com/table/latest/docs/guide/column-visibility#column-visibility-state
@@ -162,17 +160,20 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                             </div>
                             : options?.rowSelect?.header
                     ),
+                    enableHiding: false,
                     enableSorting: true, // FIXME: enable sorting doesn't seem to work / header.canSort() returns false
                     meta: { description: options?.rowSelect?.description },
                     cell: ({ row }) => (
                         multiSelect ? <Checkbox
                             variant="default"
+                            name={`checkbox_r${row.id}`}
                             checked={row.getIsSelected()}
                             disabled={!row.getCanSelect()}
                             onChange={row.getToggleSelectedHandler()}
                             alignCenter={true}
                         /> : <RadioButton
                             variant="default"
+                            name={`radiobox r${row.id}`}
                             checked={row.getIsSelected()}
                             disabled={!row.getCanSelect()}
                             onChange={row.getToggleSelectedHandler()}
@@ -240,7 +241,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         return tableData;
     }, [columns])
 
-
     // build table options conditionally
     // cannot memoize this b/c it depends on the state; 
     // doing so leads to very slow rerenders
@@ -258,9 +258,9 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             globalFilter,
         },
         onSortingChange: setSorting,
-        getSortedRowModel: getSortedRowModel(),      
+        getSortedRowModel: getSortedRowModel(),
         sortingFns: CustomSortingFunctions,
-        enableColumnResizing: true,
+        enableColumnResizing: true
     }
 
     if (enableRowSelect) {
@@ -272,7 +272,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
 
         const rowIdColumn = options?.rowSelect?.rowId
         if (!!rowIdColumn) {
-            if (__isValidRowId(resolvedData, rowIdColumn)) {
+            const isValidRowId = useMemo(() => (__isValidRowId(resolvedData, rowIdColumn)), [rowIdColumn])
+            if (isValidRowId) {
                 Object.assign(reactTableOptions, {
                     getRowId: (row: TableRow) => getCellValue(row[rowIdColumn as keyof typeof row] as Cell)
                 })
@@ -287,47 +288,48 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
 
     useLayoutEffect(() => {
         if (options?.onTableLoad) {
-            // TODO: if (firstUpdate.current)  // firstUpdate is a useRef / from GenomicsDB code; has to do w/pre-selected rows
+            // TODO: if (initialRender.current)  // not sure if necessary - initialRender is a useRef / from GenomicsDB code; has to do w/pre-selected rows
             table && options.onTableLoad(table);
         }
     }, [table]);
 
     useEffect(() => {
-        if (initialRender.current) {
+        if (initialRender.current) { // necessary to prevent actions on pre-selected rows
             initialRender.current = false;
             return;
         }
         options?.rowSelect?.onRowSelect(rowSelection)
-        // TODO: if (firstUpdate.current)  // firstUpdate is a useRef / from GenomicsDB code; has to do w/pre-selected rows
     }, [rowSelection])
 
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
                 <div className="flex justify-between">
-                    <TextInput value={globalFilter} onChange={val => setGlobalFilter(val)} />
+                  {/*  <SearchInput value={globalFilter} onChange={val => setGlobalFilter(val)} /> */}
+                    <TableToolbar table={table} exportTypes={options?.exportFileTypes}/>
                     <PaginationControls table={table} />
                 </div>
-                <div className="overflow-auto">
-                    <table className={TABLE_CLASSES}>
-                        {__renderTableHeader(table.getHeaderGroups())}
-                        <tbody>
-                            {table.getRowModel().rows.map((row) => (
-                                <tr key={row.id} className={__TAILWIND_CSS.dtr}>
-                                    {row.getVisibleCells().map((cell) => (
-                                        <td className={__TAILWIND_CSS.td} key={cell.id}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+
+            <div className="overflow-auto">
+                <table className={TABLE_CLASSES}>
+                    {__renderTableHeader(table.getHeaderGroups())}
+                    <tbody>
+                        {table.getRowModel().rows.map((row) => (
+                            <tr key={row.id} className={__TAILWIND_CSS.dtr}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <td className={__TAILWIND_CSS.td} key={cell.id}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
+        </div >
         </>
         ) :
-            <div>No data</div>
+<div>No data</div>
     )
 }
 
