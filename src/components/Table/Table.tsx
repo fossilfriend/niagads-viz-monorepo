@@ -12,6 +12,9 @@ import {
     createColumnHelper,
     ColumnDef,
     HeaderGroup,
+    getFilteredRowModel,
+    SortingFnOption,
+    getSortedRowModel,
     RowSelectionState,
     TableOptions,
 } from "@tanstack/react-table"
@@ -30,9 +33,11 @@ import {
     validateCellType
 } from "@table/Cell"
 import { TableConfig, TableData, TableRow } from "@table/TableProperties";
-import { ColumnSortConfig, GenericColumn, getColumn } from "@table/Column"
+import { GenericColumn, getColumn } from "@table/Column"
 import { PaginationControls } from "@table/PaginationControls";
 import { TableColumnHeader } from "@table/TableColumnHeader";
+import { TextInput } from "@components/UI/TextInput";
+import { CustomSortingFunctions } from "./TableSortingFunctions";
 
 import { Checkbox } from "@components/UI/Checkbox";
 import { Button, Tooltip } from "@components/UI";
@@ -50,10 +55,20 @@ const __TAILWIND_CSS = {
 
 const TABLE_CLASSES = `${__TAILWIND_CSS.table_border} ${__TAILWIND_CSS.table_layout} ${__TAILWIND_CSS.table_text}`
 
-// FIXME: type of return should be custom sorting function
-const __resolveSortingFn = (options: ColumnSortConfig) => {
-    // ! point here says that as this point, we know options will not be undefined
-    return _hasOwnProperty('sortingFn', options) ? options.sortingFn : 'alphanumeric'
+export interface Table {
+    options?: TableConfig
+    columns: GenericColumn[]
+    data: TableData
+}
+
+const __resolveSortingFn = (col: GenericColumn) => {
+    if (col.type === 'boolean') {
+        return 'boolean';
+    }
+    if (col.type === 'float') {
+        return 'scientific';
+    }
+    return 'alphanumeric';
 }
 
 // wrapper to catch any errors thrown during cell type and properties validation so that 
@@ -115,6 +130,7 @@ export interface Table {
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
 const Table: React.FC<Table> = ({ columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
+    const [globalFilter, setGlobalFilter] = useState('');
     const [rowSelection, setRowSelection] = useState<RowSelectionState>(__setInitialRowSelection(options?.rowSelect?.selectedValues))
     const initialRender = useRef(true) // to regulate callbacks affected by the initial state
     const enableRowSelect = !!options?.rowSelect?.onRowSelect
@@ -181,12 +197,12 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                         id: col.id,
                         header: _get('header', col, toTitleCase(col.id)),
                         enableColumnFilter: _get('canFilter', col, true),
-                        enableGlobalFilter: _get('disableGlobalFilter', col, false),
-                        enableSorting: _get('canSort', col, true),
+                        enableGlobalFilter: !col.disableGlobalFilter,
+                        enableSorting: !col.disableSorting,
+                        sortingFn: __resolveSortingFn(col) as SortingFnOption<TableRow>,
                         enableHiding: !(_get('required', col, false)), // if required is true, enableHiding is false
                         meta: { description: _get('description', col) },
                         cell: props => renderCell(props.cell.row.original[col.id] as Cell),
-                        // TODO: sortingFn: col.sort !== undefined && __resolveSortingFn(col.sort)
                     }
                 )
             )
@@ -234,10 +250,18 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        enableColumnResizing: true,
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: 'includesString',
+        onGlobalFilterChange: setGlobalFilter,
         state: {
-            rowSelection
-        }
+            sorting,
+            rowSelection,
+            globalFilter,
+        },
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),      
+        sortingFns: CustomSortingFunctions,
+        enableColumnResizing: true
     }
 
     if (enableRowSelect) {
@@ -281,8 +305,11 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
-                <TableToolbar table={table} exportTypes={options?.exportFileTypes}/>
+                <div className="flex justify-between">
+                    <TextInput value={globalFilter} onChange={val => setGlobalFilter(val)} />
+                    <TableToolbar table={table} exportTypes={options?.exportFileTypes}/>
                 <PaginationControls table={table} />
+                </div>
                 <div className="overflow-auto">
                     <table className={TABLE_CLASSES}>
                         {__renderTableHeader(table.getHeaderGroups())}
@@ -305,7 +332,6 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             <div>No data</div>
     )
 }
-
 
 const TableWithErrorBoundary = withErrorBoundary(Table, {
     FallbackComponent: errorFallback,
