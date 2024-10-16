@@ -1,13 +1,13 @@
 import React, { useState, useMemo } from "react"
 
-import { Table } from "@tanstack/react-table"
+import { Table as ReactTable } from "@tanstack/react-table"
 import range from "lodash.range"
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
 import { Select, Button } from "@components/UI"
 
 interface PaginationControlsProps {
-    table: Table<any>
+    table: ReactTable<any>
 }
 
 const __generatePageSizeOptions = (nRows: number) => {

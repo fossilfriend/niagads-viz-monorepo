@@ -1,53 +1,46 @@
 import React, { useState, useMemo } from "react"
 
-import { Column, Table } from "@tanstack/react-table"
-
+import { Column as ReactTableColumn, Table as ReactTable } from "@tanstack/react-table"
 import { ViewColumnsIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
-import { Button, Tooltip } from "@components/UI"
+
+import { Button, SearchInput, Tooltip } from "@components/UI"
 import { FileFormat } from "@common/types"
-import { TableRow } from "./TableProperties"
+import { TableRow } from "@table/TableProperties"
+import { TableExportControls } from "./TableExportControls"
+
 
 // column.getCanHide
 
 interface ToolbarProps {
-    table: Table<TableRow>
+    table: ReactTable<TableRow>
     exportTypes?: FileFormat[]
 }
 
-
 // if all columns are required, then cannot toggle column visibility for the table
-const __canToggleColumns = (columns: Column<TableRow>[]) => {
+const __canToggleColumns = (columns: ReactTableColumn<TableRow>[]) => {
     const requiredColumns = columns.map((col) => (!col.getCanHide()))
     return requiredColumns.some(x => (x === false))
 }
 
 
-
 export const TableToolbar = ({ table, exportTypes }: ToolbarProps) => {
     const canToggleColumns = useMemo(() => (__canToggleColumns(table.getAllColumns())), [])
+    const tableIsFiltered: boolean = table.getState().globalFilter !== '' /* && table.getState().columnFilters ? -> array so not sure what to test yet */
 
-    return <div className="flex justify-end gap-2 m-2">
+
+    return <div className="relative flex justify-end gap-2 m-2">
+        <SearchInput value={table.getState().globalFilter} onChange={val => table.setGlobalFilter(val)} />
         {canToggleColumns && <Tooltip message="Show/Hide Columns">
             <Button variant="white" onClick={() => alert('show hide columns')} >
                 <ViewColumnsIcon className={`icon-button`}></ViewColumnsIcon>
-               
+                <span className="ml-2 uppercase">Columns</span>
             </Button>
         </Tooltip>}
         {exportTypes && <Tooltip message="export table data">
-            <Button variant="white" onClick={() => alert('export')} >
-                <ArrowDownTrayIcon className="icon-button"></ArrowDownTrayIcon> 
-                <span className="ml-2 uppercase">Export</span>
-            </Button>
+            <TableExportControls isFiltered={tableIsFiltered} exportOptions={exportTypes}/>
         </Tooltip>}
+
+
     </div>
 }
 
-
-/*
-<Select defaultValue={pageSize.toString()} fields={pageSizeOptions}
-    onChange={(e: any) => { onChangePageSize(Number(e.target.value)) }}
-    label="Results per page" id="pages" inline variant='plain' />
-<p className="text-sm text-gray-900 px-2">{minDisplayedRow} - {maxDisplayedRow} of {nRows}</p>
-
-</div>
-*/
