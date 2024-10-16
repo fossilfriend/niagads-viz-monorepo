@@ -32,7 +32,7 @@ export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: Exp
         console.log(event.currentTarget);
         const formData = new FormData(event.currentTarget);
         onSubmit(Object.fromEntries(formData))
-      };
+    };
 
 
 
@@ -51,8 +51,12 @@ export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: Exp
                 <div className="z-50 absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
                     <div className="px-4 py-3">
                         <form id={formId} onSubmit={handleSubmit}>
-                            {isFiltered && <Checkbox name='export_all' value={exportAllRows.toString()} label="Visible Rows Only" checked={exportAllRows} onChange={() => setExportAllRows(!exportAllRows)}></Checkbox>}
-                            <Select id={`${formId}_select_export_format"`} name="format" fields={exportOptions} label="Export table data as" onChange={(e) => alert(e.currentTarget.value)}></Select>
+                            {isFiltered &&
+                                <Checkbox name='export_all' variant="accent"
+                                    value={exportAllRows.toString()}
+                                    label="Visible Rows Only" checked={exportAllRows}
+                                    onChange={() => setExportAllRows(!exportAllRows)}></Checkbox>}
+                            <Select id={`${formId}_select_export_format"`} name="format" fields={exportOptions} label="Export table data as"></Select>
                             <div className="mt-2 flex justify-center">
                                 <Button variant="accent" size="sm" >Export</Button>
                             </div>
