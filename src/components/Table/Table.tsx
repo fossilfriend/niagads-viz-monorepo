@@ -304,7 +304,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     return (
         table ? (<>
             <div className={__TAILWIND_CSS.container}>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   {/*  <SearchInput value={globalFilter} onChange={val => setGlobalFilter(val)} /> */}
                     <TableToolbar table={table} exportTypes={options?.exportFileTypes}/>
                     <PaginationControls table={table} />

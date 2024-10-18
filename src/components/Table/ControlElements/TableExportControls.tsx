@@ -2,9 +2,8 @@ import React, { useState, useEffect, useId } from "react"
 import { Table as ReactTable } from "@tanstack/react-table"
 import exportFromJson from "export-from-json"
 
-import { Button, Checkbox, RadioButton, Select } from "@components/UI"
+import { Button, Checkbox, Select } from "@components/UI"
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid"
-import { _get } from "@common/utils"
 
 
 type __EXPORT_FROM_JSON_TYPES = typeof exportFromJson.types
@@ -29,12 +28,9 @@ export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: Exp
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(event.currentTarget);
         const formData = new FormData(event.currentTarget);
         onSubmit(Object.fromEntries(formData))
     };
-
-
 
     useEffect(() => {
         setExportAllRows(isFiltered)
@@ -48,21 +44,26 @@ export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: Exp
             </Button>
 
             <div className="hidden dropdown-menu">
-                <div className="z-50 absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
+                <div className="z-50 absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby={`${formId}-headlessui-menu-button}`} id={`${formId}-headlessui-menu-items`} role="menu">
                     <div className="px-4 py-3">
                         <form id={formId} onSubmit={handleSubmit}>
                             {isFiltered &&
                                 <Checkbox name='export_all' variant="accent"
                                     value={exportAllRows.toString()}
                                     label="Visible Rows Only" checked={exportAllRows}
-                                    onChange={() => setExportAllRows(!exportAllRows)}></Checkbox>}
-                            <Select id={`${formId}_select_export_format"`} name="format" fields={exportOptions} label="Export table data as"></Select>
+                                    onChange={() => setExportAllRows(!exportAllRows)}></Checkbox>
+                            }
+
+                            <Select id={`${formId}_select_export_format"`}
+                                name="format"
+                                fields={exportOptions}
+                                label="Export table data as"></Select>
+
                             <div className="mt-2 flex justify-center">
-                                <Button variant="accent" size="sm" >Export</Button>
+                                <Button size="md" >Export</Button>
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
