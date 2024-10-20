@@ -5,7 +5,8 @@ export const TABLE_DEFINTION: Table = {
     id: 'text_fields_only',
     options: {
         initialize: { sort: { "publication_date": 'asc' } },
-        exportFileTypes: ["csv", "json", "xml", "txt"],
+        //disableExport: true,
+        disableColumnFilters: true,
         rowSelect: {
             header: "ROI", 
             description: "select row to target", 

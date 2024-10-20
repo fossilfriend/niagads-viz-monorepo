@@ -15,7 +15,7 @@ import { _get } from "@common/utils"
 interface ToolbarProps {
     table: ReactTable<TableRow>
     tableId: string
-    exportTypes?: FileFormat[]
+    enableExport: boolean
 }
 
 // if all columns are required, then cannot toggle column visibility for the table
@@ -25,7 +25,7 @@ const __canToggleColumns = (columns: ReactTableColumn<TableRow>[]) => {
 }
 
 
-export const TableToolbar = ({ table, tableId, exportTypes }: ToolbarProps) => {
+export const TableToolbar = ({ table, tableId, enableExport }: ToolbarProps) => {
     const canToggleColumns = useMemo(() => (__canToggleColumns(table.getAllColumns())), [])
     const tableIsFiltered: boolean = table.getState().globalFilter !== '' /* && table.getState().columnFilters ? -> array so not sure what to test yet */
 
@@ -41,8 +41,8 @@ export const TableToolbar = ({ table, tableId, exportTypes }: ToolbarProps) => {
                 <span className="ml-2 uppercase">Columns</span>
             </Button>
         </Tooltip>}
-        {exportTypes && <Tooltip message="export table data">
-            <TableExportControls onSubmit={handleTableExport} isFiltered={tableIsFiltered} exportOptions={exportTypes}/>
+        {enableExport && <Tooltip message="export table data">
+            <TableExportControls onSubmit={handleTableExport} isFiltered={tableIsFiltered}/>
         </Tooltip>}
 
 

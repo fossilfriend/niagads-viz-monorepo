@@ -1,5 +1,6 @@
 import exportFromJson from "export-from-json"
 
+export const EXPORT_FILE_FORMATS = Object.keys(exportFromJson.types).filter(f => !(['css', 'html'].includes(f)))
 export type FileFormat =  Exclude<keyof typeof exportFromJson.types, 'css' | 'html' >
 export type BasicType = string | number | boolean
 

@@ -4,7 +4,7 @@ import exportFromJSON from "export-from-json"
 
 import { Button, Checkbox, Select } from "@components/UI"
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid"
-import { FileFormat } from "@common/types"
+import { FileFormat, EXPORT_FILE_FORMATS } from "@common/types"
 
 export const exportTable = (table: ReactTable<any>, tableId: string, filteredRowsOnly: boolean, format: FileFormat) => {
     const isFiltered: boolean = table.getState().globalFilter !== '' /* && table.getState().columnFilters ? -> array so not sure what to test yet */
@@ -31,15 +31,16 @@ export const exportTable = (table: ReactTable<any>, tableId: string, filteredRow
 interface ExportMenuOptions {
     onSubmit?: any
     isFiltered: boolean
-    exportOptions: string[]
 }
 
 // working from https://www.creative-tim.com/twcomponents/component/pure-css-dropdown-using-focus-within
 // idea to create a drop down menu w/select which data and which format
 
-export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: ExportMenuOptions) => {
+export const TableExportControls = ({ isFiltered, onSubmit }: ExportMenuOptions) => {
     const [filteredOnly, setFilteredOnly] = useState<boolean>(isFiltered);
     const formId = useId()
+
+    const x:FileFormat = 'csv'
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -71,7 +72,7 @@ export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: Exp
 
                             <Select id={`${formId}_select_export_format"`}
                                 name="format"
-                                fields={exportOptions}
+                                fields={EXPORT_FILE_FORMATS}
                                 label="Export table data as"></Select>
 
                             <div className="mt-2 flex justify-center">

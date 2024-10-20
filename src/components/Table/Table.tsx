@@ -133,6 +133,7 @@ const Table: React.FC<Table> = ({ id, columns, data, options }) => {
     const [rowSelection, setRowSelection] = useState<RowSelectionState>(__setInitialRowSelection(options?.rowSelect?.selectedValues))
     const initialRender = useRef(true) // to regulate callbacks affected by the initial state
     const enableRowSelect = !!options?.rowSelect?.onRowSelect
+    const disableColumnFilters = !!options?.disableColumnFilters
 
     // Translate GenericColumns provided by user into React Table ColumnDefs
     // also adds in checkbox column if rowSelect options are set for the table
@@ -197,7 +198,7 @@ const Table: React.FC<Table> = ({ id, columns, data, options }) => {
                     {
                         id: col.id,
                         header: _get('header', col, toTitleCase(col.id)),
-                        enableColumnFilter: _get('canFilter', col, true),
+                        enableColumnFilter: _get('canFilter', col, true) && !disableColumnFilters,
                         enableGlobalFilter: !col.disableGlobalFilter,
                         enableSorting: !col.disableSorting,
                         sortingFn: __resolveSortingFn(col) as SortingFnOption<TableRow>,
@@ -307,7 +308,7 @@ const Table: React.FC<Table> = ({ id, columns, data, options }) => {
             <div className={__TAILWIND_CSS.container}>
                 <div className="flex justify-between items-center">
                   {/*  <SearchInput value={globalFilter} onChange={val => setGlobalFilter(val)} /> */}
-                    <TableToolbar table={table} tableId={id} exportTypes={options?.exportFileTypes}/>
+                    <TableToolbar table={table} tableId={id} enableExport={!!!options?.disableExport}/>
                     <PaginationControls table={table} />
                 </div>
 
