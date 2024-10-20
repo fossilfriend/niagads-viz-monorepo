@@ -1,15 +1,30 @@
 import React, { useState, useEffect, useId } from "react"
 import { Table as ReactTable } from "@tanstack/react-table"
-import exportFromJson from "export-from-json"
+import exportFromJSON from "export-from-json"
 
 import { Button, Checkbox, Select } from "@components/UI"
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid"
+import { FileFormat } from "@common/types"
 
+export const exportTable = (table: ReactTable<any>, tableId: string, filteredRowsOnly: boolean, format: FileFormat) => {
+    const isFiltered: boolean = table.getState().globalFilter !== '' /* && table.getState().columnFilters ? -> array so not sure what to test yet */
+    const columnIds: string[] = table.getVisibleFlatColumns().filter(col => col.id != 'select-col').map((col) => col.id )
+    const rows = isFiltered ? (filteredRowsOnly ? table.getSortedRowModel().rows : table.getPreFilteredRowModel().rows)
+        : table.getSortedRowModel().rows
 
-type __EXPORT_FROM_JSON_TYPES = typeof exportFromJson.types
+    /*  NOTE: Row models are applied as follows:
+        getCoreRowModel -> getFilteredRowModel -> getGroupedRowModel 
+            -> getSortedRowModel -> getExpandedRowModel -> getPaginationRowModel -> getRowModel
+        so, SortedRowModel will be filtered, but filtered is not sorted (so pre-filtered is not sorted either);
+        i.e. if a filter is applied, it is not possible to get a pre-filtered, sorted list of rows from ReactTables
+    */
 
-export const buildTableExport = (table: ReactTable<any>, filteredRowsOnly: boolean, format: string) => {
-    const exportType = exportFromJson.types[format as keyof __EXPORT_FROM_JSON_TYPES]
+    const exportData: any = rows.map(r => (
+        Object.fromEntries(columnIds.map(colId => [colId, r.getValue(colId)])
+    )))
+
+    exportFromJSON({data: exportData, fileName: tableId, withBOM: true, extension: format, delimiter: format == 'txt' ? '\t' : ',', exportType: format == 'txt' ? 'csv' : format})
+    //console.log(exportData)
 }
 
 
@@ -23,7 +38,7 @@ interface ExportMenuOptions {
 // idea to create a drop down menu w/select which data and which format
 
 export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: ExportMenuOptions) => {
-    const [exportAllRows, setExportAllRows] = useState<boolean>(isFiltered);
+    const [filteredOnly, setFilteredOnly] = useState<boolean>(isFiltered);
     const formId = useId()
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +48,7 @@ export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: Exp
     };
 
     useEffect(() => {
-        setExportAllRows(isFiltered)
+        setFilteredOnly(isFiltered)
     }, [isFiltered])
 
     return (
@@ -48,10 +63,10 @@ export const TableExportControls = ({ isFiltered, exportOptions, onSubmit }: Exp
                     <div className="px-4 py-3">
                         <form id={formId} onSubmit={handleSubmit}>
                             {isFiltered &&
-                                <Checkbox name='export_all' variant="accent"
-                                    value={exportAllRows.toString()}
-                                    label="Visible Rows Only" checked={exportAllRows}
-                                    onChange={() => setExportAllRows(!exportAllRows)}></Checkbox>
+                                <Checkbox name='filtered_only' variant="accent"
+                                    value={filteredOnly.toString()}
+                                    label="Filtered Rows Only" checked={filteredOnly}
+                                    onChange={() => setFilteredOnly(!filteredOnly)}></Checkbox>
                             }
 
                             <Select id={`${formId}_select_export_format"`}
