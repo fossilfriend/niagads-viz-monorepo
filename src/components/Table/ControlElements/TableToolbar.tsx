@@ -1,18 +1,20 @@
-import React, { useState, useMemo } from "react"
+import React, { useMemo, useCallback } from "react"
 
 import { Column as ReactTableColumn, Table as ReactTable } from "@tanstack/react-table"
-import { ViewColumnsIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
+import { ViewColumnsIcon } from '@heroicons/react/24/solid'
 
 import { Button, SearchInput, Tooltip } from "@components/UI"
 import { FileFormat } from "@common/types"
 import { TableRow } from "@table/TableProperties"
-import { TableExportControls } from "./TableExportControls"
+import { TableExportControls, exportTable } from "./TableExportControls"
+import { _get } from "@common/utils"
 
 
 // column.getCanHide
 
 interface ToolbarProps {
     table: ReactTable<TableRow>
+    tableId: string
     exportTypes?: FileFormat[]
 }
 
@@ -23,10 +25,13 @@ const __canToggleColumns = (columns: ReactTableColumn<TableRow>[]) => {
 }
 
 
-export const TableToolbar = ({ table, exportTypes }: ToolbarProps) => {
+export const TableToolbar = ({ table, tableId, exportTypes }: ToolbarProps) => {
     const canToggleColumns = useMemo(() => (__canToggleColumns(table.getAllColumns())), [])
     const tableIsFiltered: boolean = table.getState().globalFilter !== '' /* && table.getState().columnFilters ? -> array so not sure what to test yet */
 
+    const handleTableExport = useCallback((options: any) => { // FIXME:? Not sure if useCallback is necessary here
+        exportTable(table, tableId, _get('filtered_only', options, false), options.format)
+    }, [])
 
     return <div className="relative flex justify-end gap-2 m-2">
         <SearchInput value={table.getState().globalFilter} onChange={val => table.setGlobalFilter(val)} />
@@ -37,7 +42,7 @@ export const TableToolbar = ({ table, exportTypes }: ToolbarProps) => {
             </Button>
         </Tooltip>}
         {exportTypes && <Tooltip message="export table data">
-            <TableExportControls isFiltered={tableIsFiltered} exportOptions={exportTypes}/>
+            <TableExportControls onSubmit={handleTableExport} isFiltered={tableIsFiltered} exportOptions={exportTypes}/>
         </Tooltip>}
 
 

@@ -120,13 +120,14 @@ const __setInitialRowSelection = (columnIds: string[] | undefined) => {
 
 
 export interface Table {
+    id: string
     options?: TableConfig
     columns: GenericColumn[]
     data: TableData
 }
 
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
-const Table: React.FC<Table> = ({ columns, data, options }) => {
+const Table: React.FC<Table> = ({ id, columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [globalFilter, setGlobalFilter] = useState('');
     const [rowSelection, setRowSelection] = useState<RowSelectionState>(__setInitialRowSelection(options?.rowSelect?.selectedValues))
@@ -306,7 +307,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             <div className={__TAILWIND_CSS.container}>
                 <div className="flex justify-between items-center">
                   {/*  <SearchInput value={globalFilter} onChange={val => setGlobalFilter(val)} /> */}
-                    <TableToolbar table={table} exportTypes={options?.exportFileTypes}/>
+                    <TableToolbar table={table} tableId={id} exportTypes={options?.exportFileTypes}/>
                     <PaginationControls table={table} />
                 </div>
 

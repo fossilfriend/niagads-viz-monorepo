@@ -2,9 +2,10 @@ import { Table } from '../../src/components/Table/Table'
 
 
 export const TABLE_DEFINTION: Table = {
+    id: 'text_fields_only',
     options: {
         initialize: { sort: { "publication_date": 'asc' } },
-        exportFileTypes: ["csv", "json", "xlsx", "xml"],
+        exportFileTypes: ["csv", "json", "xml", "txt"],
         rowSelect: {
             header: "ROI", 
             description: "select row to target", 
