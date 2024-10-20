@@ -41,9 +41,9 @@ export const TableToolbar = ({ table, tableId, enableExport }: ToolbarProps) => 
                 <span className="ml-2 uppercase">Columns</span>
             </Button>
         </Tooltip>}
-        {enableExport && <Tooltip message="export table data">
+        {enableExport && 
             <TableExportControls onSubmit={handleTableExport} isFiltered={tableIsFiltered}/>
-        </Tooltip>}
+        }
 
 
     </div>

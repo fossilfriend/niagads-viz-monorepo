@@ -2,13 +2,13 @@ import React, { useState, useEffect, useId } from "react"
 import { Table as ReactTable } from "@tanstack/react-table"
 import exportFromJSON from "export-from-json"
 
-import { Button, Checkbox, Select } from "@components/UI"
+import { Button, Checkbox, Select, Tooltip } from "@components/UI"
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid"
 import { FileFormat, EXPORT_FILE_FORMATS } from "@common/types"
 
 export const exportTable = (table: ReactTable<any>, tableId: string, filteredRowsOnly: boolean, format: FileFormat) => {
     const isFiltered: boolean = table.getState().globalFilter !== '' /* && table.getState().columnFilters ? -> array so not sure what to test yet */
-    const columnIds: string[] = table.getVisibleFlatColumns().filter(col => col.id != 'select-col').map((col) => col.id )
+    const columnIds: string[] = table.getVisibleFlatColumns().filter(col => col.id != 'select-col').map((col) => col.id)
     const rows = isFiltered ? (filteredRowsOnly ? table.getSortedRowModel().rows : table.getPreFilteredRowModel().rows)
         : table.getSortedRowModel().rows
 
@@ -21,9 +21,9 @@ export const exportTable = (table: ReactTable<any>, tableId: string, filteredRow
 
     const exportData: any = rows.map(r => (
         Object.fromEntries(columnIds.map(colId => [colId, r.getValue(colId)])
-    )))
+        )))
 
-    exportFromJSON({data: exportData, fileName: tableId, withBOM: true, extension: format, delimiter: format == 'txt' ? '\t' : ',', exportType: format == 'txt' ? 'csv' : format})
+    exportFromJSON({ data: exportData, fileName: tableId, withBOM: true, extension: format, delimiter: format == 'txt' ? '\t' : ',', exportType: format == 'txt' ? 'csv' : format })
     //console.log(exportData)
 }
 
@@ -40,7 +40,7 @@ export const TableExportControls = ({ isFiltered, onSubmit }: ExportMenuOptions)
     const [filteredOnly, setFilteredOnly] = useState<boolean>(isFiltered);
     const formId = useId()
 
-    const x:FileFormat = 'csv'
+    const x: FileFormat = 'csv'
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -54,10 +54,12 @@ export const TableExportControls = ({ isFiltered, onSubmit }: ExportMenuOptions)
 
     return (
         <div className="relative inline-block text-left dropdown">
-            <Button variant="white">
-                <ArrowDownTrayIcon className="icon-button"></ArrowDownTrayIcon>
-                <span className="ml-2 uppercase">Export</span>
-            </Button>
+            <Tooltip message="export table data">
+                <Button variant="white">
+                    <ArrowDownTrayIcon className="icon-button"></ArrowDownTrayIcon>
+                    <span className="ml-2 uppercase">Export</span>
+                </Button>
+            </Tooltip>
 
             <div className="hidden dropdown-menu">
                 <div className="z-50 absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby={`${formId}-headlessui-menu-button}`} id={`${formId}-headlessui-menu-items`} role="menu">
