@@ -54,11 +54,7 @@ const __TAILWIND_CSS = {
 
 const TABLE_CLASSES = `${__TAILWIND_CSS.table_border} ${__TAILWIND_CSS.table_layout} ${__TAILWIND_CSS.table_text}`
 
-export interface Table {
-    options?: TableConfig
-    columns: GenericColumn[]
-    data: TableData
-}
+
 
 const __resolveSortingFn = (col: GenericColumn) => {
     if (col.type === 'boolean') {
@@ -125,6 +121,7 @@ export interface Table {
     columns: GenericColumn[]
     data: TableData
 }
+
 
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
 const Table: React.FC<Table> = ({ id, columns, data, options }) => {
