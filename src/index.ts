@@ -1,3 +1,3 @@
 import './tailwind.css'
-export { default as Table }  from '@table/Table'
+export { default as Table }  from './components/Table/Table'
 //export * from "./components";

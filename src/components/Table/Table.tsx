@@ -115,7 +115,7 @@ const __setInitialRowSelection = (columnIds: string[] | undefined) => {
 }
 
 
-export interface Table {
+export interface TableProps {
     id: string
     options?: TableConfig
     columns: GenericColumn[]
@@ -124,7 +124,7 @@ export interface Table {
 
 
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
-const Table: React.FC<Table> = ({ id, columns, data, options }) => {
+const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [globalFilter, setGlobalFilter] = useState('');
     const [rowSelection, setRowSelection] = useState<RowSelectionState>(__setInitialRowSelection(options?.rowSelect?.selectedValues))
