@@ -40,7 +40,7 @@ export const ColumnControls = ({ columns, onSelect }: ColumnControlsProps) => {
                                         checked={col.getIsVisible()}
                                         onChange={col.getToggleVisibilityHandler()}
                                     />
-                                    {col.id}
+                                    {col.columnDef.header?.toString()}
                                 </label>
                             ) : (
                                 <></>
