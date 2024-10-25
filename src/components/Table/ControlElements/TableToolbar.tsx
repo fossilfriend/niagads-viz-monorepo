@@ -30,12 +30,12 @@ export const TableToolbar = ({ table, exportTypes }: ToolbarProps) => {
 
     return <div className="relative flex justify-end gap-2 m-2">
         <SearchInput value={table.getState().globalFilter} onChange={val => table.setGlobalFilter(val)} />
-        {canToggleColumns && <Tooltip message="Show/Hide Columns">
+        {canToggleColumns &&
             <ColumnControls columns={table.getAllLeafColumns()} onSelect={() => console.log("selected")} />
-        </Tooltip>}
-        {exportTypes && <Tooltip message="export table data">
+        }
+        {exportTypes &&
             <TableExportControls isFiltered={tableIsFiltered} exportOptions={exportTypes}/>
-        </Tooltip>}
+        }
 
 
     </div>
