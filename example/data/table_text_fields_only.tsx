@@ -17,7 +17,7 @@ export const TABLE_DEFINTION: Table = {
         }
     },
     columns: [
-        { id: 'id', description: 'test alternative field to return for row selection', canFilter: false},
+        { id: 'id', description: 'test alternative field to return for row selection', canFilter: false, required: true},
         {
             id: 'dataset_accession',
             header: 'Accession',

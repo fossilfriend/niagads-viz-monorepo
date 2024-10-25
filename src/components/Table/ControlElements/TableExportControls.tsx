@@ -23,7 +23,12 @@ export const exportTable = (table: ReactTable<any>, tableId: string, filteredRow
         Object.fromEntries(columnIds.map(colId => [colId, r.getValue(colId)])
         )))
 
-    exportFromJSON({ data: exportData, fileName: tableId, withBOM: true, extension: format, delimiter: format == 'txt' ? '\t' : ',', exportType: format == 'txt' ? 'csv' : format })
+    exportFromJSON({ data: exportData, 
+        fileName: tableId, 
+        withBOM: true, 
+        extension: format, 
+        delimiter: format == 'txt' ? '\t' : ',', 
+        exportType: format == 'txt' ? 'csv' : format })
     //console.log(exportData)
 }
 
@@ -78,7 +83,7 @@ export const TableExportControls = ({ isFiltered, onSubmit }: ExportMenuOptions)
                                 label="Export table data as"></Select>
 
                             <div className="mt-2 flex justify-center">
-                                <Button size="md" >Export</Button>
+                                <Button size="md">Export</Button>
                             </div>
                         </form>
                     </div>

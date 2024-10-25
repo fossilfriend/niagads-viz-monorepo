@@ -1,16 +1,12 @@
 import React, { useMemo, useCallback } from "react"
 
 import { Column as ReactTableColumn, Table as ReactTable } from "@tanstack/react-table"
-import { ViewColumnsIcon } from '@heroicons/react/24/solid'
 
-import { Button, SearchInput, Tooltip } from "@components/UI"
-import { FileFormat } from "@common/types"
+import { SearchInput } from "@components/UI"
 import { TableRow } from "@table/TableProperties"
 import { TableExportControls, exportTable } from "./TableExportControls"
 import { _get } from "@common/utils"
-
-
-// column.getCanHide
+import { ColumnControls } from "./ColumnControls"
 
 interface ToolbarProps {
     table: ReactTable<TableRow>
@@ -35,17 +31,12 @@ export const TableToolbar = ({ table, tableId, enableExport }: ToolbarProps) => 
 
     return <div className="relative flex justify-end gap-2 m-2">
         <SearchInput value={table.getState().globalFilter} onChange={val => table.setGlobalFilter(val)} />
-        {canToggleColumns && <Tooltip message="Show/Hide Columns">
-            <Button variant="white" onClick={() => alert('show hide columns')} >
-                <ViewColumnsIcon className={`icon-button`}></ViewColumnsIcon>
-                <span className="ml-2 uppercase">Columns</span>
-            </Button>
-        </Tooltip>}
+        {canToggleColumns &&
+            <ColumnControls columns={table.getAllLeafColumns()} onSelect={() => console.log("selected")} />
+        }
         {enableExport && 
             <TableExportControls onSubmit={handleTableExport} isFiltered={tableIsFiltered}/>
         }
-
-
     </div>
 }
 
