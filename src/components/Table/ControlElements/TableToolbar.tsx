@@ -36,8 +36,6 @@ export const TableToolbar = ({ table, exportTypes }: ToolbarProps) => {
         {exportTypes &&
             <TableExportControls isFiltered={tableIsFiltered} exportOptions={exportTypes}/>
         }
-
-
     </div>
 }
 
