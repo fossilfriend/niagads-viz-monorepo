@@ -1,12 +1,12 @@
 import React, { useState, useMemo } from "react"
 
 import { Column as ReactTableColumn, Table as ReactTable } from "@tanstack/react-table"
-import { ViewColumnsIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
 
 import { Button, SearchInput, Tooltip } from "@components/UI"
 import { FileFormat } from "@common/types"
 import { TableRow } from "@table/TableProperties"
 import { TableExportControls } from "./TableExportControls"
+import { ColumnControls } from "./ColumnControls"
 
 
 // column.getCanHide
@@ -30,17 +30,12 @@ export const TableToolbar = ({ table, exportTypes }: ToolbarProps) => {
 
     return <div className="relative flex justify-end gap-2 m-2">
         <SearchInput value={table.getState().globalFilter} onChange={val => table.setGlobalFilter(val)} />
-        {canToggleColumns && <Tooltip message="Show/Hide Columns">
-            <Button variant="white" onClick={() => alert('show hide columns')} >
-                <ViewColumnsIcon className={`icon-button`}></ViewColumnsIcon>
-                <span className="ml-2 uppercase">Columns</span>
-            </Button>
-        </Tooltip>}
-        {exportTypes && <Tooltip message="export table data">
+        {canToggleColumns &&
+            <ColumnControls columns={table.getAllLeafColumns()} onSelect={() => console.log("selected")} />
+        }
+        {exportTypes &&
             <TableExportControls isFiltered={tableIsFiltered} exportOptions={exportTypes}/>
-        </Tooltip>}
-
-
+        }
     </div>
 }
 
