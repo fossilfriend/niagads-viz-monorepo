@@ -65,11 +65,7 @@ const __TAILWIND_CSS = {
 
 const TABLE_CLASSES = `${__TAILWIND_CSS.table_border} ${__TAILWIND_CSS.table_layout} ${__TAILWIND_CSS.table_text}`;
 
-export interface Table {
-    options?: TableConfig;
-    columns: GenericColumn[];
-    data: TableData;
-}
+
 
 const __resolveSortingFn = (col: GenericColumn) => {
     if (col.type === "boolean") {
@@ -93,11 +89,11 @@ const __resolveCell = (
     } catch (e: any) {
         throw Error(
             "Validation Error parsing field value for row " +
-                index +
-                " column `" +
-                column.id +
-                "`.\n" +
-                e.message
+            index +
+            " column `" +
+            column.id +
+            "`.\n" +
+            e.message
         );
     }
 };
@@ -141,14 +137,16 @@ const __setInitialRowSelection = (columnIds: string[] | undefined) => {
     return rSelection;
 };
 
-export interface Table {
-    options?: TableConfig;
-    columns: GenericColumn[];
-    data: TableData;
+export interface TableProps {
+    id: string
+    options?: TableConfig
+    columns: GenericColumn[]
+    data: TableData
 }
 
+
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
-const Table: React.FC<Table> = ({ columns, data, options }) => {
+const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [globalFilter, setGlobalFilter] = useState("");
     const [rowSelection, setRowSelection] = useState<RowSelectionState>(
@@ -157,6 +155,7 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
     const [columnVisibility, setColumnVisibility] = useState({});
     const initialRender = useRef(true); // to regulate callbacks affected by the initial state
     const enableRowSelect = !!options?.rowSelect?.onRowSelect;
+    const disableColumnFilters = !!options?.disableColumnFilters
 
     // Translate GenericColumns provided by user into React Table ColumnDefs
     // also adds in checkbox column if rowSelect options are set for the table
@@ -227,9 +226,9 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
             } catch (e: any) {
                 throw Error(
                     "Error processing column definition for `" +
-                        col.id +
-                        "`.\n" +
-                        e.message
+                    col.id +
+                    "`.\n" +
+                    e.message
                 );
             }
 
@@ -239,8 +238,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                         getCellValue(row[col.id as keyof typeof row] as Cell),
                     {
                         id: col.id,
-                        header: _get("header", col, toTitleCase(col.id)),
-                        enableColumnFilter: _get("canFilter", col, true),
+                        header: _get('header', col, toTitleCase(col.id)),
+                        enableColumnFilter: _get('canFilter', col, true) && !disableColumnFilters,
                         enableGlobalFilter: !col.disableGlobalFilter,
                         enableSorting: !col.disableSorting,
                         sortingFn: __resolveSortingFn(
@@ -281,8 +280,8 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
                     if (currentColumn === undefined) {
                         throw new Error(
                             "Invalid column name found in table data definition `" +
-                                columnId +
-                                "`"
+                            columnId +
+                            "`"
                         );
                     }
                     tableRow[columnId] = __resolveCell(
@@ -369,40 +368,37 @@ const Table: React.FC<Table> = ({ columns, data, options }) => {
         options?.rowSelect?.onRowSelect(rowSelection);
     }, [rowSelection]);
 
-    return table ? (
-        <div className={__TAILWIND_CSS.container}>
-            <div className="flex justify-between">
-                <TableToolbar
-                    table={table}
-                    exportTypes={options?.exportFileTypes}
-                />
-                <PaginationControls table={table} />
+    return (
+        table ? (
+            <div className={__TAILWIND_CSS.container}>
+                <div className="flex justify-between items-center">
+                    <TableToolbar table={table} tableId={id} enableExport={!!!options?.disableExport} />
+                    <PaginationControls table={table} />
+                </div>
+
+                <div className="overflow-auto">
+                    <table className={TABLE_CLASSES}>
+                        {__renderTableHeader(table.getHeaderGroups())}
+                        <tbody>
+                            {table.getRowModel().rows.map((row) => (
+                                <tr key={row.id} className={__TAILWIND_CSS.dtr}>
+                                    {row.getVisibleCells().map((cell) => (
+                                        <td className={__TAILWIND_CSS.td}key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div className="overflow-auto">
-                <table className={TABLE_CLASSES}>
-                    {__renderTableHeader(table.getHeaderGroups())}
-                    <tbody>
-                        {table.getRowModel().rows.map((row) => (
-                            <tr key={row.id} className={__TAILWIND_CSS.dtr}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td
-                                        className={__TAILWIND_CSS.td}
-                                        key={cell.id}
-                                    >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    ) : (
-        <div>No data</div>
+        ) : (
+            <div>No data</div>
+        )
     );
 };
 
