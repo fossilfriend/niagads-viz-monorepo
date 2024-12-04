@@ -3,7 +3,7 @@ import React from "react"
 import { TextRenderer, renderWithInfo} from "./TextRenderer"
 import { Text } from "./BasicText"
 
-import { _get, _hasOwnProperty, _isNull } from "../../../common/utils
+import { _get, _hasOwnProperty, _isNull } from "@/common/utils";
 
 const _renderLink = (displayText: string, url: string, newWindow: boolean=false) => {
     if (newWindow) {

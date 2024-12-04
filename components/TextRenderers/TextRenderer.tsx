@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react"
 
-import { _get, _hasOwnProperty, _isNA, _isNull } from "../../../common/utils
+import { _get, _hasOwnProperty, _isNA, _isNull } from "@/common/utils";
 import { renderTooltip } from "@/components/UI/Tooltip";
 
 import {
@@ -119,7 +119,7 @@ export const renderWithIcon = (textElement: ReactNode | string, icon: ReactNode 
  */
 export const buildElementStyle = (props: any, property: string | null = null) => {
     const VALID_STYLES = property ? [property] : ['color', 'backgroundColor', 'borderColor']
-    let style = {}
+    const style = {}
     for (const vStyle of VALID_STYLES) {
         if (_hasOwnProperty(vStyle, props)) {
             Object.assign(style, { [vStyle]: _get(vStyle, props) })

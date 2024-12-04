@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull } from "../../../common/utils
+import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull } from "@/common/utils";
 
 import {
     TextRenderer,
@@ -79,7 +79,7 @@ export const LargeText = <T,>({ props }: TextRenderer<T>) => {
     const truncatedValue = `${value.slice(0, maxLength - 3)}...`
 
     if (hasTooltip) {
-        let newProps = _deepCopy(props)
+        const newProps = _deepCopy(props)
         newProps.value = truncatedValue
         return <Text props={newProps} />
     }
@@ -88,7 +88,7 @@ export const LargeText = <T,>({ props }: TextRenderer<T>) => {
     const textElement = renderStyledText(isExpanded ? value : truncatedValue, style, "")
     const action = isExpanded ? 'Show Less' : 'Show More'
     return (
-        <div className="max-w-[300px]">
+        <div className="max-w-[300px] break-words">
             {textElement}{"   "}
             <a className="text-xs info-link" onClick={toggleIsExpanded}>{action}</a>
         </div>
