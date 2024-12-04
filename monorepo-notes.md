@@ -9,7 +9,8 @@
 ### IGVBrowser
 
 * requires ambient_types
-* TBD
+* lodash.get, lodash.merge, lodash.noop, lodash.find (& @types for each)
+* igv: `https://github.com/NIAGADS/igv.js.git#NIAGADS`
 
 ### Gosling
 
