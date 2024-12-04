@@ -27,7 +27,7 @@
         "isolatedModules": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true,
-        "baseUrl": "./src",
+        "baseUrl": "src",
         "noErrorTruncation": true,
         "typeRoots": [
             "node_modules/@types",
