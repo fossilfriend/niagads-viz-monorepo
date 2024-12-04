@@ -5,7 +5,7 @@ import {
     QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline";
 
-import { Tooltip } from "@components/UI/Tooltip";
+import { Tooltip } from "@/components/UI/Tooltip";
 
 interface HelpIcon {
     message: ReactNode | string,
@@ -18,7 +18,7 @@ export const HelpIcon = ({message, type}: HelpIcon) => {
         : <QuestionMarkCircleIcon className="ml-1 size-3 text-blue-600"/>
 
 
-    return <Tooltip children={icon} message={message} position='right'></Tooltip>
+    return <Tooltip message={message}>{icon}</Tooltip>
 }
 
 export const renderHelpIcon = (message:ReactNode | string, type: 'question'|'info' = 'question') => {
