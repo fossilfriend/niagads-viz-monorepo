@@ -51,7 +51,7 @@ import {
     Checkbox,
     RadioButton,
     SearchInput,
-} from "@components/UI";
+} from "@/components/UI";
 
 const __TAILWIND_CSS = {
     container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",

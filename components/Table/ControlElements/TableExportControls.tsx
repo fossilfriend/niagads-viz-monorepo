@@ -2,7 +2,7 @@ import React, { useState, useEffect, useId } from "react"
 import { Table as ReactTable } from "@tanstack/react-table"
 import exportFromJSON from "export-from-json"
 
-import { Button, Checkbox, Select, Tooltip } from "@components/UI"
+import { Button, Checkbox, Select, Tooltip } from "@/components/UI"
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid"
 import { FileFormat, EXPORT_FILE_FORMATS } from "../../../../common/types
 

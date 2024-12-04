@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 
 import { _get, _hasOwnProperty, _isNA, _isNull } from "../../../common/utils
-import { renderTooltip } from "@components/UI/Tooltip";
+import { renderTooltip } from "@/components/UI/Tooltip";
 
 import {
     CheckIcon, CheckCircleIcon,

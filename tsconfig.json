@@ -36,10 +36,7 @@
         "outDir": "dist",
         "baseUrl": ".",
         "paths": {
-            "@examples/*": ["examples/*"],
-            "@components/*": ["components/*"],
-            "@common/*": ["common/*"],
-            "@root/*" : ["./*"]
+            "@/*" : ["./*"]
         },
     },
     "exclude": [

@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from "react"
 
 import { Column as ReactTableColumn, Table as ReactTable } from "@tanstack/react-table"
 
-import { SearchInput } from "@components/UI"
+import { SearchInput } from "@/components/UI"
 import { TableRow } from "@table/TableProperties"
 import { TableExportControls, exportTable } from "./TableExportControls"
 import { _get } from "../../../../common/utils

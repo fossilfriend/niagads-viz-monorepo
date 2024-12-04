@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 
 import { BasicType, Modify, TypeMapper, Expand, NAString } from "@root/common/types"
 import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull, _isNA } from '@root/common/utils'
-import { Color } from '@common/palettes'
+import { Color } from '@/common/palettes'
 
 import { Text, TextList } from '@text/BasicText'
 import { Link, LinkList } from '@text/Link'
