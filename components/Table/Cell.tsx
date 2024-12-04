@@ -1,17 +1,17 @@
 import React, { ReactNode } from 'react'
 
 
-import { BasicType, Modify, TypeMapper, Expand, NAString } from "@root/common/types"
-import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull, _isNA } from '@root/common/utils'
-import { Color } from '@/common/palettes'
+import { BasicType, Modify, TypeMapper, Expand, NAString } from "@/common/types"
+import { _isJSON, _deepCopy, _hasOwnProperty, _get, _isNull, _isNA } from '@/common/utils'
+import { Color } from '@/common/colors'
 
-import { Text, TextList } from '@text/BasicText'
-import { Link, LinkList } from '@text/Link'
-import { Float } from '@text/Number'
+import { Text, TextList } from '@/components/TextRenderers/BasicText'
+import { Link, LinkList } from '@/components/TextRenderers/Link'
+import { Float } from '@/components/TextRenderers/Number'
 import { GenericColumn } from './Column'
-import { Badge, BooleanBadge, BadgeIconType } from '@text/Badge'
-import { ICONS } from "@text/TextRenderer"
-import { PercentageBar } from '@text/SparkChart'
+import { Badge, BooleanBadge, BadgeIconType } from '@/components/TextRenderers/Badge'
+import { ICONS } from "@/components/TextRenderers/TextRenderer"
+import { PercentageBar } from '@/components/TextRenderers/SparkChart'
 
 export const DEFAULT_NA_VALUE = 'NA'
 

@@ -1,6 +1,4 @@
-// TODO: put sorting back in
-// TODO: filtering
-
+"use client";
 import React, {
     useMemo,
     useState,
@@ -22,13 +20,14 @@ import {
     SortingFnOption,
     getSortedRowModel,
     RowSelectionState,
+    VisibilityState,
     TableOptions,
 } from "@tanstack/react-table";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-import { _get, _hasOwnProperty, toTitleCase } from "../../../common/utils
-import { errorFallback } from "../../../common/errors
+import { _get, _hasOwnProperty, toTitleCase } from "@/common/utils";
+import { errorFallback } from "@/common/errors";
 
 import {
     Cell,
@@ -43,7 +42,10 @@ import { GenericColumn, getColumn } from "./Column";
 import { TableColumnHeader } from "./TableColumnHeader";
 import { CustomSortingFunctions } from "./TableSortingFunctions";
 
-import { PaginationControls, TableToolbar } from "@table/ControlElements";
+import {
+    PaginationControls,
+    TableToolbar,
+} from "@/components/Table/ControlElements";
 
 import {
     Button,
@@ -64,8 +66,6 @@ const __TAILWIND_CSS = {
 };
 
 const TABLE_CLASSES = `${__TAILWIND_CSS.table_border} ${__TAILWIND_CSS.table_layout} ${__TAILWIND_CSS.table_text}`;
-
-
 
 const __resolveSortingFn = (col: GenericColumn) => {
     if (col.type === "boolean") {
@@ -89,11 +89,11 @@ const __resolveCell = (
     } catch (e: any) {
         throw Error(
             "Validation Error parsing field value for row " +
-            index +
-            " column `" +
-            column.id +
-            "`.\n" +
-            e.message
+                index +
+                " column `" +
+                column.id +
+                "`.\n" +
+                e.message
         );
     }
 };
@@ -128,7 +128,7 @@ const __isValidRowId = (data: TableData, columnId: string) => {
 
 // builds data structure to initialize row selection state
 const __setInitialRowSelection = (columnIds: string[] | undefined) => {
-    let rSelection: RowSelectionState = {};
+    const rSelection: RowSelectionState = {};
     if (columnIds) {
         columnIds.forEach((colId) => {
             rSelection[colId] = true;
@@ -137,32 +137,46 @@ const __setInitialRowSelection = (columnIds: string[] | undefined) => {
     return rSelection;
 };
 
-export interface TableProps {
-    id: string
-    options?: TableConfig
+// builds data structure to initialize row selection state
+const __setInitialColumnVisibility = (
+    defaultColumns: string[] | undefined,
     columns: GenericColumn[]
-    data: TableData
+) => {
+    const visibility: VisibilityState = {};
+    if (defaultColumns) {
+        columns.forEach((col) => {
+            visibility[col.id] = defaultColumns.includes(col.id)
+        });
+    }
+    return visibility;
+};
+
+export interface TableProps {
+    id: string;
+    options?: TableConfig;
+    columns: GenericColumn[];
+    data: TableData;
 }
 
-
 // TODO: use table options to initialize the state (e.g., initial sort, initial filter)
-const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
+export const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [globalFilter, setGlobalFilter] = useState("");
     const [rowSelection, setRowSelection] = useState<RowSelectionState>(
         __setInitialRowSelection(options?.rowSelect?.selectedValues)
     );
-    const [columnVisibility, setColumnVisibility] = useState({});
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+        __setInitialColumnVisibility(options?.defaultColumns, columns)
+    );
     const initialRender = useRef(true); // to regulate callbacks affected by the initial state
-    const enableRowSelect = !!options?.rowSelect?.onRowSelect;
-    const disableColumnFilters = !!options?.disableColumnFilters
+    const enableRowSelect = !!options?.rowSelect;
+    const disableColumnFilters = !!options?.disableColumnFilters;
 
     // Translate GenericColumns provided by user into React Table ColumnDefs
     // also adds in checkbox column if rowSelect options are set for the table
     const resolvedColumns = useMemo<ColumnDef<TableRow>[]>(() => {
         const columnHelper = createColumnHelper<TableRow>();
         const columnDefs: ColumnDef<TableRow>[] = [];
-
         if (enableRowSelect) {
             const multiSelect: boolean =
                 !!options?.rowSelect?.enableMultiRowSelect;
@@ -177,12 +191,14 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
                                         size="sm"
                                         variant="primary"
                                         disabled={
-                                            !table.getIsSomeRowsSelected()
+                                            Object.keys(
+                                                table.getState().rowSelection
+                                            ).length === 0
+                                            // FIXME: !table.getIsSomeRowsSelected() - not working in next.js
                                         }
                                         onClick={() => {
                                             table.resetRowSelection(true);
-                                        }}
-                                    >
+                                        }}>
                                         <TrashIcon className="icon-button"></TrashIcon>
                                     </Button>
                                 </Tooltip>
@@ -226,9 +242,9 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
             } catch (e: any) {
                 throw Error(
                     "Error processing column definition for `" +
-                    col.id +
-                    "`.\n" +
-                    e.message
+                        col.id +
+                        "`.\n" +
+                        e.message
                 );
             }
 
@@ -238,8 +254,10 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
                         getCellValue(row[col.id as keyof typeof row] as Cell),
                     {
                         id: col.id,
-                        header: _get('header', col, toTitleCase(col.id)),
-                        enableColumnFilter: _get('canFilter', col, true) && !disableColumnFilters,
+                        header: _get("header", col, toTitleCase(col.id)),
+                        enableColumnFilter:
+                            _get("canFilter", col, true) &&
+                            !disableColumnFilters,
                         enableGlobalFilter: !col.disableGlobalFilter,
                         enableSorting: !col.disableSorting,
                         sortingFn: __resolveSortingFn(
@@ -257,7 +275,7 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
     }, []);
 
     const resolvedData = useMemo<TableData>(() => {
-        let tableData: TableData = [];
+        const tableData: TableData = [];
         const enFields = columns.length; // expected number of fields
         try {
             data.forEach((row: TableRow, index: number) => {
@@ -276,12 +294,12 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
 
                 const tableRow: TableRow = {};
                 for (const [columnId, value] of Object.entries(row)) {
-                    let currentColumn = getColumn(columnId, columns);
+                    const currentColumn = getColumn(columnId, columns);
                     if (currentColumn === undefined) {
                         throw new Error(
                             "Invalid column name found in table data definition `" +
-                            columnId +
-                            "`"
+                                columnId +
+                                "`"
                         );
                     }
                     tableRow[columnId] = __resolveCell(
@@ -301,7 +319,7 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
     // build table options conditionally
     // cannot memoize this b/c it depends on the state;
     // doing so leads to very slow rerenders
-    let reactTableOptions: TableOptions<TableRow> = {
+    const reactTableOptions: TableOptions<TableRow> = {
         data: resolvedData,
         columns: resolvedColumns,
         getCoreRowModel: getCoreRowModel(),
@@ -331,10 +349,9 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
 
         const rowIdColumn = options?.rowSelect?.rowId;
         if (!!rowIdColumn) {
-            const isValidRowId = useMemo(
-                () => __isValidRowId(resolvedData, rowIdColumn),
-                [rowIdColumn]
-            );
+            // -@ts-expect-error: useMemo used conditionally
+            // const isValidRowId = useMemo(() => __isValidRowId(resolvedData, rowIdColumn), [rowIdColumn]);
+            const isValidRowId = __isValidRowId(resolvedData, rowIdColumn);
             if (isValidRowId) {
                 Object.assign(reactTableOptions, {
                     getRowId: (row: TableRow) =>
@@ -355,7 +372,7 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
     useLayoutEffect(() => {
         if (options?.onTableLoad) {
             // TODO: if (initialRender.current)  // not sure if necessary - initialRender is a useRef / from GenomicsDB code; has to do w/pre-selected rows
-            table && options.onTableLoad(table);
+            if (table) {options.onTableLoad(table)}
         }
     }, [table]);
 
@@ -368,37 +385,41 @@ const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
         options?.rowSelect?.onRowSelect(rowSelection);
     }, [rowSelection]);
 
-    return (
-        table ? (
-            <div className={__TAILWIND_CSS.container}>
-                <div className="flex justify-between items-center">
-                    <TableToolbar table={table} tableId={id} enableExport={!!!options?.disableExport} />
-                    <PaginationControls table={table} />
-                </div>
-
-                <div className="overflow-auto">
-                    <table className={TABLE_CLASSES}>
-                        {__renderTableHeader(table.getHeaderGroups())}
-                        <tbody>
-                            {table.getRowModel().rows.map((row) => (
-                                <tr key={row.id} className={__TAILWIND_CSS.dtr}>
-                                    {row.getVisibleCells().map((cell) => (
-                                        <td className={__TAILWIND_CSS.td}key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+    return table ? (
+        <div className={__TAILWIND_CSS.container}>
+            <div className="flex justify-between items-center">
+                <TableToolbar
+                    table={table}
+                    tableId={id}
+                    enableExport={!!!options?.disableExport}
+                />
+                <PaginationControls table={table} />
             </div>
-        ) : (
-            <div>No data</div>
-        )
+
+            <div className="overflow-auto">
+                <table className={TABLE_CLASSES}>
+                    {__renderTableHeader(table.getHeaderGroups())}
+                    <tbody>
+                        {table.getRowModel().rows.map((row) => (
+                            <tr key={row.id} className={__TAILWIND_CSS.dtr}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <td
+                                        className={__TAILWIND_CSS.td}
+                                        key={cell.id}>
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext()
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    ) : (
+        <div>No data</div>
     );
 };
 

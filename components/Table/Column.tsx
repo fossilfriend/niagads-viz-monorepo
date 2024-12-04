@@ -1,4 +1,4 @@
-import { BasicType, NAString } from "../../../common/types
+import { BasicType, NAString } from "@/common/types"
 import { CellType } from "./Cell";
 
 export interface ColumnSortConfig {
