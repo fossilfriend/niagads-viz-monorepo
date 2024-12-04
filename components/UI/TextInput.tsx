@@ -1,4 +1,4 @@
-import { _get } from "@common/utils"
+import { _get } from "../../../common/utils
 import React, { ReactNode } from "react"
 
 const __TAILWIND_CSS = {

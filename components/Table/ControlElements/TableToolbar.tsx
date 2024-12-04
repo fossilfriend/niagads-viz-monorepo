@@ -5,7 +5,7 @@ import { Column as ReactTableColumn, Table as ReactTable } from "@tanstack/react
 import { SearchInput } from "@components/UI"
 import { TableRow } from "@table/TableProperties"
 import { TableExportControls, exportTable } from "./TableExportControls"
-import { _get } from "@common/utils"
+import { _get } from "../../../../common/utils
 import { ColumnControls } from "./ColumnControls"
 
 interface ToolbarProps {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { LocusZoomPlot } from "@components/LocusZoom";
+import { LocusZoomPlot } from "@root/components/LocusZoom";
 
 const meta: Meta<typeof LocusZoomPlot> = {
     title: "NIAGADS-VIZ/Data Vizualization/LocusZoomPlot",

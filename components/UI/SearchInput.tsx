@@ -1,5 +1,5 @@
 import React from "react"
-import { _get } from "@common/utils"
+import { _get } from "../../../common/utils
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 
 const __TAILWIND_CSS = {

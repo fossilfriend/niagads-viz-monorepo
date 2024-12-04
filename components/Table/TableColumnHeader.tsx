@@ -7,7 +7,7 @@ import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon, InformationCircleIcon } f
 import { FunnelIcon } from "@heroicons/react/24/outline";
 
 import { Button } from "@components/UI/Button";
-import { _get } from "@common/utils";
+import { _get } from "../../../common/utils
 import { renderTooltip } from "@components/UI/Tooltip";
 
 const __TAILWIND_CSS = {

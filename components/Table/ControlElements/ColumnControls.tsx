@@ -2,7 +2,7 @@ import React, { useState, useEffect, useId } from "react";
 
 import { Button } from "@components/UI";
 import { ViewColumnsIcon } from "@heroicons/react/24/solid";
-import { _get } from "@common/utils";
+import { _get } from "../../../../common/utils
 import { GenericColumn } from "@table/Column";
 import { Column } from "@tanstack/react-table";
 import { TableRow } from "@table/TableProperties";

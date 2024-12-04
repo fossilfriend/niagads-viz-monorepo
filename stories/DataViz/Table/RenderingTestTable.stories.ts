@@ -2,7 +2,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Table  from '@table/Table';
-import { TABLE_DEFINTION as table } from '../../../../example/data/table_rendering_test'
+import { TABLE_DEFINTION as table } from '@examples/tables/table_rendering_test'
 
 const meta: Meta<typeof Table> = {
   title: 'NIAGADS-VIZ/Data Vizualization/Table/Rendering Test Table',

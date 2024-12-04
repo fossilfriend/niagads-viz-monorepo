@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react"
-import { _get } from "@common/utils"
+import { _get } from "../../../common/utils
 
 const __TAILWIND_CSS = {
     root: "cursor-pointer font-inter font-medium text-sm rounded-lg border-solid border focus:ring-2 focus:z-10 inline-flex items-center", //me-2 mb-2 

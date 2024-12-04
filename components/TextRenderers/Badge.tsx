@@ -1,5 +1,5 @@
 import React from "react"
-import { _get, _hasOwnProperty, _isNA, _isNull } from "@common/utils";
+import { _get, _hasOwnProperty, _isNA, _isNull } from "../../../common/utils
 import {
     TextRenderer,
     buildElementStyle,

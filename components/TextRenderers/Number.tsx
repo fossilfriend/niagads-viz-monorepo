@@ -9,7 +9,7 @@ import {
     _isNull,
     toExponential,
     toFixedWithoutZeros
-} from "@common/utils";
+} from "../../../common/utils
 
 
 export const formatFloat = (value: number, precision: number = 2) => {

@@ -1,6 +1,6 @@
 import React from "react"
 
-import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull, toExponential, toFixedWithoutZeros } from "@common/utils";
+import { _deepCopy, _get, _hasOwnProperty, _isJSON, _isNA, _isNull, toExponential, toFixedWithoutZeros } from "../../../common/utils
 
 import {
     TextRenderer,

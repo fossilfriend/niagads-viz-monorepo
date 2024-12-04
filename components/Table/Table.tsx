@@ -27,8 +27,8 @@ import {
 
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-import { _get, _hasOwnProperty, toTitleCase } from "@common/utils";
-import { errorFallback } from "@common/errors";
+import { _get, _hasOwnProperty, toTitleCase } from "../../../common/utils
+import { errorFallback } from "../../../common/errors
 
 import {
     Cell,

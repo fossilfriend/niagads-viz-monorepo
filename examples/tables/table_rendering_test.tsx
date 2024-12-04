@@ -1,4 +1,4 @@
-import { TableProps as Table } from '../../src/components/Table/Table'
+import { TableProps as Table } from '../../components/components/Table/Table'
 
 
 export const TABLE_DEFINTION: Table = {

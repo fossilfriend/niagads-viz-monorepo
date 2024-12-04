@@ -1,5 +1,5 @@
-import { BasicType, FileFormat } from "@common/types"
-import { GenericCell } from "@table/Cell"
+import { BasicType, FileFormat } from "../../../common/types"
+import { GenericCell } from "./Cell"
 import { RowSelectionState } from "@tanstack/react-table"
 
 export interface RowSelectOptions {

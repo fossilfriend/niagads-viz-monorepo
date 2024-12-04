@@ -4,7 +4,7 @@ import exportFromJSON from "export-from-json"
 
 import { Button, Checkbox, Select, Tooltip } from "@components/UI"
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid"
-import { FileFormat, EXPORT_FILE_FORMATS } from "@common/types"
+import { FileFormat, EXPORT_FILE_FORMATS } from "../../../../common/types
 
 export const exportTable = (table: ReactTable<any>, tableId: string, filteredRowsOnly: boolean, format: FileFormat) => {
     const isFiltered: boolean = table.getState().globalFilter !== '' /* && table.getState().columnFilters ? -> array so not sure what to test yet */

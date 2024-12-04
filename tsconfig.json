@@ -27,7 +27,6 @@
         "isolatedModules": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true,
-        "baseUrl": "src",
         "noErrorTruncation": true,
         "typeRoots": [
             "node_modules/@types",
@@ -35,13 +34,10 @@
         ],
 
         "outDir": "dist",
-
+        "baseUrl": ".",
         "paths": {
-            "@charts/*": ["components/Chart/Highcharts/*"],
-            "@text/*": ["components/TextRenderers/*"],
-            "@table/*": ["components/Table/*"],
+            "@examples/*": ["examples/*"],
             "@components/*": ["components/*"],
-            "@mui-wrappers/*": ["components/mui-wrappers/*"],
             "@common/*": ["common/*"],
             "@root/*" : ["./*"]
         },
@@ -52,7 +48,7 @@
         "dist",
         "scripts",
         "webpack",
-        "example",
+        "examples",
         "postcss.config.js",
         "**/*.scss"
     ],
