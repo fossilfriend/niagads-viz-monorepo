@@ -27,3 +27,20 @@
 ### Charting
 
 * highcharts? TBD
+
+## Considerations
+
+## next.js 'client' components
+
+* should we put in `"use client"` directive or should we assume that anyone doing next-js development will wrap the component? will the directive be problematic for rollup/eslinting outside of next-js?  seems OK in the storybook
+* may need to remove from components (e.g., table, igvbrowser) reimported from niagads-api-client
+
+## Tasks / Issues to create (notes for EGA)
+
+## IGVBRowser
+
+* `FEATURE_INFO_BASE_URL` will need to be set as IGVBrowser component property and passed into the browser config so that it can be accessed by the track parsers and renderers
+* ditto for `FEATURE_SEARCH_ENDPOINT`
+* `url` and `indexURL` for `Ensembl Gene track` need to be updated; maybe put GenomicsDB raw file in FILER?
+* review functions exported in each file
+* there are some serious issues w/the IGVBrowser component now that development branch was merged in.  Review and clean up
