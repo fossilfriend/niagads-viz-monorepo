@@ -44,3 +44,4 @@
 * `url` and `indexURL` for `Ensembl Gene track` need to be updated; maybe put GenomicsDB raw file in FILER?
 * review functions exported in each file
 * there are some serious issues w/the IGVBrowser component now that development branch was merged in.  Review and clean up
+* search for `FIXME` notes
