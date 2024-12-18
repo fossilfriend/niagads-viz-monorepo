@@ -1,0 +1,51 @@
+{
+    "scripts": {
+        "build": "rollup -c"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^28.0.2",
+        "@rollup/plugin-node-resolve": "^16.0.0",
+        "@rollup/plugin-typescript": "^12.1.2",
+        "rollup-plugin-delete": "^2.1.0",
+        "rollup-plugin-dts": "^6.1.1",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-postcss": "^4.0.2",
+        "rollup-plugin-terser": "^7.0.2",
+        "@types/lodash.assign": "^4.2.9",
+        "@types/lodash.countby": "^4.6.9",
+        "@types/lodash.get": "^4.4.9",
+        "@types/lodash.isobject": "^3.0.9",
+        "@types/lodash.merge": "^4.6.9",
+        "@types/lodash.range": "^3.2.9",
+        "@types/node": "^20.4.4",
+        "@types/react": "^18.2.16",
+        "@types/react-dom": "^18.2.7",
+        "autoprefixer": "^10.4.17",
+        "css-loader": "^6.8.1",
+        "postcss": "^8.4.35",
+        "postcss-loader": "^8.1.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "rollup": "^4.28.1",
+        "style-loader": "^3.3.3",
+        "tailwindcss": "^3.4.1",
+        "ts-interface-builder": "^0.3.3",
+        "ts-loader": "^9.4.4",
+        "typescript": "^4.9.5"
+    },
+    "dependencies": {
+        "@heroicons/react": "^2.2.0",
+        "@tanstack/react-table": "^8.11.8",
+        "export-from-json": "github:NIAGADS/export-from-json#niagads",
+        "lodash.countby": "^4.6.0",
+        "lodash.get": "^4.4.2",
+        "lodash.isobject": "^3.0.2",
+        "lodash.merge": "^4.6.2",
+        "lodash.range": "^3.2.0",
+        "react-error-boundary": "^4.0.13",
+        "@niagads/ui": "0.0.1",
+        "@niagads/common": "0.0.1"
+    },
+    "main": "dist/Table.js",
+    "types": "dist/index.d.js"
+}

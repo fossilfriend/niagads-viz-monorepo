@@ -6,13 +6,10 @@ React Component Library for NIAGADS Visualizations: including Tanstack React-Tab
 
 > **NOTE: until `Material-UI` is removed,  `npm install` must be run with the `--legacy-peer-deps` option.**
 
-## Component Library Build for Development
+## Build all packages
 
 ```bash
-git clone https://github.com/NIAGADS/niagads-viz-js.git 
-cd niagads-viz-js
-npm install --legacy-peer-deps
-npm run build
+npx lerna run build
 ```
 
 ## Import Component Library into 3rd-Party App
