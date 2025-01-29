@@ -7,7 +7,7 @@ import {
     _isJSON,
     _isNA,
     _isNull
-} from "@niagads/common";
+} from "@bug_sam/common";
 
 import {
     TextRenderer,

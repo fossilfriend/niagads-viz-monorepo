@@ -1,4 +1,5 @@
 "use client";
+import "./main.css";
 import React, {
     useMemo,
     useState,
@@ -26,8 +27,8 @@ import {
 
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-import { _get, _hasOwnProperty, toTitleCase } from "@niagads/common";
-import { errorFallback } from "@niagads/common";
+import { _get, _hasOwnProperty, toTitleCase } from "@bug_sam/common";
+import { errorFallback } from "@bug_sam/common";
 
 import {
     Cell,
@@ -53,7 +54,7 @@ import {
     Checkbox,
     RadioButton,
     SearchInput,
-} from "@niagads/ui";
+} from "@bug_sam/ui";
 
 const __TAILWIND_CSS = {
     container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",

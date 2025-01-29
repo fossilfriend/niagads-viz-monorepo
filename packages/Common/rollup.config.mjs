@@ -11,11 +11,7 @@ import tailwindcss from 'tailwindcss';
 export default [
     {
         input: [
-            "./src/colors.tsx",
-            "./src/errors.tsx",
-            "./src/formatters.tsx",
-            "./src/types.tsx",
-            "./src/utils.tsx",
+            "./src/index.ts",
         ],
         output: [
             {

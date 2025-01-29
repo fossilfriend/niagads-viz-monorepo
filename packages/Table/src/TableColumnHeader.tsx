@@ -7,8 +7,8 @@ import { flexRender, Header } from "@tanstack/react-table"
 import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 
-import { Button, renderTooltip } from "@niagads/ui";
-import { _get } from "@niagads/common";
+import { Button, renderTooltip } from "@bug_sam/ui";
+import { _get } from "@bug_sam/common";
 
 const __TAILWIND_CSS = {
     root: "bg-primary/10 px-6 py-3 border-0 border-r-[1px] border-solid border-slate-50",

@@ -3,10 +3,10 @@ import React, { useMemo, useCallback } from "react"
 
 import { Column as ReactTableColumn, Table as ReactTable } from "@tanstack/react-table"
 
-import { SearchInput } from "@niagads/ui"
+import { SearchInput } from "@bug_sam/ui"
 import { TableRow } from "../TableProperties"
 import { TableExportControls, exportTable } from "./TableExportControls"
-import { _get } from "@niagads/common"
+import { _get } from "@bug_sam/common"
 import { ColumnControls } from "./ColumnControls"
 
 interface ToolbarProps {

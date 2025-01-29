@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react"
-import { _get } from "@/packages/Common/src/utils"
+import { _get } from "@bug_sam/common"
 
 const __TAILWIND_CSS = {
     root: "flex p-4 mb-4 text-sm rounded-lg",

@@ -10,7 +10,7 @@ import {
     _isNull,
     toExponential,
     toFixedWithoutZeros
-} from "@niagads/common";
+} from "@bug_sam/common";
 
 
 export const formatFloat = (value: number, precision: number = 2) => {

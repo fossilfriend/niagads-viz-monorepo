@@ -5,7 +5,7 @@ import {
     QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline";
 
-import { Tooltip } from "@niagads/ui/Tooltip";
+import { Tooltip } from "./Tooltip";
 
 interface HelpIcon {
     message: ReactNode | string,

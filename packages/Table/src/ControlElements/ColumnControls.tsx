@@ -1,9 +1,9 @@
 'use client'
 import React, { useState, useEffect, useId } from "react";
 
-import { Button, Checkbox } from "@niagads/ui";
+import { Button, Checkbox } from "@bug_sam/ui";
 import { ViewColumnsIcon } from "@heroicons/react/24/solid";
-import { _get } from "@niagads/common";
+import { _get } from "@bug_sam/common";
 import { GenericColumn } from "../Column";
 import { Column } from "@tanstack/react-table";
 import { TableRow } from "../TableProperties";
