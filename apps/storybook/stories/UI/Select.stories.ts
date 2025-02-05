@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Select } from '@bug_sam/ui/Select'
+import { Select } from '@bug_sam/ui'
 
 const meta: Meta<typeof Select> = {
   title: 'NIAGADS-VIZ/UI/Select',

@@ -1,8 +1,8 @@
 //@ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Table  from '@table/Table';
-import { TABLE_DEFINTION as table } from '@examples/tables/table_rendering_test'
+import Table  from "@bug_sam/table";
+import { TABLE_DEFINTION as table } from "../../../exampleTables/table_rendering_test";
 
 const meta: Meta<typeof Table> = {
   title: 'NIAGADS-VIZ/Data Vizualization/Table/Rendering Test Table',

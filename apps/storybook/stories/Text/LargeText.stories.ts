@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Text } from '@/components/TextRenderers/BasicText';
+import { Text } from "@bug_sam/table";
 
 const meta: Meta<typeof Text> = {
   title: 'NIAGADS-VIZ/Text/Truncated Text',
