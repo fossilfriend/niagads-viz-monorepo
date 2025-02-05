@@ -7,6 +7,7 @@
     "devDependencies": {
         "@rollup/plugin-commonjs": "^28.0.2",
         "@rollup/plugin-node-resolve": "^16.0.0",
+        "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
         "@types/lodash.assign": "^4.2.9",
         "@types/lodash.countby": "^4.6.9",
@@ -28,7 +29,6 @@
         "rollup-plugin-dts": "^6.1.1",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-postcss": "^4.0.2",
-        "rollup-plugin-terser": "^7.0.2",
         "ts-interface-builder": "^0.3.3",
         "ts-loader": "^9.4.4",
         "typescript": "^4.9.5"

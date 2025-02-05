@@ -1,7 +1,7 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
-import { terser } from "rollup-plugin-terser"; // generate minified bundle
+import terser from "@rollup/plugin-terser"; // generate minified bundle
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import { dts } from "rollup-plugin-dts";
