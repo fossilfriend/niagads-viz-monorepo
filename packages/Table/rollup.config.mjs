@@ -10,7 +10,7 @@ import tailwindcss from "tailwindcss";
 
 export default [
     {
-        input: ["./src/Table.tsx"],
+        input: ["./src/index.ts"],
         output: [
             {
                 format: "esm",
@@ -59,7 +59,7 @@ export default [
         ],
     },
     {
-        input: ["./dist/dts/Table.d.ts"],
+        input: ["./dist/dts/index.d.ts"],
         output: [{ file: "./dist/index.d.ts", format: "es" }],
         plugins: [dts(), del({ hook: "buildEnd", targets: "./dist/dts" })],
         external: [/\.css$/u], // HACK: Fix for this problem https://github.com/Swatinem/rollup-plugin-dts/issues/165]
