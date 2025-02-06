@@ -1,0 +1,23 @@
+{
+    "name": "niagads-viz-js.storybook",
+    "version": "",
+    "scripts": {
+        "storybook": "npx storybook dev -p 6006",
+        "build-storybook": "storybook build",
+        "storybook-docs": "storybook dev --docs"
+    },
+    "devDependencies": {
+        "@bug_sam/common": "0.0.3",
+        "@bug_sam/table": "0.0.8",
+        "@bug_sam/ui": "0.0.3",
+        "@storybook/addon-essentials": "^8.2.8",
+        "@storybook/addon-interactions": "^8.2.8",
+        "@storybook/addon-links": "^8.2.8",
+        "@storybook/addon-styling-webpack": "^0.0.6",
+        "@storybook/blocks": "^8.2.8",
+        "@storybook/nextjs": "^8.2.8",
+        "@storybook/react": "^8.2.8",
+        "@storybook/test": "^8.2.8",
+        "http-proxy-middleware": "^3.0.3"
+    }
+}

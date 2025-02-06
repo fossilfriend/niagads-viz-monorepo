@@ -6,14 +6,50 @@ React Component Library for NIAGADS Visualizations: including Tanstack React-Tab
 
 > **NOTE: until `Material-UI` is removed,  `npm install` must be run with the `--legacy-peer-deps` option.**
 
-## Component Library Build for Development
+## Managing the monorepo using Lerna
+
+### List all packages
 
 ```bash
-git clone https://github.com/NIAGADS/niagads-viz-js.git 
-cd niagads-viz-js
-npm install --legacy-peer-deps
-npm run build
+npx lerna list
 ```
+
+### Building packages
+
+You can build all packages by running the following command:
+
+```bash
+npx lerna run build
+```
+
+You can also scope to a specific package using the `--scope` argument
+
+```bash
+npx lerna run build --scope=<package>
+```
+
+### Running other commands
+
+You can run any npm command for any package using lerna.
+For example if a package called `foo` had a script called `bar` defined in
+its package.json, you could run it using the following command:
+
+```bash
+npx lerna run bar
+```
+
+This will run the command `bar` for all packages that have it defined.
+If you want to only run it for the package `foo` you can use the `--scope` argument
+
+```bash
+npx lerna run bar --scope=foo
+```
+
+## Publishing
+
+Right now, packages are published to sam's personal npm repo.
+In the future we will set up a niagads npm organization and publish there instead.
+
 
 ## Import Component Library into 3rd-Party App
 

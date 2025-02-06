@@ -1,0 +1,25 @@
+{
+    "name": "@bug_sam/common",
+    "version": "0.0.3",
+    "scripts": {
+        "build": "rollup -c"
+    },
+    "devDependencies": {
+        "react": "^18.2.0",
+        "@rollup/plugin-commonjs": "^28.0.2",
+        "@rollup/plugin-node-resolve": "^16.0.0",
+        "@rollup/plugin-typescript": "^12.1.2",
+        "@rollup/plugin-terser": "^0.4.4",
+        "rollup": "^4.28.1",
+        "rollup-plugin-delete": "^2.1.0",
+        "rollup-plugin-dts": "^6.1.1",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-postcss": "^4.0.2"
+    },
+    "dependencies": {
+        "react-error-boundary": "^4.0.13"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": ["dist"]
+}
