@@ -1,0 +1,16 @@
+{
+  "targetDefaults": {
+    "storybook": {
+      "dependsOn": []
+    },
+    "build-storybook": {
+      "dependsOn": []
+    },
+    "storybook-docs": {
+      "dependsOn": []
+    },
+    "build": {
+      "dependsOn": []
+    }
+  }
+}

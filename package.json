@@ -2,6 +2,10 @@
     "name": "@bug_sam/viz-js",
     "version": "0.1.0",
     "author": "fossilfriend,bug-sam",
+    "scripts": {
+        "watch": "npx lerna watch -- lerna run build --scope=\\$LERNA_PACKAGE_NAME",
+        "storybook": "npm run watch & npx lerna run storybook & wait"
+    },
     "workspaces": [
         "packages/Common",
         "packages/Gosling",
