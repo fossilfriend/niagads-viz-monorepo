@@ -31,6 +31,8 @@ export type StringCell = Expand<Modify<AbstractCell, { type: "string", value: st
 export type FloatCell = Expand<Modify<AbstractCell,
     { type: "float", value: number | null, precision?: number }>>
 
+export type PValueCell = Expand<Modify<FloatCell, { type: "p_value" }>>;
+
 export type TextCell = Expand<Modify<AbstractCell,
     { type: "text", truncateTo?: number, color?: Color, tooltip?: string }>>
 
@@ -56,14 +58,14 @@ export type LinkListCell = Expand<Modify<AbstractCell,
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type Cell = PercentageBarCell | FloatCell | AbstractCell | TextCell | TextListCell | BadgeCell | BooleanCell | LinkCell | LinkListCell
+export type Cell = PercentageBarCell | FloatCell | PValueCell | AbstractCell | TextCell | TextListCell | BadgeCell | BooleanCell | LinkCell | LinkListCell
 
 // create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
 export type CellType = keyof CellTypeMapper
 
 // this does not include LinkList & TextList b/c those are internal cell types
-const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "text", "annotated_text", "badge", "link", "percentage_bar"]
+const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "p_value", "text", "annotated_text", "badge", "link", "percentage_bar"]
 
 
 // validates cell type specified at runtime or by user is valid

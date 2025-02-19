@@ -1,6 +1,6 @@
 import { BasicType, FileFormat } from "@bug_sam/common"
-import { GenericCell } from "./Cell"
-import { RowSelectionState } from "@tanstack/react-table"
+import { CellType, GenericCell } from "./Cell"
+import { RowSelectionState, RowData } from "@tanstack/react-table"
 
 export type RowSelectAction = 'ACCESS_ROW_DATA' |  'UPDATE_GENOME_BROWSER' | 'UPDATE_LOCUS_ZOOM'
 export interface RowSelectOptions {
@@ -37,5 +37,12 @@ export type TableRow = Record<string, GenericCell | GenericCell[]>
 export type TableData = TableRow[]
 
 
+//allows us to expose some of our custom column properties and access them after they've been converted to tanstack columns
+declare module "@tanstack/react-table" {
+    interface ColumnMeta<TData extends RowData, TValue> {
+        type?: CellType;
+        description?: string;
+    }
+}
 
 
