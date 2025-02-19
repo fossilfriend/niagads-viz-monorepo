@@ -58,6 +58,7 @@ import {
     RadioButton,
     SearchInput,
 } from "@bug_sam/ui";
+import { HeroUIProvider } from "@heroui/system";
 
 const __TAILWIND_CSS = {
     container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",
@@ -398,38 +399,39 @@ export const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
     }, [rowSelection]);
 
     return table ? (
-        <div className={__TAILWIND_CSS.container}>
-            <div className="flex justify-between items-center">
-                <TableToolbar
-                    table={table}
-                    tableId={id}
-                    enableExport={!!!options?.disableExport}
-                />
-                <PaginationControls table={table} />
+        <HeroUIProvider>
+            <div className={__TAILWIND_CSS.container}>
+                <div className="flex justify-between items-center">
+                    <TableToolbar
+                        table={table}
+                        tableId={id}
+                        enableExport={!!!options?.disableExport}
+                    />
+                    <PaginationControls table={table} />
+                </div>
+                <div className="overflow-auto">
+                    <table className={TABLE_CLASSES}>
+                        {__renderTableHeader(table.getHeaderGroups())}
+                        <tbody>
+                            {table.getRowModel().rows.map((row) => (
+                                <tr key={row.id} className={__TAILWIND_CSS.dtr}>
+                                    {row.getVisibleCells().map((cell) => (
+                                        <td
+                                            className={__TAILWIND_CSS.td}
+                                            key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <div className="overflow-auto">
-                <table className={TABLE_CLASSES}>
-                    {__renderTableHeader(table.getHeaderGroups())}
-                    <tbody>
-                        {table.getRowModel().rows.map((row) => (
-                            <tr key={row.id} className={__TAILWIND_CSS.dtr}>
-                                {row.getVisibleCells().map((cell) => (
-                                    <td
-                                        className={__TAILWIND_CSS.td}
-                                        key={cell.id}>
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                        )}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </HeroUIProvider>
     ) : (
         <div>No data</div>
     );

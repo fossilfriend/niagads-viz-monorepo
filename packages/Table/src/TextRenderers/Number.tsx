@@ -16,7 +16,7 @@ import {
 export const formatFloat = (value: number, precision: number = 2) => {
     const formattedValue: any = toExponential(value, precision)
     if (precision && !formattedValue.toString().includes('e')) {
-        return toFixedWithoutZeros(formattedValue, precision)
+        return toFixedWithoutZeros(+formattedValue, precision)
     }
     return formattedValue
 }

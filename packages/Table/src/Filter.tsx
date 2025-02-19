@@ -2,6 +2,9 @@ import { Column } from "@tanstack/react-table"
 import React, { useMemo } from "react"
 import { _get } from "@bug_sam/common";
 import { SearchInput } from "@bug_sam/ui";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
+import { Slider } from "@heroui/slider";
+import { Button } from "@heroui/button";
 
 interface Filter {
     column: Column<any, unknown>;
@@ -15,37 +18,57 @@ export const Filter = ({ column }: Filter) => {
         return Array.from(column.getFacetedUniqueValues().keys()).sort()
     }, [column.getFacetedUniqueValues()])
 
+    const minValue = useMemo(() => sortedUniqueValues[0], [sortedUniqueValues]); 
+    const maxValue = useMemo(() => sortedUniqueValues.at(-1), [sortedUniqueValues]); 
+
+    console.log(sortedUniqueValues);
+
     return colType === "float" ? (
         <div>
-            <div className="flex space-x-2">
-                <SearchInput
-                    value={`${(columnFilterValue as [number, number])?.[0]}`}
-                    onChange={(value) => column.setFilterValue((old: [number, number]) => [+value, old?.[1]])}
-                    placeholder={`Min`}
-                />
-                <SearchInput
-                    value={`${(columnFilterValue as [number, number])?.[1]}`}
-                    onChange={(value) => column.setFilterValue((old: [number, number]) => [old?.[0], +value])}
-                    placeholder={`Max`}
-                />
-            </div>
-            <div className="h-1" />
+            <Slider
+                className="max-w-mid"
+                label="Filter Range"
+                minValue={+minValue}
+                maxValue={+maxValue}
+                defaultValue={[+minValue, +maxValue]}
+                step={(maxValue - minValue) / 50}
+                onChange={(val) => column.setFilterValue(val)}
+            />
         </div>
     ) : colType === "p_value" ? (
-        <></>
+        <div>
+            <Slider
+                className="max-w-mid"
+                label="Filter Range"
+                minValue={0}
+                maxValue={+maxValue}
+                defaultValue={+maxValue}
+                step={(maxValue - minValue) / 50}
+                onChange={(val) => column.setFilterValue([0, val])}
+            />
+        </div>
     ) : sortedUniqueValues.length < 11 ? (
-        <select onChange={(e) => column.setFilterValue(e.target.value)} value={columnFilterValue?.toString()}>
-            {sortedUniqueValues.map(val => (
-                <option value={val} key={val}>
-                    {val}
-                </option>
-            ))}
-        </select>
+        <div>
+            <Dropdown>
+                <DropdownTrigger>
+                    <Button variant="bordered">Select Filter</Button>
+                </DropdownTrigger>
+                <DropdownMenu onAction={(key) => column.setFilterValue(key)}>
+                    {sortedUniqueValues.map((val) => (
+                        <DropdownItem key={val}>
+                            {val}
+                        </DropdownItem>
+                    ))}
+                </DropdownMenu>
+            </Dropdown>
+        </div>
     ) : (
-        <SearchInput
-            onChange={(value) => column.setFilterValue(value)}
-            placeholder={`Search...`}
-            value={(columnFilterValue ?? "") as string}
-        />
+        <div>
+            <SearchInput
+                onChange={(value) => column.setFilterValue(value)}
+                placeholder={`Search...`}
+                value={(columnFilterValue ?? "") as string}
+            />
+        </div>
     );
 };

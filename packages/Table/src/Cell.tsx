@@ -96,6 +96,11 @@ const __resolveBooleanValue = (props: BooleanCell): BasicType => {
     return (displayText) ? displayText : __resolveValue(props)
 }
 
+const __resolveFloatValue = (props: FloatCell): BasicType => {
+    const displayText = _get('displayText', props)
+    return (displayText) ? displayText : +__resolveValue(props)
+}
+
 // cell accessor function; gets the value; resolves nulls
 // will always return a string or number, possibly boolean if we refactor `__resolveBooleanCell`
 // has to return "any" to satisfy react table accessorFn
@@ -110,6 +115,8 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
         switch (cellType) {
             case "boolean":
                 return __resolveBooleanValue(cellProps as BooleanCell)
+            case "float":
+                return __resolveFloatValue(cellProps as FloatCell)
             default:
                 return __resolveValue(cellProps)
         }
