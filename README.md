@@ -6,6 +6,16 @@ React Component Library for NIAGADS Visualizations: including Tanstack React-Tab
 
 > **NOTE: until `Material-UI` is removed,  `npm install` must be run with the `--legacy-peer-deps` option.**
 
+## Developing
+
+While developing, you can use the storybook app to see and test your changes in real time.
+
+The following command will run storybook and automatically build packages as you change them:
+
+```bash
+npm run storybook
+```
+
 ## Managing the monorepo using Lerna
 
 ### List all packages
