@@ -5,11 +5,12 @@ const __TAILWIND_CSS = {
 }
 
 interface SearchInput {
-    onChange: (val: string) => void
-    value: string
+    onChange: (val: string) => void;
+    placeholder?: string;
+    value: string;
 }
 
-export const SearchInput = ({ onChange, value }: SearchInput) => {
+export const SearchInput = ({ onChange, placeholder, value }: SearchInput) => {
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => onChange(evt.currentTarget.value)
 
     return (
@@ -17,7 +18,7 @@ export const SearchInput = ({ onChange, value }: SearchInput) => {
             <input
                 type="search"
                 className={__TAILWIND_CSS.root}
-                placeholder="Search"
+                placeholder={placeholder || "Search"}
                 aria-label="Search"
                 onChange={handleChange}
                 value={value} />

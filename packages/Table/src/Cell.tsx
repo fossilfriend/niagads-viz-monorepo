@@ -31,6 +31,8 @@ export type StringCell = Expand<Modify<AbstractCell, { type: "string", value: st
 export type FloatCell = Expand<Modify<AbstractCell,
     { type: "float", value: number | null, precision?: number }>>
 
+export type PValueCell = Expand<Modify<FloatCell, { type: "p_value" }>>;
+
 export type TextCell = Expand<Modify<AbstractCell,
     { type: "text", truncateTo?: number, color?: Color, tooltip?: string }>>
 
@@ -56,14 +58,14 @@ export type LinkListCell = Expand<Modify<AbstractCell,
 export type PercentageBarCell = Expand<Modify<FloatCell,
     { type: "percentage_bar", colors?: [Color, Color] }>>
 
-export type Cell = PercentageBarCell | FloatCell | AbstractCell | TextCell | TextListCell | BadgeCell | BooleanCell | LinkCell | LinkListCell
+export type Cell = PercentageBarCell | FloatCell | PValueCell | AbstractCell | TextCell | TextListCell | BadgeCell | BooleanCell | LinkCell | LinkListCell
 
 // create CellType which is a list string keys corresponding to allowable "types" of cells
 type CellTypeMapper = TypeMapper<Cell>
 export type CellType = keyof CellTypeMapper
 
 // this does not include LinkList & TextList b/c those are internal cell types
-const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "text", "annotated_text", "badge", "link", "percentage_bar"]
+const CELL_TYPE_VALIDATION_REFERENCE = ["boolean", "abstract", "float", "p_value", "text", "annotated_text", "badge", "link", "percentage_bar"]
 
 
 // validates cell type specified at runtime or by user is valid
@@ -94,6 +96,17 @@ const __resolveBooleanValue = (props: BooleanCell): BasicType => {
     return (displayText) ? displayText : __resolveValue(props)
 }
 
+const __resolveFloatValue = (props: FloatCell): BasicType => {
+    const displayText = _get('displayText', props)
+    return (displayText) ? displayText : +__resolveValue(props)
+}
+
+//TODO: properly handle P Value values as numbers or handle them with neg_log10_pvalue
+const __resolvePValueValue = (props: PValueCell): BasicType => {
+    const displayText = _get('displayText', props)
+    return (displayText) ? displayText : +__resolveValue(props)
+}
+
 // cell accessor function; gets the value; resolves nulls
 // will always return a string or number, possibly boolean if we refactor `__resolveBooleanCell`
 // has to return "any" to satisfy react table accessorFn
@@ -108,6 +121,10 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
         switch (cellType) {
             case "boolean":
                 return __resolveBooleanValue(cellProps as BooleanCell)
+            case "float":
+                return __resolveFloatValue(cellProps as FloatCell)
+            case "p_value":
+                return __resolvePValueValue(cellProps as PValueCell)
             default:
                 return __resolveValue(cellProps)
         }

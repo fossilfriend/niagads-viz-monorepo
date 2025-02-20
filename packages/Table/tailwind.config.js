@@ -1,8 +1,12 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
+const { heroui } = require("@heroui/theme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./src/**/*.{js,jsx,ts,tsx}"],
+    content: [
+        "./src/**/*.{js,jsx,ts,tsx}",
+        "../../node_modules/@heroui/theme/dist/components/*.js"
+    ],
     theme: {
         extend: {
             colors: {
@@ -18,11 +22,8 @@ module.exports = {
             }
         },
     },
-    plugins: [],
+    plugins: [heroui()],
     corePlugins: { // disable b/c component library to be integrated in 3rd-party apps
         preflight: false, // preflight over-rides browser defaults (e.g., for links, headers, etc)
     }
 };
-
-
-

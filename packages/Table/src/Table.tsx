@@ -18,11 +18,14 @@ import {
     ColumnDef,
     HeaderGroup,
     getFilteredRowModel,
+    getFacetedRowModel,
+    getFacetedUniqueValues,
     SortingFnOption,
     getSortedRowModel,
     RowSelectionState,
     VisibilityState,
     TableOptions,
+    ColumnFiltersState,
 } from "@tanstack/react-table";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
@@ -55,6 +58,7 @@ import {
     RadioButton,
     SearchInput,
 } from "@bug_sam/ui";
+import { HeroUIProvider } from "@heroui/system";
 
 const __TAILWIND_CSS = {
     container: "block mx-2 max-w-full", //"block max-w-full relative shadow-md",
@@ -163,6 +167,7 @@ export interface TableProps {
 export const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [globalFilter, setGlobalFilter] = useState("");
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>(
         __setInitialRowSelection(options?.rowSelect?.selectedValues)
     );
@@ -265,7 +270,10 @@ export const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
                             col
                         ) as SortingFnOption<TableRow>,
                         enableHiding: !_get("required", col, false), // if required is true, enableHiding is false
-                        meta: { description: _get("description", col) },
+                        meta: { 
+                            description: _get("description", col),
+                            type: _get("type", col),
+                        },
                         cell: (props) =>
                             renderCell(props.cell.row.original[col.id] as Cell),
                     }
@@ -326,16 +334,20 @@ export const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+        getFacetedRowModel: getFacetedRowModel(),
+        getFacetedUniqueValues: getFacetedUniqueValues(),
         globalFilterFn: "includesString",
         onGlobalFilterChange: setGlobalFilter,
         state: {
             sorting,
             rowSelection,
             globalFilter,
+            columnFilters,
             columnVisibility,
         },
         onSortingChange: setSorting,
         onColumnVisibilityChange: setColumnVisibility,
+        onColumnFiltersChange: setColumnFilters,
         getSortedRowModel: getSortedRowModel(),
         sortingFns: CustomSortingFunctions,
         enableColumnResizing: true,
@@ -396,7 +408,6 @@ export const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
                 />
                 <PaginationControls table={table} />
             </div>
-
             <div className="overflow-auto">
                 <table className={TABLE_CLASSES}>
                     {__renderTableHeader(table.getHeaderGroups())}
