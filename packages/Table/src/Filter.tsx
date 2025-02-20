@@ -24,6 +24,7 @@ export const Filter = ({ column }: Filter) => {
     console.log(sortedUniqueValues);
 
     return colType === "float" ? (
+        //TODO: if faceted unique values length is 5 or more use slider otherwise use dropdown
         <div>
             <Slider
                 className="max-w-mid"
@@ -36,6 +37,7 @@ export const Filter = ({ column }: Filter) => {
             />
         </div>
     ) : colType === "p_value" ? (
+        //TODO: filter based on neg_log10_pvalue maybe
         <div>
             <Slider
                 className="max-w-mid"
@@ -53,7 +55,12 @@ export const Filter = ({ column }: Filter) => {
                 <DropdownTrigger>
                     <Button variant="bordered">Select Filter</Button>
                 </DropdownTrigger>
-                <DropdownMenu onAction={(key) => column.setFilterValue(key)}>
+                <DropdownMenu
+                    onSelectionChange={key => column.setFilterValue(key)}
+                    //TODO: handle filtering based on mutiple selections
+                    // selectionMode="multiple"
+                    // closeOnSelect={false}
+                >
                     {sortedUniqueValues.map((val) => (
                         <DropdownItem key={val}>
                             {val}

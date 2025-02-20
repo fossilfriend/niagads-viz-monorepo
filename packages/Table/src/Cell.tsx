@@ -101,6 +101,12 @@ const __resolveFloatValue = (props: FloatCell): BasicType => {
     return (displayText) ? displayText : +__resolveValue(props)
 }
 
+//TODO: properly handle P Value values as numbers or handle them with neg_log10_pvalue
+const __resolvePValueValue = (props: PValueCell): BasicType => {
+    const displayText = _get('displayText', props)
+    return (displayText) ? displayText : +__resolveValue(props)
+}
+
 // cell accessor function; gets the value; resolves nulls
 // will always return a string or number, possibly boolean if we refactor `__resolveBooleanCell`
 // has to return "any" to satisfy react table accessorFn
@@ -117,6 +123,8 @@ export const getCellValue = (cellProps: Cell | Cell[]): any => {
                 return __resolveBooleanValue(cellProps as BooleanCell)
             case "float":
                 return __resolveFloatValue(cellProps as FloatCell)
+            case "p_value":
+                return __resolvePValueValue(cellProps as PValueCell)
             default:
                 return __resolveValue(cellProps)
         }

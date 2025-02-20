@@ -5,7 +5,7 @@ const { heroui } = require("@heroui/theme");
 module.exports = {
     content: [
         "./src/**/*.{js,jsx,ts,tsx}",
-        "../../node_modules/@heroui/theme/dist/components/(button|dropdown|slider).js"
+        "../../node_modules/@heroui/theme/dist/components/*.js"
     ],
     theme: {
         extend: {
@@ -27,6 +27,3 @@ module.exports = {
         preflight: false, // preflight over-rides browser defaults (e.g., for links, headers, etc)
     }
 };
-
-
-
