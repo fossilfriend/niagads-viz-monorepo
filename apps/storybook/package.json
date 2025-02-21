@@ -7,9 +7,9 @@
         "storybook-docs": "storybook dev --docs"
     },
     "devDependencies": {
-        "@bug_sam/common": "0.0.3",
-        "@bug_sam/table": "0.0.9",
-        "@bug_sam/ui": "0.0.4",
+        "@bug_sam/common": "0.0.1-apha.0",
+        "@bug_sam/table": "0.0.1-apha.0",
+        "@bug_sam/ui": "0.0.1-apha.0",
         "@storybook/addon-essentials": "^8.2.8",
         "@storybook/addon-interactions": "^8.2.8",
         "@storybook/addon-links": "^8.2.8",
