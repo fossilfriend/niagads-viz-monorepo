@@ -60,6 +60,7 @@ npx lerna run bar --scope=foo
 Right now, packages are published to sam's personal npm repo.
 In the future we will set up a niagads npm organization and publish there instead.
 
+> OLD README:
 
 ## Import Component Library into 3rd-Party App
 
