@@ -14,14 +14,11 @@ module.exports = {
             fontFamily: {
                 'sans': ['"Open Sans"', ...defaultTheme.fontFamily.sans],
                 'inter': ['Inter'],
-                'roboto': ['Roboto']
+                'lato': ['Lato']
             }
         },
     },
     plugins: [],
-    corePlugins: { // disable b/c component library to be integrated in 3rd-party apps
-        preflight: false, // preflight over-rides browser defaults (e.g., for links, headers, etc)
-    }
 };
 
 
