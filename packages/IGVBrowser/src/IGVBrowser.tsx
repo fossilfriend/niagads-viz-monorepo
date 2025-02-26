@@ -1,5 +1,3 @@
-"use client";
-
 // TODO: streaming w/Suspense and fallback instead
 
 import React, {

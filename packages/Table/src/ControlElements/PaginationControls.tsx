@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useMemo } from "react"
 
 import { Table as ReactTable } from "@tanstack/react-table"

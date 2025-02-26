@@ -1,4 +1,3 @@
-'use client'
 import React, { useRef, useLayoutEffect, useEffect } from "react";
 import { GoslingComponent } from 'gosling.js';
 
