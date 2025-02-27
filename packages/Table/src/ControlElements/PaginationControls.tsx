@@ -4,7 +4,8 @@ import { Table as ReactTable } from "@tanstack/react-table"
 import range from "lodash.range"
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
 
-import { Select, Button } from "@bug_sam/ui"
+import { Button } from "@heroui/button"
+import { Select } from "@bug_sam/ui"
 
 interface PaginationControlsProps {
     table: ReactTable<any>
@@ -48,10 +49,10 @@ export const PaginationControls = ({ table }: PaginationControlsProps) => {
                 onChange={(e: any) => { onChangePageSize(Number(e.target.value)) }}
                 label="Results per page" id="pages" inline variant='plain' />
             <div className="self-center text-sm text-gray-900 px-2">{minDisplayedRow} - {maxDisplayedRow} of {nRows}</div>
-            <Button variant="white" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+            <Button isIconOnly={true} variant="light" disableRipple={true} onPress={() => table.previousPage()} isDisabled={!table.getCanPreviousPage()}>
                 <ChevronLeftIcon className={`icon-button stroke-1 ${!table.getCanPreviousPage() ? 'icon-disabled' : 'stroke-black'}`}></ChevronLeftIcon>
             </Button>
-            <Button variant="white" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+            <Button isIconOnly={true} variant="light" disableRipple={true} onPress={() => table.nextPage()} isDisabled={!table.getCanNextPage()}>
                 <ChevronRightIcon className={`icon-button stroke-1 ${!table.getCanNextPage() ? 'icon-disabled' : 'stroke-black'}`}></ChevronRightIcon>
             </Button>
         </div>
