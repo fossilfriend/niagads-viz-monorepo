@@ -63,7 +63,19 @@
     @apply ml-1 text-slate-700 pl-px size-5;
 }
 
-/* classes that may need to overloaded in line (e.g., change color depending on context) */
+.icon-disabled {
+    @apply stroke-slate-300;
+}
+
+/* 
+
+classes that may need to overloaded in line (e.g., change color depending on context)
+these are the source of conflicts as the UI ones seem to have precedence
+
+1. are they necessary?
+2. !important directives?
+
+*/
 @layer components {
     .info-bubble {
         @apply text-blue-600 size-5;
@@ -74,9 +86,7 @@
         @apply cursor-pointer underline decoration-dashed decoration-blue-600 underline-offset-4;
     }
 
-    .icon-disabled {
-        @apply stroke-slate-500;
-    }
+
 
     /* FIXME: for formatting icon in a button icon / may go away with heroui */
     .icon-button {
