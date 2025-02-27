@@ -1,5 +1,3 @@
-import "./main.css";
-
 import React, {
     useMemo,
     useState,

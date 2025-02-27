@@ -1,4 +1,4 @@
-import "./main.css"
+import "./global.css";
 
 import { Table } from "./Table";
 
