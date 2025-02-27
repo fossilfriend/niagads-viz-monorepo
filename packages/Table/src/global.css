@@ -92,7 +92,7 @@ these are the source of conflicts as the UI ones seem to have precedence
 
     /* FIXME: for formatting icon in a button icon / may go away with heroui */
     .icon-button {
-        @apply size-4 stroke-2;
+        @apply size-4 stroke-4;
     }
 
     .dropdown:focus-within .dropdown-menu {
