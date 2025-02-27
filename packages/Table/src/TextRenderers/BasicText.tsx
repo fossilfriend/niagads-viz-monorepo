@@ -90,7 +90,7 @@ export const LargeText = <T,>({ props }: TextRenderer<T>) => {
     return (
         <div className="max-w-[300px] break-words">
             {textElement}{"   "}
-            <a className="text-xs info-link" onClick={toggleIsExpanded}>{action}</a>
+            <a className="table-cell-link text-xs info-link" onClick={toggleIsExpanded}>{action}</a>
         </div>
     )
 };
