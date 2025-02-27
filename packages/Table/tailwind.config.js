@@ -4,17 +4,6 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
     content: ["./src/**/*.{js,jsx,ts,tsx}"],
     purge: ['./src/**/*.{js,jsx,ts,tsx}'],
-    theme: {
-        extend: {
-            colors: {
-                'primary': '#3d5263',
-                'secondary': '#f9c664',
-                'accent': '#618eb5',
-                'accent-dark': '#27333f'
-            }
-        },
-    },
-    important: true,
     plugins: [],
 };
 
