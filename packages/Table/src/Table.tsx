@@ -56,6 +56,7 @@ import {
     RadioButton,
     SearchInput,
 } from "@bug_sam/ui";
+import { HeroUIProvider } from "@heroui/system";
 
 const __resolveSortingFn = (col: GenericColumn) => {
     if (col.type === "boolean") {
@@ -427,4 +428,6 @@ const TableWithErrorBoundary = withErrorBoundary(Table, {
     },
 });
 
-export default TableWithErrorBoundary;
+export default Table;
+
+// export default TableWithErrorBoundary;
