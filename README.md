@@ -26,10 +26,10 @@ npx lerna list
 
 ### Building packages
 
-You can build all packages by running the following command:
+You can build all packages **sequentially** by running the following command:
 
 ```bash
-npx lerna run build
+npx lerna run build --concurrency 1
 ```
 
 You can also scope to a specific package using the `--scope` argument
