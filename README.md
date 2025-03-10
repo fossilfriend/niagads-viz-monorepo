@@ -78,62 +78,13 @@ Then you can publish the packages
 npx lerna package from-package
 ```
 
-
-> OLD README:
-
-## Import Component Library into 3rd-Party App
-
-```bash
-npm install git+https://github.com/NIAGADS/niagads-viz-js.git --legacy-peer-deps
-```
-
-To install a specific branch:
-
-```bash
-npm install git+https://github.com/NIAGADS/niagads-viz-js.git#BRANCH --legacy-peer-deps
-```
-
-## StoryBook
-
-```bash
-git clone https://github.com/NIAGADS/niagads-viz-js.git 
-cd niagads-viz-js
-npm install --legacy-peer-deps
-npm run storybook
-```
-
-* TODO: generate story hierarchy from project hierarchy: https://storybook.js.org/docs/configure#configure-story-loading
-
-### Auto-Doc
-
-```bash
-npm run storybook-doc
-```
-
-
-## Run `example` app
-
-> NOTE: Requires `next.js`: you may need to pre-install `next` npm package
-
-```bash
-git clone https://github.com/NIAGADS/niagads-viz-js.git 
-cd niagads-viz-js/example
-npm install --legacy-peer-deps
-```
-
-### Dev
-
-```bash
-npm run dev
-```
-
-### Prod
-
-```bash
-npm run start
-```
-
 ## Developer Notes
+
+### Troubleshooting Lerna/NX
+
+* nx causing "Daemon is not running" error
+
+  Try removing `.nx/workspace-data/d/disabled` (<https://github.com/lerna/lerna/issues/4054#issuecomment-2378029441>)
 
 ### VSCode Configurations
 
