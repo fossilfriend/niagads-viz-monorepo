@@ -2,7 +2,8 @@ import React, { useState, useEffect, useId } from "react"
 import { Table as ReactTable } from "@tanstack/react-table"
 import exportFromJSON from "export-from-json"
 
-import { Button, Checkbox, Select, Tooltip } from "@bug_sam/ui"
+import { Checkbox, Tooltip } from "@bug_sam/ui"
+import { Button, Select, SelectItem } from "@heroui/react"
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid"
 import { FileFormat, EXPORT_FILE_FORMATS } from "@bug_sam/common"
 
@@ -61,7 +62,7 @@ export const TableExportControls = ({ isFiltered, onSubmit }: ExportMenuOptions)
     return (
         <div className="relative inline-block text-left dropdown">
 
-            <Button variant="white">
+            <Button variant="light">
                 <ArrowDownTrayIcon className="icon-button"></ArrowDownTrayIcon>
                 <span className="ml-2 uppercase">Export</span>
             </Button>
@@ -80,8 +81,9 @@ export const TableExportControls = ({ isFiltered, onSubmit }: ExportMenuOptions)
 
                             <Select id={`${formId}_select_export_format"`}
                                 name="format"
-                                fields={EXPORT_FILE_FORMATS}
-                                label="Export table data as"></Select>
+                                label="Export table data as">
+                                    {EXPORT_FILE_FORMATS.map((v) => <SelectItem key={v.toString()}>{v}</SelectItem>)}
+                                </Select>
 
                             <div className="mt-2 flex justify-center">
                                 <Button size="md">Export</Button>

@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { TableRow } from "./TableProperties";
 import { flexRender, Header } from "@tanstack/react-table";
@@ -11,8 +11,9 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { FunnelIcon } from "@heroicons/react/24/outline";
+import {Button} from "@heroui/react";
 
-import { Button, renderTooltip } from "@bug_sam/ui";
+import { renderTooltip } from "@bug_sam/ui";
 import { _get } from "@bug_sam/common";
 import { Filter } from "./Filter";
 
@@ -72,9 +73,10 @@ export const TableColumnHeader = ({ header }: TableColumnHeader) => {
                 {header.column.getCanFilter() && (
                     <div className="ml-5">
                         <Button
-                            variant="primary"
+                            color="primary"
+                            variant="solid"
                             size="sm"
-                            onClick={() => setFilterOpen(!filterOpen)}>
+                            onPress={() => setFilterOpen(!filterOpen)}>
                             <FunnelIcon className="icon-button stroke-primary"></FunnelIcon>
                         </Button>
                     </div>

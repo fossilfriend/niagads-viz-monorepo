@@ -50,13 +50,13 @@ import {
 } from "./ControlElements";
 
 import {
-    Button,
     Tooltip,
     Checkbox,
     RadioButton,
     SearchInput,
 } from "@bug_sam/ui";
-import { HeroUIProvider } from "@heroui/system";
+
+import { Button } from "@heroui/react";
 
 const __resolveSortingFn = (col: GenericColumn) => {
     if (col.type === "boolean") {
@@ -181,14 +181,15 @@ export const Table: React.FC<TableProps> = ({ id, columns, data, options }) => {
                                 <Tooltip message="Reset selected rows">
                                     <Button
                                         size="sm"
-                                        variant="primary"
+                                        color="primary"
+                                        variant="solid"
                                         disabled={
                                             Object.keys(
                                                 table.getState().rowSelection
                                             ).length === 0
                                             // FIXME: !table.getIsSomeRowsSelected() - not working in next.js
                                         }
-                                        onClick={() => {
+                                        onPress={() => {
                                             table.resetRowSelection(true);
                                         }}>
                                         <TrashIcon className="icon-button"></TrashIcon>

@@ -2,9 +2,7 @@ import { Column } from "@tanstack/react-table"
 import React, { useMemo } from "react"
 import { _get } from "@bug_sam/common";
 import { SearchInput } from "@bug_sam/ui";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
-import { Slider } from "@heroui/slider";
-import { Button } from "@heroui/button";
+import { Slider, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@heroui/react";
 
 interface Filter {
     column: Column<any, unknown>;
