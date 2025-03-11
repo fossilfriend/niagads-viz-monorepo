@@ -84,19 +84,21 @@ npx lerna package from-package
 
 HeroUI 2 does not support Tailwind 4.0 as of version 2.7.5 (checked: 03/11/2025).
 
-A beta-release has been made for HeroUI that is more compatible, but full official support not planned until 2.8 or maybe even 3+.
+A beta-release (2.7.6-beta) has been made for HeroUI that is more compatible, but full official support not planned until 2.8 or maybe even 3.
 
-See <https://github.com/heroui-inc/heroui/issues/4644>
+See: <https://beta.heroui.com/docs/guide/tailwind-v4>
 
-In the meanwhile, please add `@heroui` to new packages using the beta release mentioned in the issue:
+See also: <https://github.com/heroui-inc/heroui/issues/4644>
+
+To use the version, install `@heroui/react` as follows:
 
 ```bash
-npm install -D https://pkg.pr.new/@heroui/react@63afa9a
+npm install @heroui/react@beta
 ```
 
-and do the following:
+and configure as follows:
 
-* rename `tailwind.config.js` to `tailwind.config.mjs` and include the following:
+* rename `tailwind.config.js` to `tailwind.config.mjs` (not sure if the file rename is necessary) and include the following in the file (the `purge` directive is for storybook applications only):
 
 ```javascript
 /** @type {import('tailwindcss').Config} */
@@ -112,6 +114,8 @@ module.exports = {
 };
 ```
 
+> NOTE: TailwindCSS no longer officially supports configuration files as of version 4.0.  The following is for background compatibility and will go away later:
+
 * include the following in your `global.css` directly following the `@import "tailwindcss";` line:
 
 ```css
@@ -119,6 +123,20 @@ module.exports = {
 https://github.com/heroui-inc/heroui/issues/4644 */
 @config "../tailwind.config.mjs";
 ```
+
+Finally, `--heroui-` prefixed classes will not be set without specifying a theme. **This is thought to be an issue only with the `beta` release of @heroui**.  In an app, do this by wrapping the {children} in an empty div with the class set to the theme (e.g., `light` or `dark`).  For example:
+
+```javascript
+        return (
+            <HeroUIProvider>
+                <div className="light">
+                    {children}
+                </div>
+            </HeroUIProvider>
+        );
+```
+
+For creating the a decorator in Storybook to accomplish this, see [preview.tsx](/apps/storybook/.storybook/preview.tsx).
 
 ### Troubleshooting Lerna/NX
 
