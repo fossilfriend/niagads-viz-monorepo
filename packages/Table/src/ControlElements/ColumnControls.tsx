@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useId } from "react";
+import {Button} from "@heroui/react"
 
-import { Button, Checkbox } from "@bug_sam/ui";
+import { Checkbox } from "@bug_sam/ui";
 import { ViewColumnsIcon } from "@heroicons/react/24/solid";
 import { _get } from "@bug_sam/common";
 import { GenericColumn } from "../Column";
@@ -18,7 +19,7 @@ interface ColumnControlsProps {
 export const ColumnControls = ({ columns, onSelect }: ColumnControlsProps) => {
     return (
         <div className="relative inline-block text-left dropdown">
-            <Button variant="white">
+            <Button variant="bordered" color="default">
                 <ViewColumnsIcon className={`icon-button`}></ViewColumnsIcon>
                 <span className="ml-2 uppercase">Columns</span>
             </Button>
