@@ -80,6 +80,46 @@ npx lerna package from-package
 
 ## Developer Notes
 
+### TailwindCSS and Heroui
+
+HeroUI 2 does not support Tailwind 4.0 as of version 2.7.5 (checked: 03/11/2025).
+
+A beta-release has been made for HeroUI that is more compatible, but full official support not planned until 2.8 or maybe even 3+.
+
+See <https://github.com/heroui-inc/heroui/issues/4644>
+
+In the meanwhile, please add `@heroui` to new packages using the beta release mentioned in the issue:
+
+```bash
+npm install -D https://pkg.pr.new/@heroui/react@63afa9a
+```
+
+and do the following:
+
+* rename `tailwind.config.js` to `tailwind.config.mjs` and include the following:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+const {heroui} = require("@heroui/theme");
+
+module.exports = {
+    content: [
+        "./src/**/*.{js,jsx,ts,tsx}",
+        "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
+    ],
+    purge: ['./src/**/*.{js,jsx,ts,tsx}'],
+    plugins: [heroui()],
+};
+```
+
+* include the following in your `global.css` directly following the `@import "tailwindcss";` line:
+
+```css
+/* Needed until HeroUI supports Tailwind v4 officially.
+https://github.com/heroui-inc/heroui/issues/4644 */
+@config "../tailwind.config.mjs";
+```
+
 ### Troubleshooting Lerna/NX
 
 * nx causing "Daemon is not running" error
