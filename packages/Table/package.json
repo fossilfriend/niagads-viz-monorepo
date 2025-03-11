@@ -5,7 +5,6 @@
         "build": "rollup -c"
     },
     "devDependencies": {
-        "@heroui/react": "https://pkg.pr.new/@heroui/react@63afa9a",
         "@rollup/plugin-commonjs": "^28.0.2",
         "@rollup/plugin-node-resolve": "^16.0.0",
         "@rollup/plugin-terser": "^0.4.4",
@@ -41,6 +40,7 @@
         "@bug_sam/ui": "^0.0.1-alpha.0",
         "@emotion/is-prop-valid": "^1.3.1",
         "@heroicons/react": "^2.2.0",
+        "@heroui/react": "^2.7.6-beta.2",
         "@tanstack/react-table": "^8.11.8",
         "export-from-json": "github:NIAGADS/export-from-json#niagads",
         "framer-motion": "^12.4.4",

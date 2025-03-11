@@ -4,5 +4,5 @@ module.exports = {
     },
     inject: true,
     extensions: [".css"],
-    minimize: true,       
+    minimize: true,          
 };

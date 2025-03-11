@@ -6,7 +6,9 @@ const decorators: Preview["decorators"] = [
     (Story) => {
         return (
             <HeroUIProvider>
-                <Story />
+                <div className="light">
+                    <Story />
+                </div>
             </HeroUIProvider>
         );
     }
