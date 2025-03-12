@@ -2,8 +2,8 @@ import React, { useState, useEffect, useId } from "react"
 import { Table as ReactTable } from "@tanstack/react-table"
 import exportFromJSON from "export-from-json"
 
-import { Checkbox, Tooltip } from "@bug_sam/ui"
-import { Button, Select, SelectItem } from "@heroui/react"
+import { Checkbox, Tooltip, Select } from "@bug_sam/ui"
+import { Button } from "@heroui/react"
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid"
 import { FileFormat, EXPORT_FILE_FORMATS } from "@bug_sam/common"
 
@@ -78,12 +78,11 @@ export const TableExportControls = ({ isFiltered, onSubmit }: ExportMenuOptions)
                                     label="Filtered Rows Only" checked={filteredOnly}
                                     onChange={() => setFilteredOnly(!filteredOnly)}></Checkbox>
                             }
-
                             <Select id={`${formId}_select_export_format"`}
                                 name="format"
-                                label="Export table data as">
-                                    {EXPORT_FILE_FORMATS.map((v) => <SelectItem key={v.toString()}>{v}</SelectItem>)}
-                                </Select>
+                                fields={EXPORT_FILE_FORMATS}
+                                label="Export table data as"></Select>
+
 
                             <div className="mt-2 flex justify-center">
                                 <Button size="md">Export</Button>

@@ -19,7 +19,7 @@ interface ColumnControlsProps {
 export const ColumnControls = ({ columns, onSelect }: ColumnControlsProps) => {
     return (
         <div className="relative inline-block text-left dropdown">
-            <Button variant="bordered" color="default">
+            <Button variant="light" color="default">
                 <ViewColumnsIcon className={`icon-button`}></ViewColumnsIcon>
                 <span className="ml-2 uppercase">Columns</span>
             </Button>
